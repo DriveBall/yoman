@@ -161,6 +161,7 @@ details[open] summary{margin-bottom:8px}
 #scanner .aim{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
 #scanner .aim i{width:min(80vw,420px);height:150px;border:3px solid var(--focus);border-radius:16px;box-shadow:0 0 0 100vmax var(--scrim)}
 #scanner .bar{position:relative;background:var(--black);color:var(--white);display:flex;gap:12px;align-items:center;justify-content:space-between;padding:14px max(16px,env(safe-area-inset-left,0px)) calc(14px + env(safe-area-inset-bottom,0px))}
+#scanner .bar{flex-wrap:wrap}.scanacts{display:flex;gap:8px;flex:none}.galbtn{display:inline-flex;align-items:center;border:1px solid var(--white);color:var(--white);border-radius:6px;font:600 16px var(--body);min-height:44px;padding:0 16px;cursor:pointer;position:relative;overflow:hidden}.galbtn input{position:absolute;width:1px;height:1px;opacity:0;min-height:0;padding:0;border:0}.galbtn:focus-within{outline:3px solid var(--focus);outline-offset:2px}
 #scanner button{appearance:none;border:1px solid var(--white);background:transparent;color:var(--white);border-radius:6px;font:600 16px var(--body);min-height:44px;padding:0 16px;cursor:pointer;flex:none}
 .quick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 .quick button{appearance:none;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:6px;font:600 15px var(--body);min-height:52px;cursor:pointer}
@@ -355,7 +356,7 @@ body{margin:0}
 <div id="live" dir="rtl" hidden><div class="ltop"><strong id="live-title">מצב אימון</strong><button type="button" class="iconbtn" id="live-close">הקטנה</button></div><div id="live-body"></div></div>
 <div id="wrapped" dir="rtl" hidden><button type="button" class="iconbtn" id="wr-close">סגירה</button><div id="wr-slide"></div><div id="wr-dots"></div><p class="hint">נגיעה במסך ממשיכה</p></div>
 <div id="picker" dir="rtl" hidden><div class="ltop"><strong>בחירת תרגיל</strong><button type="button" class="iconbtn" id="pk-close">סגירה</button></div><div id="pk-tools"><input id="pk-q" type="search" maxlength="80" aria-label="חיפוש תרגיל" placeholder="חיפוש תרגיל, או שם של תרגיל חדש"></div><div id="pk-groups"></div><div id="pk-grid"></div></div>
-<div id="scanner" dir="rtl" hidden><video id="scan-video" playsinline muted autoplay></video><div class="aim"><i></i></div><div class="bar"><span id="scan-state" aria-live="polite"></span><button type="button" id="scan-torch" hidden>פנס</button><button type="button" id="scan-close">סגירה</button></div></div>
+<div id="scanner" dir="rtl" hidden><video id="scan-video" playsinline muted autoplay></video><div class="aim"><i></i></div><div class="bar"><span id="scan-state" aria-live="polite"></span><div class="scanacts"><label class="galbtn">מהגלריה<input id="scan-file" type="file" accept="image/*"></label><button type="button" id="scan-torch" hidden>פנס</button><button type="button" id="scan-close">סגירה</button></div></div></div>
 <div id="toast" class="toast" dir="rtl" hidden></div>
 
 <script>
@@ -460,7 +461,7 @@ function panelSkeleton(id){
      plateTool('p1')+
      '<details id="tpl-box"><summary>שמירת התרגילים של היום כתוכנית</summary><form id="f-tpl" class="inlineform"><input id="tpl-name" type="text" maxlength="40" required placeholder="למשל: דחיפה" aria-label="שם התוכנית"><button class="iconbtn" id="tpl-save">שמירה</button></form><div class="chips" id="tpl-manage"></div></details>'+
      '</div>'+
-   '<div class="drawer" id="dr-food" hidden><label class="check" id="share-l" hidden><input id="share-on" type="checkbox"><span id="share-txt"></span></label><div id="share-split" hidden><label class="f"><span id="share-pct"></span><input id="share-range" type="range" min="10" max="90" step="10" value="50"></label></div><div class="scanrow"><button type="button" class="scanbtn" id="scan-live">סריקת ברקוד</button><label class="scanbtn" id="scan-l">מתמונה<input id="scan-file" type="file" accept="image/*"></label><a class="scanbtn" id="photo-link" href="'+PHOTO_URL+'" target="_blank" rel="noopener">צילום ארוחה</a></div>'+
+   '<div class="drawer" id="dr-food" hidden><label class="check" id="share-l" hidden><input id="share-on" type="checkbox"><span id="share-txt"></span></label><div id="share-split" hidden><label class="f"><span id="share-pct"></span><input id="share-range" type="range" min="10" max="90" step="10" value="50"></label></div><div class="scanrow"><button type="button" class="scanbtn" id="scan-live">סריקת ברקוד</button><a class="scanbtn" id="photo-link" href="'+PHOTO_URL+'" target="_blank" rel="noopener">צילום ארוחה</a></div>'+
      '<form class="bcman" id="f-bc"><input id="bc-manual" type="text" inputmode="numeric" maxlength="14" aria-label="מספר ברקוד" placeholder="מספר ברקוד"><button class="iconbtn" id="bc-go">חיפוש</button></form>'+
      '<form class="bcman" id="f-search"><input id="s-q" type="search" maxlength="80" aria-label="חיפוש מוצר לפי שם" placeholder="חיפוש מוצר לפי שם"><button class="iconbtn" id="s-go">חיפוש</button></form><div id="s-res" class="results"></div>'+
      '<p class="hint" id="scan-msg" hidden></p><div class="card" id="scan-card" hidden></div><div class="chips" id="food-favs"></div>'+
@@ -589,9 +590,10 @@ async function decodeBarcode(file){
 function stopScan(){clearTimeout(scanTimer);scanTimer=0;if(scanStream){scanStream.getTracks().forEach(t=>t.stop());scanStream=null}$('scan-video').srcObject=null;$('scanner').hidden=true}
 async function startScan(){
   scanMsg('');
-  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){scanMsg('הדפדפן הזה לא מאפשר סריקה חיה. השתמש ב״מתמונה״ או הקלד את המספר.');return}
+  const noCam=t=>{$('scanner').hidden=false;$('scan-torch').hidden=true;$('scan-state').textContent=t};
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){noCam('הדפדפן לא מאפשר מצלמה כאן. אפשר לבחור תמונה מהגלריה.');return}
   try{scanStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1080}},audio:false})}
-  catch(e){scanMsg('אין גישה למצלמה. אשר אותה בהגדרות הדפדפן, או השתמש ב״מתמונה״.');return}
+  catch(e){noCam('אין גישה למצלמה. אשר אותה בהגדרות הדפדפן, או בחר תמונה מהגלריה.');return}
   const v=$('scan-video'),track=scanStream.getVideoTracks()[0];v.srcObject=scanStream;$('scanner').hidden=false;$('scan-state').textContent='כוון את הברקוד למסגרת, במרחק של כ־15 ס״מ';try{await v.play()}catch(e){}
   try{const cap=track.getCapabilities?track.getCapabilities():{};if(cap.focusMode&&cap.focusMode.includes('continuous'))await track.applyConstraints({advanced:[{focusMode:'continuous'}]});$('scan-torch').hidden=!cap.torch}catch(e){}
   let det;try{det=await getDetector()}catch(e){stopScan();scanMsg('קורא הברקודים לא נטען. בדוק את החיבור או הקלד את המספר.');return}
@@ -1087,6 +1089,11 @@ const recall=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
 $('switchme').onclick=()=>{S.live=null;S.open=null;S.edit=null;S.show='me';S.me=null;store('fit_me',null);S.panelsKey='';favKey=null;showWho()};
 $('codeform').addEventListener('submit',e=>{e.preventDefault();const c=$('code-in').value.trim();if(c){store('fit_code',c);$('codebox').hidden=true;boot()}});
 $('scan-close').onclick=stopScan;
+$('scan-file').addEventListener('change',async e=>{const file=e.target.files&&e.target.files[0];e.target.value='';if(!file)return;
+  stopScan();S.open='food';syncDrawers();scanMsg('מחפש ברקוד בתמונה…');
+  let code=null;try{code=await decodeBarcode(file)}catch(err){scanMsg('לא הצלחנו לקרוא את התמונה. נסה תמונה אחרת או הקלד את המספר.');return}
+  if(code)openProduct(code);else scanMsg('לא זוהה ברקוד בתמונה. נסה תמונה חדה יותר או הקלד את המספר.');
+});
 let torchOn=false;$('scan-torch').onclick=async()=>{if(!scanStream)return;torchOn=!torchOn;try{await scanStream.getVideoTracks()[0].applyConstraints({advanced:[{torch:torchOn}]})}catch(e){}};
 $('pk-close').onclick=closePicker;$('pk-q').addEventListener('input',drawPicker);
 $('pk-groups').addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(b){pkGroup=b.dataset.g||null;drawPicker()}});
@@ -1194,11 +1201,6 @@ $('panels').addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches(
 $('panels').addEventListener('change',async e=>{
   const date=S.sel;
   if(e.target.id==='e-name'){pickExercise();return}
-  if(e.target.id==='scan-file'){const file=e.target.files&&e.target.files[0],id=e.target.id;e.target.value='';if(!file)return;
-    scanMsg('מחפש ברקוד בתמונה…');
-    let code=null;try{code=await decodeBarcode(file)}catch(err){scanMsg('לא הצלחנו לטעון את קורא הברקודים. הקלד את המספר ידנית.');return}
-    if(code)openProduct(code);else scanMsg('לא זוהה ברקוד. צלם מקרוב ובאור טוב, או הקלד את המספר.');
-    return}
   if(e.target.id==='f-weight'){const v=num(e.target.value);
     if(v!=null&&(v<20||v>300)){toast('משקל צריך להיות בין 20 ל־300 ק״ג.');return}
     mutate(date,d=>{d.weight=v;d.weightAt=new Date().toISOString()})}
