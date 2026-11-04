@@ -241,6 +241,16 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .badge i{width:32px;height:32px;border-radius:50%;border:2px dashed var(--line);position:relative}.badge.on{color:var(--ink)}.badge.on i{border:0;background:var(--c)}.badge.on i::after{content:"";position:absolute;inset:11px;border-radius:50%;background:var(--well)}
 .finish{display:grid;gap:12px;text-align:center}.fig{font:800 56px/1 var(--display);font-variant-numeric:tabular-nums}.fig small{display:block;font:500 15px var(--body);color:var(--muted);margin-top:8px}.finish p{margin:0}
 .confetti{position:fixed;inset:0;z-index:60;pointer-events:none}
+.check{display:flex;gap:8px;align-items:center;font-weight:700;min-height:44px;cursor:pointer}.check input{width:24px;height:24px;min-height:0;flex:none;accent-color:var(--accent)}input[type=range]{min-height:32px;padding:0;background:transparent;border:0;accent-color:var(--accent)}
+.rc-row{display:flex;gap:8px;align-items:stretch}.rc-row .res{flex:1;min-width:0}.rc-row .iconbtn{flex:none}
+.ing{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;align-items:center;padding-bottom:8px;border-bottom:1px solid var(--line)}.ing .i-name{grid-column:span 4}.ing .i-g{grid-column:span 2}.ing input{min-height:40px;padding:4px 8px;font-size:15px}.ing .i-k,.ing .i-p,.ing .i-c,.ing .i-f{grid-column:span 1}.ing .i-k{grid-column:span 2}.ing .del{grid-column:6}.ing input.i-f{grid-column:span 1}
+.xp.big{height:12px;border-radius:8px}.rw-t{flex:1 1 auto;font:800 18px var(--display)}#reward .count{font:800 18px var(--display)}#reward{gap:8px}
+.egg{position:absolute;inset-inline-start:50%;top:50%;width:20px;height:20px;transform:translate(-50%,-50%);border-radius:50%;border:2px solid var(--ink);background:var(--mark);cursor:pointer;z-index:2;padding:0}.egg::after{content:"";position:absolute;inset:-12px}
+#wrapped{position:fixed;inset:0;z-index:50;background:var(--ink);color:var(--on-ink);display:grid;grid-template-rows:auto 1fr auto auto;justify-items:center;padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-left,0px)) calc(16px + env(safe-area-inset-bottom,0px));gap:12px;text-align:center;cursor:pointer}
+#wrapped #wr-close{justify-self:start;border-color:var(--on-ink);color:var(--on-ink)}#wrapped .hint{color:inherit;opacity:.75;margin:0}
+#wr-slide{align-self:center;display:grid;gap:12px;justify-items:center;max-width:32rem}#wr-slide p{margin:0;font-size:20px}#wr-slide small{font:800 20px var(--display)}.wr-big{font:800 clamp(40px,12vw,64px)/1.05 var(--display);margin:0}.wr-mid{font:800 32px/1.1 var(--display);margin:0}.wr-fig{font:800 clamp(64px,20vw,112px)/1 var(--display);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+#wr-dots{display:flex;gap:6px}#wr-dots i{width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.3}#wr-dots i.on{opacity:1}
+@media (prefers-reduced-motion:no-preference){#wr-slide.in{animation:wrin .32s ease-out}}@keyframes wrin{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 /* who are you */
 .who{max-width:460px;margin:8vh auto 0;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:24px;display:grid;gap:16px}
 .whobtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -291,6 +301,7 @@ body{margin:0}
   <div id="view-log" hidden style="display:grid;gap:18px">
     <div id="nudge" class="nudge" hidden></div>
     <section class="block hero" id="hero" hidden></section>
+    <section class="block" id="reward" hidden></section>
     <section class="rail" aria-label="בחירת יום">
       <div class="railhead">
         <h2 id="dayTitle"></h2>
@@ -341,6 +352,7 @@ body{margin:0}
 </div>
 <div id="tip" dir="rtl" hidden></div>
 <div id="live" dir="rtl" hidden><div class="ltop"><strong id="live-title">מצב אימון</strong><button type="button" class="iconbtn" id="live-close">הקטנה</button></div><div id="live-body"></div></div>
+<div id="wrapped" dir="rtl" hidden><button type="button" class="iconbtn" id="wr-close">סגירה</button><div id="wr-slide"></div><div id="wr-dots"></div><p class="hint">נגיעה במסך ממשיכה</p></div>
 <div id="picker" dir="rtl" hidden><div class="ltop"><strong>בחירת תרגיל</strong><button type="button" class="iconbtn" id="pk-close">סגירה</button></div><div id="pk-tools"><input id="pk-q" type="search" maxlength="80" aria-label="חיפוש תרגיל" placeholder="חיפוש תרגיל, או שם של תרגיל חדש"></div><div id="pk-groups"></div><div id="pk-grid"></div></div>
 <div id="scanner" dir="rtl" hidden><video id="scan-video" playsinline muted autoplay></video><div class="aim"><i></i></div><div class="bar"><span id="scan-state" aria-live="polite"></span><button type="button" id="scan-torch" hidden>פנס</button><button type="button" id="scan-close">סגירה</button></div></div>
 <div id="toast" class="toast" dir="rtl" hidden></div>
@@ -376,7 +388,7 @@ const EXERCISES={
 const EX_IMG={"סקוואט": "00.jpg", "סקוואט קדמי": "01.jpg", "לחיצת רגליים": "02.jpg", "דדליפט רומני": "03.jpg", "מכרעים (Lunges)": "04.jpg", "בולגרי ספליט סקוואט": "05.jpg", "כפיפת ברכיים במכונה": "06.jpg", "פשיטת ברכיים במכונה": "07.jpg", "היפ ת׳ראסט": "08.jpg", "עליות על קופסה": "09.jpg", "תאומים בעמידה": "10.jpg", "לחיצת חזה במוט": "11.jpg", "לחיצת חזה בשיפוע חיובי": "12.jpg", "לחיצת חזה עם משקולות יד": "13.jpg", "פרפר במכונה": "14.jpg", "קרוס אובר בכבלים": "15.jpg", "שכיבות סמיכה": "16.jpg", "מקבילים": "17.jpg", "דדליפט": "18.jpg", "מתח": "19.jpg", "מתח באחיזה הפוכה": "20.jpg", "פולי עליון": "21.jpg", "חתירה במוט": "22.jpg", "חתירה עם משקולת יד": "23.jpg", "חתירה בכבל בישיבה": "24.jpg", "פייס פול": "25.jpg", "היפר אקסטנשן": "26.jpg", "לחיצת כתפיים במוט": "27.jpg", "לחיצת כתפיים עם משקולות יד": "28.jpg", "הרחקה לצדדים": "29.jpg", "הרחקה קדמית": "30.jpg", "פרפר אחורי": "31.jpg", "שראגס": "32.jpg", "כפיפת מרפקים במוט": "33.jpg", "כפיפת מרפקים עם משקולות יד": "34.jpg", "כפיפת פטיש": "35.jpg", "פשיטת מרפקים בכבל": "36.jpg", "לחיצה צרפתית": "37.jpg", "דיפים על ספסל": "38.jpg", "פלאנק": "39.jpg", "פלאנק צד": "40.jpg", "כפיפות בטן": "41.jpg", "הרמות רגליים בתלייה": "42.jpg", "רוסיאן טוויסט": "43.jpg", "אב רולר": "44.jpg", "קטלבל סווינג": "45.jpg", "קלין אנד פרס": "46.jpg", "טראסטר": "47.jpg", "הליכת חקלאי": "48.jpg", "קפיצה בחבל": "49.jpg"};
 const RX=['💪','🔥','👏','❤️'];
 const PHOTO_URL='https://claude.ai/artifact/SJ29RfbqxbbN9kdiLwrpZN';
-const S={nudges:{},nudgedNow:false,me:null,products:{},reactions:{},open:null,edit:null,show:'me',searchRes:[],live:null,pendingMeal:null,recap:weekStart(today()),cal:today().slice(0,7),people:{},days:{},subs:{},sel:today(),tab:'log',range:30,readonly:false,ready:false,panelsKey:''};
+const S={recipes:{},reward:null,nudges:{},nudgedNow:false,me:null,products:{},reactions:{},open:null,edit:null,show:'me',searchRes:[],live:null,pendingMeal:null,recap:weekStart(today()),cal:today().slice(0,7),people:{},days:{},subs:{},sel:today(),tab:'log',range:30,readonly:false,ready:false,panelsKey:''};
 let db=null,loadTimer=null,raf=0;
 const queue={};
 
@@ -446,11 +458,14 @@ function panelSkeleton(id){
      plateTool('p1')+
      '<details id="tpl-box"><summary>שמירת התרגילים של היום כתוכנית</summary><form id="f-tpl" class="inlineform"><input id="tpl-name" type="text" maxlength="40" required placeholder="למשל: דחיפה" aria-label="שם התוכנית"><button class="iconbtn" id="tpl-save">שמירה</button></form><div class="chips" id="tpl-manage"></div></details>'+
      '</div>'+
-   '<div class="drawer" id="dr-food" hidden><div class="scanrow"><button type="button" class="scanbtn" id="scan-live">סריקת ברקוד</button><label class="scanbtn" id="scan-l">מתמונה<input id="scan-file" type="file" accept="image/*"></label><a class="scanbtn" id="photo-link" href="'+PHOTO_URL+'" target="_blank" rel="noopener">צילום ארוחה</a></div>'+
+   '<div class="drawer" id="dr-food" hidden><label class="check" id="share-l" hidden><input id="share-on" type="checkbox"><span id="share-txt"></span></label><div id="share-split" hidden><label class="f"><span id="share-pct"></span><input id="share-range" type="range" min="10" max="90" step="10" value="50"></label></div><div class="scanrow"><button type="button" class="scanbtn" id="scan-live">סריקת ברקוד</button><label class="scanbtn" id="scan-l">מתמונה<input id="scan-file" type="file" accept="image/*"></label><a class="scanbtn" id="photo-link" href="'+PHOTO_URL+'" target="_blank" rel="noopener">צילום ארוחה</a></div>'+
      '<form class="bcman" id="f-bc"><input id="bc-manual" type="text" inputmode="numeric" maxlength="14" aria-label="מספר ברקוד" placeholder="מספר ברקוד"><button class="iconbtn" id="bc-go">חיפוש</button></form>'+
      '<form class="bcman" id="f-search"><input id="s-q" type="search" maxlength="80" aria-label="חיפוש מוצר לפי שם" placeholder="חיפוש מוצר לפי שם"><button class="iconbtn" id="s-go">חיפוש</button></form><div id="s-res" class="results"></div>'+
      '<p class="hint" id="scan-msg" hidden></p><div class="card" id="scan-card" hidden></div><div class="chips" id="food-favs"></div>'+
      '<button type="button" class="ghost" id="copy-open">כמו ביום קודם</button><div id="copy-box" class="results" hidden></div>'+
+     '<button type="button" class="ghost" id="rc-open">מתכונים של הבית</button><div id="rc-box" class="results" hidden><div id="rc-list" class="results"></div><button type="button" class="ghost" id="rc-new">מתכון חדש</button>'+
+     '<div class="card" id="rc-log" hidden><strong id="rc-log-t"></strong><label class="f">כמה מנות אכלת?<input id="rc-por" type="number" min="0.25" max="50" step="0.25" inputmode="decimal"></label><p class="hint" id="rc-log-calc"></p><div class="btnrow"><button type="button" class="primary" id="rc-log-add">הוספה לארוחה</button><button type="button" class="iconbtn" id="rc-log-x">ביטול</button></div></div>'+
+     '<form class="card" id="rc-form" hidden><label class="f">שם המתכון<input id="rc-name" type="text" maxlength="60" required></label><label class="f">לכמה מנות?<input id="rc-serv" type="number" min="1" max="100" step="1" inputmode="numeric" required></label><p class="hint">לכל מרכיב: כמה גרם נכנסו, וערכים ל־100 גרם. מוצר ששמרתם מתמלא לבד.</p><datalist id="prod-list"></datalist><div id="rc-ings" class="results"></div><button type="button" class="ghost" id="rc-add-ing">עוד מרכיב</button><p class="hint" id="rc-calc"></p><div class="btnrow"><button class="primary" id="rc-save">שמירת המתכון</button><button type="button" class="iconbtn" id="rc-x">סגירה</button></div><button type="button" class="ghost" id="rc-del" hidden>מחיקת המתכון</button></form></div>'+
      '<form class="add" id="f-meal"><label class="f w2">ארוחה<select id="m-type">'+MEALS.map(x=>'<option'+(x===defMeal?' selected':'')+'>'+x+'</option>').join('')+'</select></label><label class="f w4">מה אכלת<input id="m-name" type="text" maxlength="200" required placeholder="חביתה, סלט ופרוסת לחם"></label>'+
      '<label class="f w3">קלוריות<input id="m-kcal" type="number" min="0" max="10000" inputmode="numeric"></label><label class="f w3">חלבון (ג׳)<input id="m-prot" type="number" min="0" max="1000" step="any" inputmode="decimal"></label><label class="f w3">פחמימות (ג׳)<input id="m-carb" type="number" min="0" max="2000" step="any" inputmode="decimal"></label><label class="f w3">שומן (ג׳)<input id="m-fat" type="number" min="0" max="1000" step="any" inputmode="decimal"></label>'+
      '<div class="w4"><button class="primary" id="m-add">הוספה</button></div><div class="w2"><button type="button" class="ghost" data-cancel hidden>ביטול</button></div></form></div>'+
@@ -479,7 +494,7 @@ function fillPanel(el,id){
   const none='<li class="none">עוד לא הוזן</li>';
   const ex=(d&&d.exercises)||[],wk=(d&&d.workouts)||[],ml=(d&&d.meals)||[];
   el.querySelector('.ex').innerHTML=ex.map(x=>row('exercises',x,'<div class="exline">'+thumb(x.name)+'<div><strong>'+esc(x.name)+'</strong>'+(isPR(id,k,x)?' <span class="pr">שיא</span>':'')+(perf(x)?'<small>'+esc(perf(x))+'</small>':'')+'</div></div>',x.name)).join('')||(mine?'':none);
-  el.querySelector('.ml').innerHTML=ml.map(x=>{const b=[];if(x.kcal!=null)b.push(fmt(x.kcal)+' קל׳');if(x.protein!=null)b.push(fmt(x.protein,1)+' ג׳ חלבון');if(x.carbs!=null)b.push(fmt(x.carbs,1)+' ג׳ פחמ׳');if(x.fat!=null)b.push(fmt(x.fat,1)+' ג׳ שומן');if(x.qty&&x.unit&&x.unit!=='גרם')b.push(fmt(x.qty,2)+' '+x.unit+' ('+fmt(x.grams)+' ג׳)');else if(x.grams)b.push(fmt(x.grams)+' ג׳');
+  el.querySelector('.ml').innerHTML=ml.map(x=>{const b=[];if(x.kcal!=null)b.push(fmt(x.kcal)+' קל׳');if(x.protein!=null)b.push(fmt(x.protein,1)+' ג׳ חלבון');if(x.carbs!=null)b.push(fmt(x.carbs,1)+' ג׳ פחמ׳');if(x.fat!=null)b.push(fmt(x.fat,1)+' ג׳ שומן');if(x.sharedBy)b.push('מ'+nameOf(x.sharedBy));if(x.sharedWith)b.push('ביחד עם '+nameOf(x.sharedWith));if(x.qty&&x.unit&&x.unit!=='גרם')b.push(fmt(x.qty,2)+' '+(x.unit==='מנה'&&x.qty!==1?'מנות':x.unit)+' ('+fmt(x.grams)+' ג׳)');else if(x.grams)b.push(fmt(x.grams)+' ג׳');
     return row('meals',x,'<strong>'+esc(x.meal)+'</strong>, '+esc(x.name)+(b.length?'<small>'+esc(b.join(', '))+'</small>':''),x.name)}).join('')||(mine?'':none);
   el.querySelector('.sec-ex').hidden=mine&&!ex.length;el.querySelector('.sec-ml').hidden=mine&&!ml.length;el.querySelector('.sec-nt').hidden=mine&&!(d&&d.note);
   el.querySelector('.notetext').textContent=(d&&d.note)||'–';
@@ -489,7 +504,7 @@ function fillPanel(el,id){
     renderFavs();renderTemplates();syncDrawers()}
 }
 function plateTool(s){return '<details class="platebox"><summary>מחשבון פלטות</summary><div class="inlineform" style="margin-top:8px"><label class="f">משקל כולל (ק״ג)<input class="pl-kg" id="pl-kg-'+s+'" type="number" min="0" max="500" step="0.5" inputmode="decimal"></label><label class="f">מוט<select class="pl-bar" id="pl-bar-'+s+'"><option>20</option><option>15</option><option>10</option></select></label></div><div class="pl-out hint"></div></details>'}
-function syncDrawers(){['ex','food','weight','note'].forEach(n=>{const d=$('dr-'+n),b=$('open-'+n);if(d){d.hidden=S.open!==n;b.setAttribute('aria-expanded',String(S.open===n))}})}
+function syncDrawers(){syncShare();['ex','food','weight','note'].forEach(n=>{const d=$('dr-'+n),b=$('open-'+n);if(d){d.hidden=S.open!==n;b.setAttribute('aria-expanded',String(S.open===n))}})}
 const rowsOf=x=>x.rows&&x.rows.length?x.rows:(x.sets&&(x.reps!=null||x.kg!=null)?Array.from({length:x.sets},()=>({reps:x.reps,kg:x.kg})):[]);
 const perf=x=>{const rs=x.rows||[];if(rs.length&&!rs.every(r=>r.reps===rs[0].reps&&r.kg===rs[0].kg))return rs.map(r=>(r.reps!=null?r.reps:'–')+(r.kg!=null?' × '+fmt(r.kg,1)+' ק״ג':'')).join(' | ');
   if(rs.length){x={sets:rs.length,reps:rs[0].reps,kg:rs[0].kg}}
@@ -500,7 +515,7 @@ function favFoods(id){const c={},ds=S.days[id]||{};Object.keys(ds).sort().forEac
   return Object.values(c).sort((a,b)=>b.n-a.n||String(b.lastK).localeCompare(a.lastK))}
 let favKey=null;
 function renderFavs(){
-  const fx=favExercises(S.me),ff=favFoods(S.me).slice(0,8),k=fx.map(f=>f.name).join('|'),sel=$('e-name');if(!sel)return;
+  const fx=favExercises(S.me),ff=smartFoods(S.me).slice(0,8),k=fx.map(f=>f.name).join('|'),sel=$('e-name');if(!sel)return;
   if(k!==favKey||!sel.options.length){favKey=k;const v=sel.value;
     let h='<option value="">בחירת תרגיל…</option>';
     if(fx.length)h+='<optgroup label="המועדפים שלי">'+fx.slice(0,8).map(f=>'<option>'+esc(f.name)+'</option>').join('')+'</optgroup>';
@@ -526,7 +541,7 @@ const thumb=(name,cls)=>EX_IMG[name]?'<img class="thumb '+(cls||'')+'" src="ex/'
 function setExSel(name){const sel=$('e-name');sel.value=name;if(sel.value!==name){const o=document.createElement('option');o.textContent=name;sel.append(o);sel.value=name}}
 function showPick(){const b=$('e-pick');if(!b)return;const n=$('e-name').value;b.innerHTML=n?thumb(n)+'<span>'+esc(n)+'</span>':'<span class="thumb" aria-hidden="true">+</span><span>בחירת תרגיל</span>'}
 let pkCb=null,pkGroup=null;
-function openPicker(cb){pkCb=cb;pkGroup=null;$('pk-q').value='';$('picker').hidden=false;drawPicker()}
+function openPicker(cb,group){pkCb=cb;pkGroup=group||null;$('pk-q').value='';$('picker').hidden=false;drawPicker()}
 function closePicker(){$('picker').hidden=true;pkCb=null}
 function drawPicker(){
   const q=$('pk-q').value.trim(),fx=S.me?favExercises(S.me).slice(0,8).map(f=>f.name):[],tile=n=>'<button type="button" class="pk" data-pk="'+esc(n)+'">'+thumb(n)+'<span>'+esc(n)+'</span></button>';
@@ -849,7 +864,7 @@ function drawLive(){
     if(last)h+='<p class="hint">פעם קודמת ('+shortDate(last.k)+'): '+esc(perf(last.x))+'</p>';
     if(s)h+='<div class="sug">'+sugHTML(s)+'</div>';
     h+='<div class="lrows"><div class="lrow head"><span>סט</span><span>חזרות</span><span>ק״ג</span><span></span></div>'+it.rows.map((r,i)=>'<div class="lrow'+(r.done?' done':'')+'" data-i="'+i+'"><b>'+(i+1)+'</b><input id="l-r'+i+'" class="l-reps" type="number" min="0" max="500" inputmode="numeric" aria-label="חזרות בסט '+(i+1)+'" value="'+(r.reps!=null?r.reps:'')+'"><input id="l-k'+i+'" class="l-kg" type="number" min="0" max="500" step="0.5" inputmode="decimal" aria-label="משקל בסט '+(i+1)+'" value="'+(r.kg!=null?r.kg:'')+'"><button type="button" class="tick" data-l="tick" data-i="'+i+'" aria-pressed="'+!!r.done+'" aria-label="סיום סט '+(i+1)+'">✓</button></div>').join('')+'</div>';
-    h+='<div class="btnrow"><button type="button" class="ghost" data-l="addset">הוספת סט</button><button type="button" class="ghost" data-l="delset"'+(it.rows.length>1?'':' disabled')+'>הסרת סט</button><button type="button" class="ghost" data-l="delex">הסרת תרגיל</button></div>'+plateTool('p2');
+    h+='<div class="btnrow"><button type="button" class="ghost" data-l="addset">הוספת סט</button><button type="button" class="ghost" data-l="delset"'+(it.rows.length>1?'':' disabled')+'>הסרת סט</button><button type="button" class="ghost" data-l="swap">החלפת תרגיל</button><button type="button" class="ghost" data-l="delex">הסרת תרגיל</button></div>'+plateTool('p2');
   }else h+='<p class="hint">בחר תרגיל ראשון כדי להתחיל.</p>';
   h+='<button type="button" class="ghost big" data-l="addex">הוספת תרגיל</button><button type="button" class="primary big" data-l="finish">סיום ושמירת האימון</button><button type="button" class="ghost" data-l="discard">ביטול האימון בלי לשמור</button>';
   const y=box.scrollTop;box.innerHTML=h;box.scrollTop=y;
@@ -871,6 +886,7 @@ function liveClick(e){const b=e.target.closest('[data-l]');if(!b){const ap=e.tar
   if(a==='prev'&&L.cur>0)L.cur--;
   if(a==='next'&&L.cur<L.items.length-1)L.cur++;
   if(a==='tick'){const r=it.rows[+b.dataset.i];r.done=!r.done;if(r.done&&it.rows.every(q=>q.done)&&L.cur<L.items.length-1)L.cur++;}
+  if(a==='swap'){const g=Object.keys(EXERCISES).find(k=>EXERCISES[k].includes(it.name));openPicker(n=>{it.name=n;it.rows=lastRows(n);saveLive();drawLive()},g);return}
   if(a==='addset'){const l=it.rows[it.rows.length-1]||{};it.rows.push({reps:l.reps,kg:l.kg,done:false})}
   if(a==='delset'&&it.rows.length>1)it.rows.pop();
   if(a==='delex'){L.items.splice(L.cur,1);L.cur=Math.max(0,Math.min(L.cur,L.items.length-1))}
@@ -954,7 +970,7 @@ function renderHero(){
   let line=!missing?'המוט מלא. שבוע מעולה לשניכם!':(missing===1?'נשאר אימון אחד':'נשארו '+missing+' אימונים')+' למוט מלא השבוע.';
   let status='';if(other){status=meT&&oT?'שניכם התאמנתם היום.':oT?esc(nameOf(other))+(other==='victor'?' כבר התאמן':' כבר התאמנה')+' היום. תורך.':meT?'התאמנת היום. עכשיו תור '+esc(nameOf(other))+'.':''}
   host.innerHTML='<div class="navhead"><h2>המוט של השבוע</h2><strong class="count">'+total+' מתוך '+goal+'</strong></div>'+
-    '<div class="bar-wrap" dir="ltr" role="img" aria-label="'+total+' אימונים מתוך '+goal+' השבוע"><div class="wside l">'+(b?side(b):'')+'</div><div class="wbar"></div><div class="wside r">'+side(a)+'</div></div>'+
+    '<div class="bar-wrap" dir="ltr" role="img" aria-label="'+total+' אימונים מתוך '+goal+' השבוע"><div class="wside l">'+(b?side(b):'')+'</div><div class="wbar"></div>'+(wrapYear()!=null&&order().some(i=>yearData(i,wrapYear()).days)?'<button type="button" class="egg" id="egg-open" aria-label="הפתעה"></button>':'')+'<div class="wside r">'+side(a)+'</div></div>'+
     '<p class="heroline">'+line+(status?' '+status:'')+'</p>'+
     '<div class="players">'+ids.map(id=>{const st=playerStats(id);return '<div class="player" style="--c:'+color(id)+'"><div class="ctitle"><span class="plate"></span>'+esc(nameOf(id))+'</div><div class="pl-stats"><div><b>'+st.lvl+'</b><small>רמה</small></div><div><b>'+st.streak+'</b><small>שבועות ברצף</small></div><div><b>'+weekWorkouts(id,ws)+'/'+goalOf(id)+'</b><small>השבוע</small></div></div><div class="xp" role="img" aria-label="'+st.into+' מתוך '+st.need+' נקודות לרמה הבאה"><i style="width:'+Math.round(st.into/st.need*100)+'%"></i></div><small class="xpt">עוד '+(st.need-st.into)+' נקודות לרמה '+(st.lvl+1)+'</small></div>'}).join('')+'</div>'+
     (other&&!S.readonly&&!S.nudgedNow?'<button type="button" class="ghost" id="nudge-send">לדרבן את '+esc(nameOf(other))+'</button>':other&&S.nudgedNow?'<p class="hint">הדרבון יופיע אצל '+esc(nameOf(other))+' בכניסה הבאה.</p>':'');
@@ -976,6 +992,50 @@ function drawFinish(done,date){
   confetti();
 }
 
+/* ---------- shared meals ---------- */
+const other=()=>order().find(i=>i!==S.me)||null;
+const r1=v=>v==null?null:Math.round(v*10)/10;
+function scaleMeal(m,f){const c=Object.assign({},m);['protein','carbs','fat','grams','qty'].forEach(k=>{if(c[k]!=null)c[k]=r1(c[k]*f)});if(c.kcal!=null)c.kcal=Math.round(c.kcal*f);return c}
+function syncShare(){const o=other(),l=$('share-l');if(!l)return;l.hidden=!o;if(o){$('share-txt').textContent='גם '+nameOf(o)+(o==='victor'?' אכל':' אכלה')+' מזה';const on=$('share-on').checked;$('share-split').hidden=!on;$('share-pct').textContent='החלק שלי '+$('share-range').value+'%'}}
+function sendToPartner(item,date){const o=other();if(!o)return;const ds=S.days[o]||(S.days[o]={});const cur=JSON.parse(JSON.stringify(ds[date]||{date,weight:null,exercises:[],meals:[],note:''}));cur.meals=cur.meals||[];cur.meals.push(Object.assign(item,{id:uid(),sharedBy:S.me}));cur.date=date;cur.updatedAt=new Date().toISOString();ds[date]=cur;db.doc('people/'+o+'/days/'+date).set(JSON.parse(JSON.stringify(cur))).catch(writeFail);schedule()}
+/* ---------- usual foods by time of day ---------- */
+const mealSlot=()=>{const h=new Date().getHours();return h<11?'בוקר':h<16?'צהריים':h<21?'ערב':'נשנוש'};
+function smartFoods(id){const c={},ds=S.days[id]||{},slot=mealSlot();Object.keys(ds).sort().forEach(k=>(ds[k].meals||[]).forEach(x=>{const r=c[x.name]||(c[x.name]={name:x.name,n:0,here:0});r.n++;if(x.meal===slot)r.here++;r.lastK=k;r.last=x}));return Object.values(c).sort((a,b)=>b.here-a.here||b.n-a.n||String(b.lastK).localeCompare(a.lastK))}
+/* ---------- recipes ---------- */
+let rcEdit=null;
+function ingTotals(list){const t={grams:0,kcal:0,protein:0,carbs:0,fat:0};list.forEach(i=>{const g=i.grams||0;t.grams+=g;['kcal','protein','carbs','fat'].forEach(k=>{t[k]+=(i[k+'100']||0)*g/100})});return t}
+function drawRecipes(){const l=$('rc-list');if(!l)return;const a=Object.entries(S.recipes).sort((x,y)=>String(x[1].name).localeCompare(y[1].name,'he'));
+  l.innerHTML=a.map(([id,r])=>{const t=ingTotals(r.ingredients||[]),sv=r.servings||1;return '<div class="rc-row"><button type="button" class="res" data-rc="'+esc(id)+'"><strong>'+esc(r.name)+'</strong><small>'+fmt(t.kcal/sv)+' קל׳ ו־'+fmt(t.protein/sv)+' ג׳ חלבון למנה, '+fmt(sv)+' מנות</small></button><button type="button" class="iconbtn" data-rc-edit="'+esc(id)+'">עריכה</button></div>'}).join('')||'<p class="none">עוד אין מתכונים. מזינים פעם אחת, ושניכם רושמים מנות.</p>'}
+function ingRow(i){i=i||{};const v=x=>esc(x!=null?x:'');return '<div class="ing"><input class="i-name" type="text" list="prod-list" maxlength="80" aria-label="מרכיב" placeholder="מרכיב" value="'+v(i.name)+'"><input class="i-g" type="number" min="0" step="any" inputmode="decimal" aria-label="גרם" placeholder="גרם" value="'+v(i.grams)+'"><input class="i-k" type="number" min="0" step="any" inputmode="decimal" aria-label="קלוריות ל־100 גרם" placeholder="קל׳/100" value="'+v(i.kcal100)+'"><input class="i-p" type="number" min="0" step="any" inputmode="decimal" aria-label="חלבון ל־100 גרם" placeholder="חלבון" value="'+v(i.protein100)+'"><input class="i-c" type="number" min="0" step="any" inputmode="decimal" aria-label="פחמימות ל־100 גרם" placeholder="פחמ׳" value="'+v(i.carbs100)+'"><input class="i-f" type="number" min="0" step="any" inputmode="decimal" aria-label="שומן ל־100 גרם" placeholder="שומן" value="'+v(i.fat100)+'"><button type="button" class="del" data-ing-del aria-label="מחיקת מרכיב">×</button></div>'}
+function readIngs(){return [...document.querySelectorAll('#rc-ings .ing')].map(e=>({name:e.querySelector('.i-name').value.trim(),grams:num(e.querySelector('.i-g').value),kcal100:num(e.querySelector('.i-k').value),protein100:num(e.querySelector('.i-p').value),carbs100:num(e.querySelector('.i-c').value),fat100:num(e.querySelector('.i-f').value)})).filter(i=>i.name)}
+function rcCalc(){const n=num($('rc-serv').value)||1,t=ingTotals(readIngs());$('rc-calc').textContent='סך הכול '+fmt(t.kcal)+' קל׳. למנה: '+fmt(t.kcal/n)+' קל׳, '+fmt(t.protein/n)+' ג׳ חלבון.'}
+function openRcForm(id){rcEdit=id||null;const r=id?S.recipes[id]:{};$('rc-form').hidden=false;$('rc-del').hidden=!id;delete $('rc-del').dataset.sure;$('rc-del').textContent='מחיקת המתכון';$('rc-name').value=r.name||'';$('rc-serv').value=r.servings||'';
+  $('prod-list').innerHTML=Object.values(S.products).map(p=>'<option value="'+esc(p.name)+'"></option>').join('');$('rc-ings').innerHTML=(r.ingredients&&r.ingredients.length?r.ingredients:[{},{}]).map(ingRow).join('');rcCalc()}
+function logRecipe(id){const r=S.recipes[id];if(!r)return;const c=$('rc-log');c.hidden=false;c.dataset.id=id;$('rc-log-t').textContent=r.name;$('rc-por').value=1;rcLogCalc()}
+function rcLogCalc(){const r=S.recipes[$('rc-log').dataset.id];if(!r)return;const t=ingTotals(r.ingredients||[]),f=(num($('rc-por').value)||0)/(r.servings||1);$('rc-log-calc').textContent=fmt(t.kcal*f)+' קל׳, '+fmt(t.protein*f,1)+' ג׳ חלבון'}
+/* ---------- couple reward ---------- */
+let rwKey=null;
+function bothMet(ws){const ids=order();return ids.length>0&&ids.every(i=>weekWorkouts(i,ws)>=goalOf(i))}
+function rewardProg(r){let n=0,w=r.startWeek;const now=weekStart(today());while(w<=now){if(bothMet(w))n++;w=addDays(w,7)}return n}
+function renderReward(){const box=$('reward');if(!box||S.readonly&&!S.reward){if(box)box.hidden=true;return}box.hidden=false;const r=S.reward,n=r?rewardProg(r):0,k=r?[r.title,r.weeks,n].join('|'):'none';if(k===rwKey)return;rwKey=k;
+  if(!r){box.innerHTML='<details id="rw-box"><summary>לקבוע פרס משותף</summary><form id="f-reward" class="inlineform" style="margin-top:8px"><label class="f">מה הפרס?<input id="rw-title" type="text" maxlength="60" required placeholder="ערב בחוץ"></label><label class="f">כמה שבועות ביעד?<select id="rw-weeks"><option>2</option><option selected>4</option><option>8</option><option>12</option></select></label><button class="iconbtn" id="rw-save">קביעה</button></form></details>';return}
+  const done=n>=r.weeks;box.innerHTML='<div class="navhead"><strong class="rw-t">הפרס שלנו: '+esc(r.title)+'</strong><span class="count">'+Math.min(n,r.weeks)+' מתוך '+r.weeks+'</span></div><div class="xp big" style="--c:var(--accent)" role="img" aria-label="'+n+' מתוך '+r.weeks+' שבועות"><i style="width:'+Math.min(100,n/r.weeks*100)+'%"></i></div>'+(done?'<p class="heroline">הגעתם! תהנו מהפרס.</p><button type="button" class="primary" id="rw-clear">מימשנו, אפשר לקבוע חדש</button>':'<p class="hint">כל שבוע שבו שניכם עומדים ביעד נספר. שבוע שפוספס רק לא נספר.</p><button type="button" class="ghost" id="rw-clear">ביטול הפרס</button>');
+  if(done){const key='fit_rw_'+r.startWeek+r.title;if(!recall(key)){store(key,'1');confetti()}}}
+/* ---------- year wrapped (hidden until the end of the year) ---------- */
+function wrapYear(){const n=new Date(),m=n.getMonth(),d=n.getDate();if(m===11&&d>=20)return n.getFullYear();if(m===0&&d<=10)return n.getFullYear()-1;return null}
+function yearData(id,y){const ds=S.days[id]||{},o={days:0,sets:0,kg:0,prs:0,ex:{},mon:{}};Object.keys(ds).filter(k=>k.startsWith(y+'-')).forEach(k=>{const ex=ds[k].exercises||[];if(ex.length){o.days++;const mm=+k.slice(5,7)-1;o.mon[mm]=(o.mon[mm]||0)+1}ex.forEach(x=>{o.sets+=rowsOf(x).length||x.sets||0;o.kg+=exVol(x);o.ex[x.name]=(o.ex[x.name]||0)+1;if(isPR(id,k,x))o.prs++})});
+  o.fav=Object.keys(o.ex).sort((a,b)=>o.ex[b]-o.ex[a])[0]||null;o.best=Object.keys(o.mon).sort((a,b)=>o.mon[b]-o.mon[a])[0];return o}
+let wr={i:0,s:[]};
+function openWrapped(){const y=wrapYear();if(y==null)return;const ids=order(),D={};ids.forEach(i=>D[i]=yearData(i,y));const kg=ids.reduce((s,i)=>s+D[i].kg,0),days=ids.reduce((s,i)=>s+D[i].days,0);
+  const monName=m=>new Date(y,+m,1).toLocaleDateString('he-IL',{month:'long'});
+  const s=['<small>'+y+'</small><h2 class="wr-big">השנה שלנו</h2><p>'+ids.map(nameOf).map(esc).join(' ו')+', זה מה שעשיתם השנה.</p>',
+   '<p>הרמתם ביחד</p><div class="wr-fig">'+fmt(kg)+'</div><p>ק״ג'+(kg>=1500?', בערך '+fmt(kg/1500)+' מכוניות משפחתיות':'')+'</p>',
+   '<p>שניכם יחד התאמנתם</p><div class="wr-fig">'+fmt(days)+'</div><p>ימי אימון</p>'];
+  ids.forEach(i=>{const d=D[i];if(!d.fav)return;s.push('<p>התרגיל של '+esc(nameOf(i))+'</p>'+thumb(d.fav,'l')+'<h2 class="wr-mid">'+esc(d.fav)+'</h2><p>'+fmt(d.ex[d.fav])+' פעמים, '+fmt(d.prs)+' שיאים ו־'+fmt(d.sets)+' סטים השנה'+(d.best!=null?'. החודש הכי חזק: '+monName(d.best):'')+'</p>')});
+  s.push('<h2 class="wr-big">כל הכבוד לשניכם</h2><p>נתראה על המוט בשנה הבאה.</p>');
+  wr={i:0,s};$('wrapped').hidden=false;drawWrapped();confetti()}
+function drawWrapped(){$('wr-slide').innerHTML=wr.s[wr.i];$('wr-dots').innerHTML=wr.s.map((_,i)=>'<i class="'+(i===wr.i?'on':'')+'"></i>').join('');const c=$('wr-slide');c.classList.remove('in');void c.offsetWidth;c.classList.add('in')}
+
 /* ---------- orchestration ---------- */
 function render(){
   raf=0;if(!S.ready)return;
@@ -983,7 +1043,7 @@ function render(){
   $('view-log').hidden=S.tab!=='log';$('view-progress').hidden=S.tab!=='progress';
   ['log','progress'].forEach(t=>$('tab-'+t).setAttribute('aria-selected',S.tab===t?'true':'false'));
   if(S.edit&&S.edit.date!==S.sel)clearEdit();
-  if(S.tab==='log'){renderHero();renderRail();renderRecapLog();renderPanels();renderFeed();applyPendingMeal()}
+  if(S.tab==='log'){renderHero();renderReward();renderRail();renderRecapLog();renderPanels();renderFeed();applyPendingMeal()}
   else{renderRecap();renderBadges();renderCalendar();renderSummary();renderFavTable();renderCharts();renderExChart();renderTable();fillGoals()}
 }
 function schedule(){if(!raf)raf=requestAnimationFrame(render)}
@@ -1026,8 +1086,11 @@ let torchOn=false;$('scan-torch').onclick=async()=>{if(!scanStream)return;torchO
 $('pk-close').onclick=closePicker;$('pk-q').addEventListener('input',drawPicker);
 $('pk-groups').addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(b){pkGroup=b.dataset.g||null;drawPicker()}});
 $('pk-grid').addEventListener('click',e=>{const b=e.target.closest('[data-pk]');if(b&&pkCb){const cb=pkCb,n=b.dataset.pk;closePicker();cb(n)}});
-$('hero').addEventListener('click',e=>{if(e.target.id!=='nudge-send')return;const o=order().find(i=>i!==S.me);if(!o)return;S.nudgedNow=true;db.doc('nudges/'+o).set({from:S.me,text:NUDGES[Math.floor(Math.random()*NUDGES.length)],at:new Date().toISOString()}).catch(writeFail);renderHero();toast('הדרבון נשלח')});
+$('hero').addEventListener('click',e=>{if(e.target.id==='egg-open'){openWrapped();return}if(e.target.id!=='nudge-send')return;const o=order().find(i=>i!==S.me);if(!o)return;S.nudgedNow=true;db.doc('nudges/'+o).set({from:S.me,text:NUDGES[Math.floor(Math.random()*NUDGES.length)],at:new Date().toISOString()}).catch(writeFail);renderHero();toast('הדרבון נשלח')});
 $('nudge').addEventListener('click',e=>{if(e.target.id!=='nudge-ok')return;delete S.nudges[S.me];db.doc('nudges/'+S.me).delete().catch(writeFail);schedule()});
+$('reward').addEventListener('submit',e=>{e.preventDefault();const title=$('rw-title').value.trim();if(!title)return;const doc={title,weeks:+$('rw-weeks').value,startWeek:weekStart(today()),by:S.me,at:new Date().toISOString()};S.reward=doc;db.doc('shared/reward').set(doc).catch(writeFail);renderReward()});
+$('reward').addEventListener('click',e=>{const t=e.target;if(t.id!=='rw-clear')return;if(t.classList.contains('ghost')&&t.dataset.sure!=='1'){t.dataset.sure='1';t.textContent='ללחוץ שוב כדי לבטל';return}S.reward=null;db.doc('shared/reward').delete().catch(writeFail);renderReward()});
+$('wrapped').addEventListener('click',e=>{if(e.target.id==='wr-close'){$('wrapped').hidden=true;return}if(wr.i<wr.s.length-1){wr.i++;drawWrapped()}else $('wrapped').hidden=true});
 $('live-close').onclick=closeLive;$('live').addEventListener('click',liveClick);$('live').addEventListener('input',liveInput);
 $('seg').addEventListener('click',e=>{const b=e.target.closest('button');if(b){S.show=b.dataset.show;render()}});
 $('recap-prev').onclick=()=>{S.recap=addDays(S.recap,-7);renderRecap()};$('recap-next').onclick=()=>{S.recap=addDays(S.recap,7);renderRecap()};
@@ -1046,6 +1109,7 @@ function clearEdit(){S.edit=null;document.querySelectorAll('[data-cancel]').forE
   const a=$('e-add'),m=$('m-add'),w=$('w-add');if(a)a.textContent='הוספת תרגיל';if(m)m.textContent='הוספה';if(w)w.textContent='הוספה'}
 function save(kind,item,date){
   const ed=S.edit&&S.edit.kind===kind?S.edit:null;
+  if(kind==='meals'&&!ed&&$('share-on')&&$('share-on').checked&&other()){const pct=+$('share-range').value/100,theirs=scaleMeal(item,1-pct);item=Object.assign(scaleMeal(item,pct),{sharedWith:other()});sendToPartner(theirs,date);$('share-on').checked=false;syncShare();toast('נוסף גם ל'+nameOf(other()))}
   mutate(date,d=>{d[kind]=d[kind]||[];if(ed){const i=d[kind].findIndex(x=>x.id===ed.id);if(i>=0){d[kind][i]=Object.assign({},d[kind][i],item,{id:ed.id,at:d[kind][i].at});return}}d[kind].push(item)});
   if(ed)clearEdit();
 }
@@ -1063,6 +1127,7 @@ $('panels').addEventListener('submit',e=>{
   e.preventDefault();const f=e.target,date=S.sel,now=new Date().toISOString();
   if(f.id==='f-bc'){openProduct($('bc-manual').value);$('bc-manual').value='';return}
   if(f.id==='f-search'){runSearch($('s-q').value);return}
+  if(f.id==='rc-form'){const name=$('rc-name').value.trim(),servings=num($('rc-serv').value),ingredients=readIngs();if(!name||!servings)return;if(!ingredients.length){toast('הוסף לפחות מרכיב אחד.');return}const id=rcEdit||uid(),doc={name,servings,ingredients,by:S.me,updatedAt:now};S.recipes[id]=doc;db.doc('recipes/'+id).set(doc).catch(writeFail);$('rc-form').hidden=true;rcEdit=null;drawRecipes();toast('המתכון נשמר לשניכם');return}
   if(f.id==='f-tpl'){const name=$('tpl-name').value.trim(),ex=(dayOf(S.me,S.sel)||{}).exercises||[];if(!name)return;if(!ex.length){toast('אין תרגילים ביום הזה לשמור.');return}
     const tpls=((S.people[S.me]||{}).templates||[]).concat({id:uid(),name,exercises:ex.map(x=>({name:x.name,rows:rowsOf(x)}))});saveProfile({templates:tpls});$('tpl-name').value='';toast('התוכנית נשמרה');return}
   if(f.id==='f-ex'){const name=$('e-name').value;if(!name){$('e-hint').textContent='בחר תרגיל.';return}
@@ -1076,6 +1141,9 @@ $('panels').addEventListener('submit',e=>{
     save('meals',{id:uid(),at:now,meal:$('m-type').value,name,kcal:num($('m-kcal').value),protein:num($('m-prot').value),carbs:num($('m-carb').value),fat:num($('m-fat').value)},date);['m-name','m-kcal','m-prot','m-carb','m-fat'].forEach(i=>$(i).value='')}
 });
 $('panels').addEventListener('input',e=>{const t=e.target;
+  if(t.id==='share-on'||t.id==='share-range')syncShare();
+  if(t.closest&&t.closest('#rc-form')){if(t.classList.contains('i-name')){const p=Object.values(S.products).find(x=>x.name===t.value),row=t.closest('.ing');if(p){row.querySelector('.i-k').value=p.kcal100??'';row.querySelector('.i-p').value=p.protein100??'';row.querySelector('.i-c').value=p.carbs100??'';row.querySelector('.i-f').value=p.fat100??''}}rcCalc()}
+  if(t.id==='rc-por')rcLogCalc();
   if(/^p-(kcal|prot|qty)$/.test(t.id))calcProduct();
   if(t.id==='e-sets')buildRows();
   if(t.classList.contains('r-reps')||t.classList.contains('r-kg')){const cls=t.classList.contains('r-reps')?'.r-reps':'.r-kg',all=[...document.querySelectorAll('#e-rows '+cls)];
@@ -1090,6 +1158,16 @@ $('panels').addEventListener('click',e=>{const t=e.target;
   if(t.id==='u-add'){const g=num($('u-g').value),n=$('u-name').value;if(!g)return;scanUnits=scanUnits.filter(u=>u.name!==n).concat({name:n,grams:g});fillUnits(n);$('p-qty').value=1;$('u-g').value='';$('u-box').open=false;calcProduct();return}
   if(t.id==='p-unit')return;
   if(t.closest('[data-cancel]')){clearEdit();$('e-hint')&&($('e-hint').textContent='');return}
+  if(t.id==='rc-open'){const b=$('rc-box');b.hidden=!b.hidden;if(!b.hidden)drawRecipes();return}
+  if(t.id==='rc-new'){openRcForm();return}
+  const re=t.closest('[data-rc-edit]');if(re){openRcForm(re.dataset.rcEdit);return}
+  const rl=t.closest('[data-rc]');if(rl){logRecipe(rl.dataset.rc);return}
+  if(t.id==='rc-log-x'){$('rc-log').hidden=true;return}
+  if(t.id==='rc-log-add'){const id=$('rc-log').dataset.id,r=S.recipes[id],por=num($('rc-por').value);if(!r||!por)return;const a=ingTotals(r.ingredients||[]),f=por/(r.servings||1);save('meals',{id:uid(),at:new Date().toISOString(),meal:$('m-type').value,name:r.name,kcal:Math.round(a.kcal*f),protein:r1(a.protein*f),carbs:r1(a.carbs*f),fat:r1(a.fat*f),grams:r1(a.grams*f),qty:por,unit:'מנה',recipe:id},S.sel);$('rc-log').hidden=true;return}
+  if(t.id==='rc-add-ing'){$('rc-ings').insertAdjacentHTML('beforeend',ingRow());return}
+  if(t.closest('[data-ing-del]')){t.closest('.ing').remove();rcCalc();return}
+  if(t.id==='rc-x'){$('rc-form').hidden=true;rcEdit=null;return}
+  if(t.id==='rc-del'&&rcEdit){if(t.dataset.sure!=='1'){t.dataset.sure='1';t.textContent='ללחוץ שוב כדי למחוק';return}db.doc('recipes/'+rcEdit).delete().catch(writeFail);delete S.recipes[rcEdit];rcEdit=null;$('rc-form').hidden=true;drawRecipes();return}
   if(t.id==='copy-open'){const b=$('copy-box');b.hidden=!b.hidden;if(!b.hidden)drawCopy();return}
   const cp=t.closest('[data-copy]');if(cp){const ml=S.days[S.me][cp.dataset.k].meals,now=new Date().toISOString(),list=cp.dataset.copy==='all'?ml:[ml[+cp.dataset.copy]];mutate(S.sel,d=>{d.meals=d.meals||[];list.forEach(l=>d.meals.push(newMeal(l,now)))});toast(list.length>1?'כל הארוחות נוספו':'הארוחה נוספה');return}
   const rs=t.closest('[data-res]');if(rs){const p=S.searchRes[+rs.dataset.res];renderProduct(p.code,S.products[p.code]||p,S.products[p.code]?'known':'off');return}
@@ -1097,9 +1175,7 @@ $('panels').addEventListener('click',e=>{const t=e.target;
   const tp=t.closest('[data-tpl]');if(tp){openLive(tp.dataset.tpl);return}
   const td=t.closest('[data-tpl-del]');if(td){const list=((S.people[S.me]||{}).templates||[]).filter(x=>x.id!==td.dataset.tplDel);saveProfile({templates:list});return}
   const ch=t.closest('[data-ex]');if(ch){pickExercise(ch.dataset.ex);return}
-  const fd=t.closest('[data-food]');if(fd){const f=favFoods(S.me).find(x=>x.name===fd.dataset.food);if(f){const l=f.last;
-    if(l.barcode&&S.products[l.barcode])renderProduct(l.barcode,S.products[l.barcode],'known');
-    else{$('m-name').value=l.name;$('m-kcal').value=l.kcal!=null?l.kcal:'';$('m-prot').value=l.protein!=null?l.protein:'';$('m-carb').value=l.carbs!=null?l.carbs:'';$('m-fat').value=l.fat!=null?l.fat:''}}return}
+  const fd=t.closest('[data-food]');if(fd){const f=smartFoods(S.me).find(x=>x.name===fd.dataset.food);if(f){const item=Object.assign({},f.last,{id:uid(),at:new Date().toISOString(),meal:mealSlot()});delete item.sharedBy;const id=item.id,date=S.sel;mutate(date,d=>{d.meals=d.meals||[];d.meals.push(item)});toast('נוסף: '+f.name,()=>mutate(date,d=>{d.meals=(d.meals||[]).filter(x=>x.id!==id)}))}return}
   const rb=t.closest('[data-rx]');if(rb){toggleRx(rb.dataset);return}
   const b=t.closest('[data-del]');if(b){
     const kind=b.dataset.del,id=b.dataset.i,date=S.sel,cur=dayOf(S.me,date);if(!cur)return;
@@ -1150,6 +1226,8 @@ async function boot(){
   loadTimer=setTimeout(()=>{msg.textContent='הנתונים עוד לא נטענו. בדוק את החיבור לאינטרנט.'},10000);
   db.collection('reactions').limit(1000).onSnapshot(sn=>{const m={};sn.docs.forEach(d=>{m[d.id]=d.data()});S.reactions=m;schedule()},()=>{});
   db.collection('nudges').limit(10).onSnapshot(sn=>{const m={};sn.docs.forEach(d=>{m[d.id]=d.data()});S.nudges=m;schedule()},()=>{});
+  db.collection('recipes').limit(500).onSnapshot(sn=>{const m={};sn.docs.forEach(d=>{m[d.id]=d.data()});S.recipes=m;if($('rc-box')&&!$('rc-box').hidden)drawRecipes()},()=>{});
+  db.collection('shared').limit(5).onSnapshot(sn=>{const d=sn.docs.find(x=>x.id==='reward');S.reward=d?d.data():null;schedule()},()=>{});
   db.collection('products').limit(1000).onSnapshot(sn=>{const m={};sn.docs.forEach(d=>{m[d.id]=d.data()});S.products=m},()=>{});
   db.collection('people').onSnapshot({includeMetadataChanges:true},onPeople,e=>{
     if(loadTimer){clearTimeout(loadTimer);loadTimer=null}
