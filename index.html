@@ -251,6 +251,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 #wr-slide{align-self:center;display:grid;gap:12px;justify-items:center;max-width:32rem}#wr-slide p{margin:0;font-size:20px}#wr-slide small{font:800 20px var(--display)}.wr-big{font:800 clamp(40px,12vw,64px)/1.05 var(--display);margin:0}.wr-mid{font:800 32px/1.1 var(--display);margin:0}.wr-fig{font:800 clamp(64px,20vw,112px)/1 var(--display);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 #wr-dots{display:flex;gap:6px}#wr-dots i{width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.3}#wr-dots i.on{opacity:1}
 @media (prefers-reduced-motion:no-preference){#wr-slide.in{animation:wrin .32s ease-out}}@keyframes wrin{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.linkbtn{display:flex;align-items:center;justify-content:center;text-decoration:none;text-align:center}.btnrow>.ghost{flex:1;width:auto}
 /* who are you */
 .who{max-width:460px;margin:8vh auto 0;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:24px;display:grid;gap:16px}
 .whobtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -387,8 +388,9 @@ const EXERCISES={
 };
 const EX_IMG={"סקוואט": "00.jpg", "סקוואט קדמי": "01.jpg", "לחיצת רגליים": "02.jpg", "דדליפט רומני": "03.jpg", "מכרעים (Lunges)": "04.jpg", "בולגרי ספליט סקוואט": "05.jpg", "כפיפת ברכיים במכונה": "06.jpg", "פשיטת ברכיים במכונה": "07.jpg", "היפ ת׳ראסט": "08.jpg", "עליות על קופסה": "09.jpg", "תאומים בעמידה": "10.jpg", "לחיצת חזה במוט": "11.jpg", "לחיצת חזה בשיפוע חיובי": "12.jpg", "לחיצת חזה עם משקולות יד": "13.jpg", "פרפר במכונה": "14.jpg", "קרוס אובר בכבלים": "15.jpg", "שכיבות סמיכה": "16.jpg", "מקבילים": "17.jpg", "דדליפט": "18.jpg", "מתח": "19.jpg", "מתח באחיזה הפוכה": "20.jpg", "פולי עליון": "21.jpg", "חתירה במוט": "22.jpg", "חתירה עם משקולת יד": "23.jpg", "חתירה בכבל בישיבה": "24.jpg", "פייס פול": "25.jpg", "היפר אקסטנשן": "26.jpg", "לחיצת כתפיים במוט": "27.jpg", "לחיצת כתפיים עם משקולות יד": "28.jpg", "הרחקה לצדדים": "29.jpg", "הרחקה קדמית": "30.jpg", "פרפר אחורי": "31.jpg", "שראגס": "32.jpg", "כפיפת מרפקים במוט": "33.jpg", "כפיפת מרפקים עם משקולות יד": "34.jpg", "כפיפת פטיש": "35.jpg", "פשיטת מרפקים בכבל": "36.jpg", "לחיצה צרפתית": "37.jpg", "דיפים על ספסל": "38.jpg", "פלאנק": "39.jpg", "פלאנק צד": "40.jpg", "כפיפות בטן": "41.jpg", "הרמות רגליים בתלייה": "42.jpg", "רוסיאן טוויסט": "43.jpg", "אב רולר": "44.jpg", "קטלבל סווינג": "45.jpg", "קלין אנד פרס": "46.jpg", "טראסטר": "47.jpg", "הליכת חקלאי": "48.jpg", "קפיצה בחבל": "49.jpg"};
 const RX=['💪','🔥','👏','❤️'];
+const RECIPE_URL='https://claude.ai/artifact/NLQ4ctBxTjwHVFV1uQJnZf';
 const PHOTO_URL='https://claude.ai/artifact/SJ29RfbqxbbN9kdiLwrpZN';
-const S={recipes:{},reward:null,nudges:{},nudgedNow:false,me:null,products:{},reactions:{},open:null,edit:null,show:'me',searchRes:[],live:null,pendingMeal:null,recap:weekStart(today()),cal:today().slice(0,7),people:{},days:{},subs:{},sel:today(),tab:'log',range:30,readonly:false,ready:false,panelsKey:''};
+const S={pendingRecipe:null,recipes:{},reward:null,nudges:{},nudgedNow:false,me:null,products:{},reactions:{},open:null,edit:null,show:'me',searchRes:[],live:null,pendingMeal:null,recap:weekStart(today()),cal:today().slice(0,7),people:{},days:{},subs:{},sel:today(),tab:'log',range:30,readonly:false,ready:false,panelsKey:''};
 let db=null,loadTimer=null,raf=0;
 const queue={};
 
@@ -463,7 +465,7 @@ function panelSkeleton(id){
      '<form class="bcman" id="f-search"><input id="s-q" type="search" maxlength="80" aria-label="חיפוש מוצר לפי שם" placeholder="חיפוש מוצר לפי שם"><button class="iconbtn" id="s-go">חיפוש</button></form><div id="s-res" class="results"></div>'+
      '<p class="hint" id="scan-msg" hidden></p><div class="card" id="scan-card" hidden></div><div class="chips" id="food-favs"></div>'+
      '<button type="button" class="ghost" id="copy-open">כמו ביום קודם</button><div id="copy-box" class="results" hidden></div>'+
-     '<button type="button" class="ghost" id="rc-open">מתכונים של הבית</button><div id="rc-box" class="results" hidden><div id="rc-list" class="results"></div><button type="button" class="ghost" id="rc-new">מתכון חדש</button>'+
+     '<button type="button" class="ghost" id="rc-open">מתכונים של הבית</button><div id="rc-box" class="results" hidden><div id="rc-list" class="results"></div><div class="btnrow"><button type="button" class="ghost" id="rc-new">מתכון חדש</button><a class="ghost linkbtn" href="'+RECIPE_URL+'" target="_blank" rel="noopener">מתכון עם Claude</a></div>'+
      '<div class="card" id="rc-log" hidden><strong id="rc-log-t"></strong><label class="f">כמה מנות אכלת?<input id="rc-por" type="number" min="0.25" max="50" step="0.25" inputmode="decimal"></label><p class="hint" id="rc-log-calc"></p><div class="btnrow"><button type="button" class="primary" id="rc-log-add">הוספה לארוחה</button><button type="button" class="iconbtn" id="rc-log-x">ביטול</button></div></div>'+
      '<form class="card" id="rc-form" hidden><label class="f">שם המתכון<input id="rc-name" type="text" maxlength="60" required></label><label class="f">לכמה מנות?<input id="rc-serv" type="number" min="1" max="100" step="1" inputmode="numeric" required></label><p class="hint">לכל מרכיב: כמה גרם נכנסו, וערכים ל־100 גרם. מוצר ששמרתם מתמלא לבד.</p><datalist id="prod-list"></datalist><div id="rc-ings" class="results"></div><button type="button" class="ghost" id="rc-add-ing">עוד מרכיב</button><p class="hint" id="rc-calc"></p><div class="btnrow"><button class="primary" id="rc-save">שמירת המתכון</button><button type="button" class="iconbtn" id="rc-x">סגירה</button></div><button type="button" class="ghost" id="rc-del" hidden>מחיקת המתכון</button></form></div>'+
      '<form class="add" id="f-meal"><label class="f w2">ארוחה<select id="m-type">'+MEALS.map(x=>'<option'+(x===defMeal?' selected':'')+'>'+x+'</option>').join('')+'</select></label><label class="f w4">מה אכלת<input id="m-name" type="text" maxlength="200" required placeholder="חביתה, סלט ופרוסת לחם"></label>'+
@@ -936,6 +938,9 @@ function renderExChart(){
   who.forEach((id,i)=>{const by={};sessions(id,name).forEach(s=>{if(s.k<from)return;const v=fn(s.x);if(v==null||v===0)return;by[s.k]=Math.max(by[s.k]||0,v)});
     lineChart(host.children[i],{title:nameOf(id),pts:Object.keys(by).sort().map(q=>({k:q,v:Math.round(by[q]*10)/10})),from,goal:null,c:color(id),unit,dec:1,empty:'אין נתונים לתרגיל הזה בטווח.'})});
 }
+function applyPendingRecipe(){const r=S.pendingRecipe;if(!r||!S.me||S.readonly||!$('rc-form'))return;S.pendingRecipe=null;S.open='food';syncDrawers();$('rc-box').hidden=false;drawRecipes();rcEdit=null;$('rc-form').hidden=false;$('rc-del').hidden=true;$('rc-name').value=String(r.name||'').slice(0,60);const sv=Number(r.servings);$('rc-serv').value=sv>=1&&sv<=100?sv:'';
+  const n=v=>{const x=Number(v);return v!=null&&isFinite(x)&&x>=0?x:null};$('prod-list').innerHTML=Object.values(S.products).map(p=>'<option value="'+esc(p.name)+'"></option>').join('');
+  $('rc-ings').innerHTML=r.ingredients.slice(0,40).map(i=>ingRow({name:String(i.name||'').slice(0,80),grams:n(i.grams),kcal100:n(i.kcal100),protein100:n(i.protein100),carbs100:n(i.carbs100),fat100:n(i.fat100)})).join('');rcCalc();scanMsg('מתכון מ־Claude. הערכים הם הערכה, בדוק לפני השמירה.');$('rc-form').scrollIntoView({block:'start'});}
 function applyPendingMeal(){
   const m=S.pendingMeal;if(!m||!S.me||S.readonly||!$('m-name'))return;S.pendingMeal=null;S.sel=today();S.open='food';syncDrawers();
   $('m-name').value=String(m.name||'ארוחה').slice(0,200);const n=(v,id)=>{const x=Number(v);$(id).value=isFinite(x)&&x>=0?x:''};n(m.kcal,'m-kcal');n(m.protein,'m-prot');n(m.carbs,'m-carb');n(m.fat,'m-fat');
@@ -1043,7 +1048,7 @@ function render(){
   $('view-log').hidden=S.tab!=='log';$('view-progress').hidden=S.tab!=='progress';
   ['log','progress'].forEach(t=>$('tab-'+t).setAttribute('aria-selected',S.tab===t?'true':'false'));
   if(S.edit&&S.edit.date!==S.sel)clearEdit();
-  if(S.tab==='log'){renderHero();renderReward();renderRail();renderRecapLog();renderPanels();renderFeed();applyPendingMeal()}
+  if(S.tab==='log'){renderHero();renderReward();renderRail();renderRecapLog();renderPanels();renderFeed();applyPendingMeal();applyPendingRecipe()}
   else{renderRecap();renderBadges();renderCalendar();renderSummary();renderFavTable();renderCharts();renderExChart();renderTable();fillGoals()}
 }
 function schedule(){if(!raf)raf=requestAnimationFrame(render)}
@@ -1215,7 +1220,7 @@ function connect(code){
 }
 async function boot(){
   const msg=$('startmsg'),h=location.hash.slice(1);
-  if(/^(k|meal)=/.test(h)){const q=new URLSearchParams(h);if(q.get('k'))store('fit_code',q.get('k'));if(q.get('meal')){try{const m=JSON.parse(q.get('meal'));if(m&&typeof m==='object')S.pendingMeal=m}catch(e){}}try{history.replaceState(null,'',location.pathname)}catch(e){location.hash=''}}
+  if(/^(k|meal|recipe)=/.test(h)){const q=new URLSearchParams(h);if(q.get('k'))store('fit_code',q.get('k'));if(q.get('recipe')){try{const m=JSON.parse(q.get('recipe'));if(m&&typeof m==='object'&&Array.isArray(m.ingredients))S.pendingRecipe=m}catch(e){}}if(q.get('meal')){try{const m=JSON.parse(q.get('meal'));if(m&&typeof m==='object')S.pendingMeal=m}catch(e){}}try{history.replaceState(null,'',location.pathname)}catch(e){location.hash=''}}
   else if(h==='progress')S.tab='progress';
   if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
   if(!window.firebase||!FIREBASE_CONFIG.projectId){msg.textContent='החיבור לנתונים לא נטען. בדוק את האינטרנט וטען מחדש.';return}
