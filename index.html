@@ -11,15 +11,15 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="icon-192.png">
-<meta name="theme-color" content="#121A2B">
-<script>try{var m=localStorage.getItem("fit_me");document.documentElement.dataset.theme=localStorage.getItem("fit_skin_"+m)||(m==="racheli"?"rose":"night")}catch(e){document.documentElement.dataset.theme="night"}</script>
+<meta name="theme-color" content="#F4F6F8">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem("fit_me")==="racheli"?"rose":"concrete"}catch(e){document.documentElement.dataset.theme="concrete"}</script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <title>יומן ויקטור ורחלי</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@500;700&family=Rubik:wght@800&display=swap">
 <style>
-/* Hallmark · shape: app screen · genre: playful · theme: Sport (by request, default skin of four)
+/* Hallmark · shape: app screen · genre: playful · theme: Sport (by request, one colour per person)
  * nav: top bar with two tabs · signature: the shared barbell of the week · states: loading, empty, error, full
  * axes: mid/geometric-sans/warm · posture: drenched · contrast: pass · v2.0.0 */
 /* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: Hebrew fonts, Gabarito and Manrope have no Hebrew so Rubik and Heebo stand in */
@@ -35,7 +35,6 @@
   --body:"Heebo",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
   color-scheme:dark;
 }
-:root[data-theme="night"]{--bg:oklch(18% 0.035 260);--surface:oklch(24% 0.04 258);--well:oklch(13% 0.03 260);--ink:oklch(98% 0.005 250);--muted:oklch(80% 0.02 250);--line:oklch(38% 0.035 255);--grid:oklch(31% 0.035 255);--p1:oklch(80% 0.12 230);--p2:oklch(76% 0.16 15);--p3:oklch(85% 0.12 300);--mark:oklch(88% 0.20 120);--mark-ink:oklch(16% 0.08 260);--on-ink:oklch(16% 0.08 260);--accent-2:oklch(80% 0.20 122);--accent-ink:oklch(16% 0.08 260);--accent:oklch(88% 0.20 120);--focus:oklch(88% 0.20 120);}
 :root[data-theme="concrete"]{color-scheme:light}
 :root[data-theme="concrete"]{--bg:oklch(97% 0.005 250);--surface:oklch(100% 0.002 250);--well:oklch(92% 0.007 250);--ink:oklch(18% 0.08 260);--muted:oklch(42% 0.02 250);--line:oklch(78% 0.008 250);--grid:oklch(88% 0.008 250);--p1:oklch(50% 0.17 255);--p2:oklch(56% 0.20 20);--p3:oklch(50% 0.12 150);--mark:oklch(88% 0.20 120);--mark-ink:oklch(16% 0.08 260);--on-ink:oklch(98% 0.005 250);--accent-2:oklch(80% 0.20 122);--accent-ink:oklch(16% 0.08 260);--accent:oklch(88% 0.20 120);--focus:oklch(50% 0.17 255);}
 :root[data-theme="rose"]{--bg:oklch(22% 0.06 320);--surface:oklch(29% 0.07 320);--well:oklch(16% 0.05 320);--ink:oklch(98% 0.01 320);--muted:oklch(83% 0.03 320);--line:oklch(42% 0.07 320);--grid:oklch(35% 0.06 320);--p1:oklch(85% 0.13 85);--p2:oklch(78% 0.15 350);--p3:oklch(82% 0.1 200);--mark:oklch(80% 0.14 5);--mark-ink:oklch(22% 0.06 320);--on-ink:oklch(22% 0.06 320);--accent-2:oklch(72% 0.16 5);--accent-ink:oklch(22% 0.06 320);--accent:oklch(80% 0.14 5);--focus:oklch(85% 0.12 5);}
@@ -260,7 +259,7 @@ body{margin:0}
 <div id="app" dir="rtl" lang="he" class="wrap">
   <header class="top">
     <h1>יומן ויקטור ורחלי</h1>
-    <div class="topctl"><button class="iconbtn" id="skin-btn">צבע</button><button class="iconbtn" id="switchme" hidden>החלפת משתמש</button><div class="tabs" role="tablist" id="tabs" hidden>
+    <div class="topctl"><button class="iconbtn" id="switchme" hidden>החלפת משתמש</button><div class="tabs" role="tablist" id="tabs" hidden>
       <button role="tab" id="tab-log" data-tab="log" aria-selected="true">יומן</button>
       <button role="tab" id="tab-progress" data-tab="progress" aria-selected="false">התקדמות</button>
     </div></div>
@@ -1007,7 +1006,7 @@ function onPeople(snap){
 }
 function showWho(){S.ready=false;$('start').hidden=true;$('tabs').hidden=true;$('view-log').hidden=true;$('view-progress').hidden=true;$('switchme').hidden=true;$('who').hidden=false}
 const IDS={victor:{name:'ויקטור',slot:0},racheli:{name:'רחלי',slot:1}};
-const applySkin=()=>{document.documentElement.dataset.theme=recall('fit_skin_'+S.me)||(S.me==='racheli'?'rose':'night')};
+const applySkin=()=>{document.documentElement.dataset.theme=S.me==='racheli'?'rose':'concrete'};
 async function claim(id){
   S.me=id;store('fit_me',id);applySkin();S.panelsKey='';favKey=null;
   $('who').hidden=true;
@@ -1029,8 +1028,6 @@ $('pk-groups').addEventListener('click',e=>{const b=e.target.closest('[data-g]')
 $('pk-grid').addEventListener('click',e=>{const b=e.target.closest('[data-pk]');if(b&&pkCb){const cb=pkCb,n=b.dataset.pk;closePicker();cb(n)}});
 $('hero').addEventListener('click',e=>{if(e.target.id!=='nudge-send')return;const o=order().find(i=>i!==S.me);if(!o)return;S.nudgedNow=true;db.doc('nudges/'+o).set({from:S.me,text:NUDGES[Math.floor(Math.random()*NUDGES.length)],at:new Date().toISOString()}).catch(writeFail);renderHero();toast('הדרבון נשלח')});
 $('nudge').addEventListener('click',e=>{if(e.target.id!=='nudge-ok')return;delete S.nudges[S.me];db.doc('nudges/'+S.me).delete().catch(writeFail);schedule()});
-const SKINS=[['night','כחול לילה, של ויקטור'],['rose','שזיף ורוד, של רחלי'],['concrete','בטון בהיר'],['forest','ירוק']];
-$('skin-btn').onclick=()=>{const cur=document.documentElement.dataset.theme||'night',i=SKINS.findIndex(x=>x[0]===cur),n=SKINS[(i+1)%SKINS.length];document.documentElement.dataset.theme=n[0];store('fit_skin_'+(S.me||'x'),n[0]);toast('צבע: '+n[1]);if(S.ready)schedule()};
 $('live-close').onclick=closeLive;$('live').addEventListener('click',liveClick);$('live').addEventListener('input',liveInput);
 $('seg').addEventListener('click',e=>{const b=e.target.closest('button');if(b){S.show=b.dataset.show;render()}});
 $('recap-prev').onclick=()=>{S.recap=addDays(S.recap,-7);renderRecap()};$('recap-next').onclick=()=>{S.recap=addDays(S.recap,7);renderRecap()};
