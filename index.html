@@ -299,7 +299,7 @@ body{margin:0}
     <section class="block"><h2>התרגילים המועדפים</h2><div class="tablewrap" id="favTable"></div></section>
     <section class="block"><h2>התקדמות בתרגיל</h2><div class="inlineform"><label class="f">תרגיל<select id="xc-name"></select></label><label class="f">מדד<select id="xc-metric"><option value="best">משקל גבוה ביותר</option><option value="vol">נפח אימון</option><option value="rm">כוח משוער לחזרה אחת</option></select></label></div><div class="mult" id="xCharts"></div></section>
     <section class="block"><h2>משקל ומגמה</h2><p class="help">הנקודות הן שקילות, והקו הוא ממוצע של 7 ימים.</p><div class="mult" id="weightCharts"></div></section>
-    <section class="block"><h2>דקות אימון בשבוע</h2><div id="workLegend" class="legend"></div><div class="chart" id="workChart"></div></section>
+    <section class="block"><h2>סטים בשבוע</h2><div id="workLegend" class="legend"></div><div class="chart" id="workChart"></div></section>
     <section class="block"><h2>קלוריות ביום</h2><div class="mult" id="kcalCharts"></div></section>
     <section class="block"><details id="tableBox"><summary>כל הימים כטבלה</summary><div class="tablewrap" id="dayTable"></div></details></section>
     <section class="block" id="goalsBox">
@@ -363,7 +363,7 @@ const dayOf=(id,k)=>(S.days[id]&&S.days[id][k])||null;
 const totals=d=>{const w=(d&&d.workouts)||[],m=(d&&d.meals)||[];
   const kcalM=m.filter(x=>x.kcal!=null),protM=m.filter(x=>x.protein!=null),sum=f=>{const a=m.filter(x=>x[f]!=null);return a.length?a.reduce((s,x)=>s+x[f],0):null};
   const ex=(d&&d.exercises)||[];
-  return{weight:d&&d.weight!=null?d.weight:null,workouts:w.length||(ex.length?1:0),exercises:ex.length,minutes:w.reduce((s,x)=>s+(x.minutes||0),0),
+  return{weight:d&&d.weight!=null?d.weight:null,workouts:ex.length||w.length?1:0,exercises:ex.length,sets:ex.reduce((n,x)=>n+(rowsOf(x).length||x.sets||0),0),minutes:w.reduce((s,x)=>s+(x.minutes||0),0),
     kcal:kcalM.length?kcalM.reduce((s,x)=>s+x.kcal,0):null,protein:protM.length?protM.reduce((s,x)=>s+x.protein,0):null,carbs:sum('carbs'),fat:sum('fat'),meals:m.length}};
 const hasData=d=>d&&((d.exercises&&d.exercises.length)||(d.workouts&&d.workouts.length)||(d.meals&&d.meals.length)||d.weight!=null||d.note);
 
@@ -421,7 +421,7 @@ function panelSkeleton(id){
      '<div class="w4"><button class="primary" id="e-add">הוספת תרגיל</button></div><div class="w2"><button type="button" class="ghost" data-cancel hidden>ביטול</button></div></form>'+
      plateTool('p1')+
      '<details id="tpl-box"><summary>שמירת התרגילים של היום כתוכנית</summary><form id="f-tpl" class="inlineform"><input id="tpl-name" type="text" maxlength="40" required placeholder="למשל: דחיפה" aria-label="שם התוכנית"><button class="iconbtn" id="tpl-save">שמירה</button></form><div class="chips" id="tpl-manage"></div></details>'+
-     '<details id="work-box"><summary>משך אימון או אירובי</summary><form class="add" id="f-work" style="margin-top:8px"><label class="f w3">סוג<select id="w-type">'+WORK.map(x=>'<option>'+x+'</option>').join('')+'</select></label><label class="f w3">דקות<input id="w-min" type="number" min="1" max="600" inputmode="numeric" required></label><label class="f w4">פירוט (לא חובה)<input id="w-note" type="text" maxlength="200" placeholder="ריצה קלה בפארק"></label><div class="w2"><button class="primary" id="w-add">הוספה</button></div></form></details></div>'+
+     '</div>'+
    '<div class="drawer" id="dr-food" hidden><div class="scanrow"><button type="button" class="scanbtn" id="scan-live">סריקת ברקוד</button><label class="scanbtn" id="scan-l">מתמונה<input id="scan-file" type="file" accept="image/*"></label><a class="scanbtn" id="photo-link" href="'+PHOTO_URL+'" target="_blank" rel="noopener">צילום ארוחה</a></div>'+
      '<form class="bcman" id="f-bc"><input id="bc-manual" type="text" inputmode="numeric" maxlength="14" aria-label="מספר ברקוד" placeholder="מספר ברקוד"><button class="iconbtn" id="bc-go">חיפוש</button></form>'+
      '<form class="bcman" id="f-search"><input id="s-q" type="search" maxlength="80" aria-label="חיפוש מוצר לפי שם" placeholder="חיפוש מוצר לפי שם"><button class="iconbtn" id="s-go">חיפוש</button></form><div id="s-res" class="results"></div>'+
@@ -434,7 +434,7 @@ function panelSkeleton(id){
    '<div class="drawer" id="dr-note" hidden><textarea id="f-note" maxlength="1000" aria-label="הערה ליום" placeholder="איך היה היום?"></textarea></div>';
   return '<section class="panel'+(mine?' mine':'')+'" data-id="'+esc(id)+'" style="--c:'+color(id)+'">'+
    '<div class="phead"><span class="plate"></span><h2></h2><span class="upd"></span></div><div class="stats"></div><p class="hint macro" hidden></p>'+forms+
-   '<div class="sec sec-ex"><h3>תרגילים</h3><ul class="items ex"></ul></div><div class="sec sec-wk"><h3>משך אימון ואירובי</h3><ul class="items wk"></ul></div><div class="sec sec-ml"><h3>אוכל</h3><ul class="items ml"></ul></div><div class="sec sec-nt"><h3>הערה ליום</h3><p class="notetext"></p></div></section>';
+   '<div class="sec sec-ex"><h3>תרגילים</h3><ul class="items ex"></ul></div><div class="sec sec-ml"><h3>אוכל</h3><ul class="items ml"></ul></div><div class="sec sec-nt"><h3>הערה ליום</h3><p class="notetext"></p></div></section>';
 }
 function rxHTML(owner,itemId,date,label){
   const all=Object.values(S.reactions).filter(r=>r.itemId===itemId);
@@ -449,16 +449,15 @@ function fillPanel(el,id){
   let upd='';if(d&&d.updatedAt){const u=new Date(d.updatedAt);if(!isNaN(u))upd='עודכן ב־'+pad(u.getHours())+':'+pad(u.getMinutes())}
   el.querySelector('.upd').textContent=upd;
   const stat=(v,l)=>'<div class="stat"><b>'+v+'</b><small>'+l+'</small></div>';
-  el.querySelector('.stats').innerHTML=stat(fmt(t.weight,1),'ק״ג')+stat(fmt(t.kcal),g.kcal?'מתוך '+fmt(g.kcal)+' קל׳':'קלוריות')+stat(fmt(t.protein),g.protein?'מתוך '+fmt(g.protein)+' ג׳':'גרם חלבון')+stat(t.minutes?fmt(t.minutes):'–','דק׳ אימון');
+  el.querySelector('.stats').innerHTML=stat(fmt(t.weight,1),'ק״ג')+stat(fmt(t.kcal),g.kcal?'מתוך '+fmt(g.kcal)+' קל׳':'קלוריות')+stat(fmt(t.protein),g.protein?'מתוך '+fmt(g.protein)+' ג׳':'גרם חלבון')+stat(t.sets?fmt(t.sets):'–','סטים');
   const mc=el.querySelector('.macro');mc.hidden=t.carbs==null&&t.fat==null;mc.textContent='פחמימות '+fmt(t.carbs)+' ג׳, שומן '+fmt(t.fat)+' ג׳';
   const row=(kind,x,html,label)=>'<li><div class="it'+(mine?' tap':'')+'"'+(mine?' data-edit="'+kind+'" data-i="'+esc(x.id)+'" role="button" tabindex="0" aria-label="עריכה"':'')+'>'+html+'</div>'+rxHTML(id,x.id,k,label)+(mine?'<button type="button" class="del" data-del="'+kind+'" data-i="'+esc(x.id)+'" aria-label="מחיקה">×</button>':'')+'</li>';
   const none='<li class="none">עוד לא הוזן</li>';
   const ex=(d&&d.exercises)||[],wk=(d&&d.workouts)||[],ml=(d&&d.meals)||[];
   el.querySelector('.ex').innerHTML=ex.map(x=>row('exercises',x,'<div class="exline">'+thumb(x.name)+'<div><strong>'+esc(x.name)+'</strong>'+(isPR(id,k,x)?' <span class="pr">שיא</span>':'')+(perf(x)?'<small>'+esc(perf(x))+'</small>':'')+'</div></div>',x.name)).join('')||(mine?'':none);
-  el.querySelector('.wk').innerHTML=wk.map(x=>row('workouts',x,'<strong>'+esc(x.type)+'</strong>, '+fmt(x.minutes)+' דק׳'+(x.note?'<small>'+esc(x.note)+'</small>':''),x.type)).join('')||(mine?'':none);
   el.querySelector('.ml').innerHTML=ml.map(x=>{const b=[];if(x.kcal!=null)b.push(fmt(x.kcal)+' קל׳');if(x.protein!=null)b.push(fmt(x.protein,1)+' ג׳ חלבון');if(x.carbs!=null)b.push(fmt(x.carbs,1)+' ג׳ פחמ׳');if(x.fat!=null)b.push(fmt(x.fat,1)+' ג׳ שומן');if(x.qty&&x.unit&&x.unit!=='גרם')b.push(fmt(x.qty,2)+' '+x.unit+' ('+fmt(x.grams)+' ג׳)');else if(x.grams)b.push(fmt(x.grams)+' ג׳');
     return row('meals',x,'<strong>'+esc(x.meal)+'</strong>, '+esc(x.name)+(b.length?'<small>'+esc(b.join(', '))+'</small>':''),x.name)}).join('')||(mine?'':none);
-  el.querySelector('.sec-ex').hidden=mine&&!ex.length;el.querySelector('.sec-wk').hidden=mine&&!wk.length;el.querySelector('.sec-ml').hidden=mine&&!ml.length;el.querySelector('.sec-nt').hidden=mine&&!(d&&d.note);
+  el.querySelector('.sec-ex').hidden=mine&&!ex.length;el.querySelector('.sec-ml').hidden=mine&&!ml.length;el.querySelector('.sec-nt').hidden=mine&&!(d&&d.note);
   el.querySelector('.notetext').textContent=(d&&d.note)||'–';
   if(mine){const w=$('f-weight'),n=$('f-note');
     if(w&&document.activeElement!==w)w.value=d&&d.weight!=null?d.weight:'';
@@ -628,7 +627,6 @@ function renderFeed(){
   const since=addDays(today(),-14),items=[];
   Object.keys(S.days).forEach(id=>{const ds=S.days[id]||{};Object.keys(ds).forEach(k=>{if(k<since)return;const d=ds[k];
     (d.exercises||[]).forEach(x=>items.push({id,at:x.at,k,tx:x.name+(perf(x)?', '+perf(x):'')+(isPR(id,k,x)?', שיא חדש':'')}));
-    (d.workouts||[]).forEach(x=>items.push({id,at:x.at,k,tx:'אימון '+x.type+', '+fmt(x.minutes)+' דק׳'}));
     (d.meals||[]).forEach(x=>items.push({id,at:x.at,k,tx:x.meal+': '+x.name}));
     if(d.weight!=null&&d.weightAt)items.push({id,at:d.weightAt,k,tx:'שקילה: '+fmt(d.weight,1)+' ק״ג'});
   })});
@@ -645,9 +643,9 @@ function summary(id,from){
   const ds=S.days[id]||{},keys=Object.keys(ds).filter(k=>k>=from&&k<=today()&&hasData(ds[k]));
   const w=series(id,from,'weight'),kc=series(id,from,'kcal'),pr=series(id,from,'protein'),cb=series(id,from,'carbs'),ft=series(id,from,'fat');
   const avg=a=>a.length?a.reduce((s,p)=>s+p.v,0)/a.length:null;
-  let workouts=0,minutes=0;keys.forEach(k=>{const t=totals(ds[k]);workouts+=t.workouts;minutes+=t.minutes});
+  let workouts=0,sets=0;keys.forEach(k=>{const t=totals(ds[k]);workouts+=t.workouts;sets+=t.sets});
   const ws=weekStart(today());let week=0;Object.keys(ds).forEach(k=>{if(k>=ws)week+=totals(ds[k]).workouts});
-  return{last:w.length?w[w.length-1].v:null,change:w.length>1?w[w.length-1].v-w[0].v:null,workouts,minutes,week,kcal:avg(kc),protein:avg(pr),carbs:avg(cb),fat:avg(ft),logged:keys.length,trend:trendChange(id,today())};
+  return{last:w.length?w[w.length-1].v:null,change:w.length>1?w[w.length-1].v-w[0].v:null,workouts,sets,week,kcal:avg(kc),protein:avg(pr),carbs:avg(cb),fat:avg(ft),logged:keys.length,trend:trendChange(id,today())};
 }
 function renderSummary(){
   const ids=order(),from=rangeFrom(),s={};ids.forEach(i=>s[i]=summary(i,from));
@@ -655,7 +653,7 @@ function renderSummary(){
   const rows=[['משקל אחרון (ק״ג)',i=>fmt(s[i].last,1)],['שינוי במשקל בטווח',i=>sign(s[i].change)],['מגמה שבועית',i=>sign(s[i].trend)],
     ['יעד משקל',i=>fmt((S.people[i].goals||{}).weight,1)],
     ['אימונים השבוע',i=>{const g=(S.people[i].goals||{}).workouts;return fmt(s[i].week)+(g?' מתוך '+fmt(g):'')}],
-    ['אימונים בטווח',i=>fmt(s[i].workouts)],['דקות אימון בטווח',i=>fmt(s[i].minutes)],
+    ['אימונים בטווח',i=>fmt(s[i].workouts)],['סטים בטווח',i=>fmt(s[i].sets)],
     ['ממוצע קלוריות ליום*',i=>fmt(s[i].kcal)],['ממוצע חלבון ליום*',i=>fmt(s[i].protein)],['ממוצע פחמימות ליום*',i=>fmt(s[i].carbs)],['ממוצע שומן ליום*',i=>fmt(s[i].fat)],['ימים עם הזנה',i=>fmt(s[i].logged)+' מתוך '+S.range]];
   $('summary').innerHTML='<table><thead><tr><th></th>'+ids.map(i=>'<th>'+esc(nameOf(i))+'</th>').join('')+'</tr></thead><tbody>'+
     rows.map(r=>'<tr><th scope="row">'+r[0]+'</th>'+ids.map(i=>'<td>'+r[1](i)+'</td>').join('')+'</tr>').join('')+'</tbody></table>'+
@@ -703,15 +701,15 @@ function lineChart(el,o){
 function barChart(el){
   const ids=order(),t=today(),last=weekStart(t);
   const count=Math.min(Math.ceil(S.range/7),26);const weeks=[];for(let i=count-1;i>=0;i--)weeks.push(addDays(last,-7*i));
-  const val=(id,w)=>{let s=0;for(let i=0;i<7;i++)s+=totals(dayOf(id,addDays(w,i))).minutes;return s};
+  const val=(id,w)=>{let s=0;for(let i=0;i<7;i++)s+=totals(dayOf(id,addDays(w,i))).sets;return s};
   const all=[];weeks.forEach(w=>ids.forEach(id=>all.push(val(id,w))));
   $('workLegend').innerHTML=ids.length>1?ids.map(id=>'<span><i style="--c:'+color(id)+'"></i>'+esc(nameOf(id))+'</span>').join(''):'';
-  if(!all.some(v=>v>0)){el.innerHTML='<p class="nodata">עוד אין אימונים בטווח הזה. אימון שתוסיפו ביומן יופיע כאן.</p>';return}
+  if(!all.some(v=>v>0)){el.innerHTML='<p class="nodata">עוד אין סטים בטווח הזה. תרגיל שתוסיפו ביומן יופיע כאן.</p>';return}
   const W=Math.max(el.clientWidth||600,260),H=210,m={t:12,r:6,b:24,l:40};
   const sc=niceScale(0,Math.max.apply(null,all));
   const Y=v=>H-m.b-(v-sc.a)/((sc.b-sc.a)||1)*(H-m.t-m.b),gw=(W-m.l-m.r)/weeks.length;
   const bw=Math.max(2,Math.min(22,(gw-6-(ids.length-1)*2)/ids.length));
-  let s='<svg dir="ltr" viewBox="0 0 '+W+' '+H+'" height="'+H+'" role="img" aria-label="דקות אימון בשבוע">';
+  let s='<svg dir="ltr" viewBox="0 0 '+W+' '+H+'" height="'+H+'" role="img" aria-label="סטים בשבוע">';
   sc.t.forEach(v=>{s+='<line x1="'+m.l+'" x2="'+(W-m.r)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="var(--grid)"/><text x="'+(m.l-6)+'" y="'+(Y(v)+4)+'" text-anchor="end">'+fmt(v)+'</text>'});
   const every=Math.ceil(weeks.length/6);
   weeks.forEach((w,wi)=>{const gx=m.l+wi*gw,tot=ids.length*bw+(ids.length-1)*2,x0=gx+(gw-tot)/2;
@@ -723,15 +721,15 @@ function barChart(el){
   const svg=el.querySelector('svg');
   const move=e=>{const r=svg.getBoundingClientRect(),px=(e.clientX-r.left)*(W/r.width),i=Math.floor((px-m.l)/gw);
     if(i<0||i>=weeks.length){untip();return}const w=weeks[i];
-    tip('שבוע '+shortDate(w)+'<br>'+ids.map(id=>esc(nameOf(id))+': <b>'+fmt(val(id,w))+'</b> דק׳').join('<br>'),e.clientX,r.top+20)};
+    tip('שבוע '+shortDate(w)+'<br>'+ids.map(id=>esc(nameOf(id))+': <b>'+fmt(val(id,w))+'</b> סטים').join('<br>'),e.clientX,r.top+20)};
   svg.addEventListener('pointermove',move);svg.addEventListener('pointerdown',move);svg.addEventListener('pointerleave',untip);
 }
 function renderTable(){
   const ids=order(),from=rangeFrom(),keys={};ids.forEach(id=>Object.keys(S.days[id]||{}).forEach(k=>{if(k>=from&&k<=today())keys[k]=1}));
   const list=Object.keys(keys).sort().reverse();
   if(!list.length){$('dayTable').innerHTML='<p class="nodata">אין עדיין ימים עם הזנה בטווח הזה.</p>';return}
-  $('dayTable').innerHTML='<table><thead><tr><th>תאריך</th>'+ids.map(i=>'<th>'+esc(nameOf(i))+': משקל</th><th>קל׳</th><th>חלבון</th><th>דק׳ אימון</th>').join('')+'</tr></thead><tbody>'+
-    list.map(k=>'<tr><th scope="row">'+shortDate(k)+'</th>'+ids.map(i=>{const t=totals(dayOf(i,k));return '<td>'+fmt(t.weight,1)+'</td><td>'+fmt(t.kcal)+'</td><td>'+fmt(t.protein)+'</td><td>'+(t.minutes?fmt(t.minutes):'–')+'</td>'}).join('')+'</tr>').join('')+'</tbody></table>';
+  $('dayTable').innerHTML='<table><thead><tr><th>תאריך</th>'+ids.map(i=>'<th>'+esc(nameOf(i))+': משקל</th><th>קל׳</th><th>חלבון</th><th>סטים</th>').join('')+'</tr></thead><tbody>'+
+    list.map(k=>'<tr><th scope="row">'+shortDate(k)+'</th>'+ids.map(i=>{const t=totals(dayOf(i,k));return '<td>'+fmt(t.weight,1)+'</td><td>'+fmt(t.kcal)+'</td><td>'+fmt(t.protein)+'</td><td>'+(t.sets?fmt(t.sets):'–')+'</td>'}).join('')+'</tr>').join('')+'</tbody></table>';
 }
 function renderFavTable(){
   const rows=[];order().forEach(id=>favExercises(id).slice(0,5).forEach(f=>rows.push({id,f})));
@@ -809,7 +807,7 @@ function drawLive(){
   const box=$('live-body'),L=S.live;
   if(!L){const t=(S.people[S.me]||{}).templates||[];$('live-title').textContent='מצב אימון';
     box.innerHTML='<button type="button" class="primary big" data-l="empty">התחלת אימון ריק</button>'+(t.length?'<h3>מתוכנית שמורה</h3><div class="stack">'+t.map(x=>'<button type="button" class="ghost big" data-l="tpl" data-id="'+esc(x.id)+'">'+esc(x.name)+'<small>'+x.exercises.length+' תרגילים</small></button>').join('')+'</div>':'<p class="hint">אחרי שתזין תרגילים ביום מסוים, אפשר לשמור אותם כתוכנית ולהתחיל ממנה כאן.</p>');return}
-  $('live-title').textContent='אימון, '+Math.max(1,Math.round((Date.now()-L.start)/60000))+' דק׳';
+  $('live-title').textContent='מצב אימון';
   const it=L.items[L.cur];
   let h='';
   if(it){const s=suggest(S.me,it.name),last=sessions(S.me,it.name).pop();
@@ -823,10 +821,10 @@ function drawLive(){
   const y=box.scrollTop;box.innerHTML=h;box.scrollTop=y;
 }
 function finishLive(){
-  const L=S.live,now=new Date().toISOString(),date=today(),min=Math.max(1,Math.round((Date.now()-L.start)/60000));
+  const L=S.live,now=new Date().toISOString(),date=today();
   const done=L.items.map(it=>({name:it.name,rows:it.rows.filter(r=>r.done).map(r=>({reps:r.reps,kg:r.kg}))})).filter(x=>x.rows.length);
   if(!done.length){toast('לא סימנת אף סט. סמן ✓ על סט שסיימת, או בטל את האימון.');return}
-  mutate(date,d=>{d.exercises=d.exercises||[];done.forEach(x=>d.exercises.push({id:uid(),at:now,name:x.name,sets:x.rows.length,rows:x.rows}));d.workouts=d.workouts||[];d.workouts.push({id:uid(),at:now,type:'כוח',minutes:min,note:''})});
+  mutate(date,d=>{d.exercises=d.exercises||[];done.forEach(x=>d.exercises.push({id:uid(),at:now,name:x.name,sets:x.rows.length,rows:x.rows}));});
   S.live=null;saveLive();S.sel=date;closeLive();toast('האימון נשמר');render();
 }
 function liveClick(e){const b=e.target.closest('[data-l]');if(!b){const ap=e.target.closest('[data-apply-kg]');if(ap)applyKg(+ap.dataset.applyKg);return}
@@ -966,7 +964,6 @@ function startEdit(kind,id){
   const x=((dayOf(S.me,S.sel)||{})[kind]||[]).find(y=>y.id===id);if(!x)return;S.edit={kind,id,date:S.sel};
   if(kind==='exercises'){S.open='ex';syncDrawers();renderFavs();setExSel(x.name);const r=rowsOf(x);$('e-sets').value=r.length||'';buildRows(r,true);$('e-hint').textContent='עורך את התרגיל';$('e-sug').hidden=true;$('e-add').textContent='שמירת השינויים';$('e-add').focus()}
   if(kind==='meals'){S.open='food';syncDrawers();$('m-type').value=x.meal;$('m-name').value=x.name;$('m-kcal').value=x.kcal!=null?x.kcal:'';$('m-prot').value=x.protein!=null?x.protein:'';$('m-carb').value=x.carbs!=null?x.carbs:'';$('m-fat').value=x.fat!=null?x.fat:'';$('m-add').textContent='שמירת השינויים';$('m-name').focus()}
-  if(kind==='workouts'){S.open='ex';syncDrawers();$('work-box').open=true;$('w-type').value=x.type;$('w-min').value=x.minutes;$('w-note').value=x.note||'';$('w-add').textContent='שמירת השינויים';$('w-min').focus()}
   document.querySelectorAll('[data-cancel]').forEach(b=>b.hidden=false);
 }
 function newMeal(l,now){const c=Object.assign({},l,{id:uid(),at:now});return c}
@@ -986,8 +983,6 @@ $('panels').addEventListener('submit',e=>{
     const prod={barcode:code,name,kcal100:k,protein100:pr,carbs100:cb,fat100:ft,units,lastUnit:unit,lastQty:qty,updatedAt:now};S.products[code]=prod;db.doc('products/'+code).set(prod).catch(writeFail);
     const r1=v=>v!=null?Math.round(v*g/10)/10:null;
     save('meals',{id:uid(),at:now,meal:$('m-type').value,name,kcal:Math.round(k*g/100),protein:r1(pr),carbs:r1(cb),fat:r1(ft),grams:g,qty,unit,barcode:code},date);$('scan-card').hidden=true;scanCode=null;return}
-  if(f.id==='f-work'){const minutes=num($('w-min').value);if(minutes==null||minutes<=0)return;
-    save('workouts',{id:uid(),at:now,type:$('w-type').value,minutes,note:$('w-note').value.trim()},date);$('w-min').value='';$('w-note').value=''}
   if(f.id==='f-meal'){const name=$('m-name').value.trim();if(!name)return;
     save('meals',{id:uid(),at:now,meal:$('m-type').value,name,kcal:num($('m-kcal').value),protein:num($('m-prot').value),carbs:num($('m-carb').value),fat:num($('m-fat').value)},date);['m-name','m-kcal','m-prot','m-carb','m-fat'].forEach(i=>$(i).value='')}
 });
