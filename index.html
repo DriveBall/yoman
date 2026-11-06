@@ -551,16 +551,16 @@ function panelSkeleton(id){
      '</div>'+
    '<div class="drawer sheet" id="dr-food" hidden>'+shead('אוכל','<select id="m-type" aria-label="איזו ארוחה">'+MEALS.map(x=>'<option'+(x===defMeal?' selected':'')+'>'+x+'</option>').join('')+'</select>')+
      '<div class="stack" id="food-main"><button type="button" class="primary big noedit" id="scan-live">סריקת ברקוד</button>'+
-     '<div class="two noedit"><button type="button" class="ghost" id="pt-open">צלחת</button><a class="ghost linkbtn" id="claude-link" href="'+PHOTO_URL+'" target="_blank" rel="noopener">לספר ל־Claude</a></div>'+
+     '<a class="primary big linkbtn noedit" id="claude-link" href="'+PHOTO_URL+'" target="_blank" rel="noopener">לספר ל־Claude</a><p class="hint noedit">ארוחה, צלחת או מתכון: כותבים או מצלמים, ו־Claude מחליט.</p>'+
      '<form class="bcman noedit" id="f-search"><input id="s-q" type="search" enterkeyhint="search" maxlength="80" aria-label="שם או ברקוד" placeholder="שם או ברקוד"><button class="iconbtn" id="s-go">חיפוש</button></form><p class="hint noedit" id="scan-msg" hidden></p><div id="s-res" class="results noedit"></div>'+
      '<div class="chips noedit" id="food-favs"></div>'+
-     '<form class="stack" id="f-meal"><label class="f">מה אכלת<input id="m-name" type="text" maxlength="200" required placeholder="חביתה, סלט ופרוסת לחם"></label>'+
+     '<details id="m-manual"><summary>הזנה ידנית</summary><form class="stack" id="f-meal"><label class="f">מה אכלת<input id="m-name" type="text" maxlength="200" required placeholder="חביתה, סלט ופרוסת לחם"></label>'+
      '<div class="two"><label class="f">קלוריות<input id="m-kcal" type="number" min="0" max="10000" inputmode="numeric"></label><label class="f">חלבון (ג׳)<input id="m-prot" type="number" min="0" max="1000" step="any" inputmode="decimal"></label></div>'+
      '<details id="m-more"><summary>עוד ערכים</summary><div class="two"><label class="f">פחמימות (ג׳)<input id="m-carb" type="number" min="0" max="2000" step="any" inputmode="decimal"></label><label class="f">שומן (ג׳)<input id="m-fat" type="number" min="0" max="1000" step="any" inputmode="decimal"></label></div></details>'+shareHTML('')+
-     '<div class="acts"><button class="primary" id="m-add">הוספה</button><button type="button" class="ghost" data-cancel hidden>ביטול</button></div></form>'+
+     '<div class="acts"><button class="primary" id="m-add">הוספה</button><button type="button" class="ghost" data-cancel hidden>ביטול</button></div></form></details>'+
      '<details id="food-more" class="noedit"><summary>עוד אפשרויות</summary><div class="stack">'+
-     '<button type="button" class="ghost" id="copy-open">כמו ביום קודם</button><div id="copy-box" class="results" hidden></div>'+
-     '<button type="button" class="ghost" id="rc-open">מתכונים</button><div id="rc-box" class="results" hidden><div id="rc-list" class="results"></div><button type="button" class="ghost" id="rc-new">מתכון חדש</button></div></div></details></div>'+
+     '<button type="button" class="ghost" id="pt-open">צלחת בלי Claude</button><button type="button" class="ghost" id="copy-open">כמו ביום קודם</button><div id="copy-box" class="results" hidden></div>'+
+     '<button type="button" class="ghost" id="rc-open">המתכונים השמורים</button><div id="rc-box" class="results" hidden><div id="rc-list" class="results"></div><button type="button" class="ghost" id="rc-new">מתכון חדש</button></div></div></details></div>'+
      '<div class="card" id="scan-card" hidden></div>'+plateHTML()+
      '<div class="card" id="rc-log" hidden><strong id="rc-log-t"></strong><div class="chips" id="rc-por-chips">'+[['0.5','½'],['1','1'],['1.5','1½'],['2','2']].map(a=>'<button type="button" class="chip" data-por="'+a[0]+'" aria-label="'+a[0]+' מנות">'+a[1]+'</button>').join('')+'</div><label class="f">כמות אחרת של מנות<input id="rc-por" type="number" min="0.25" max="50" step="0.25" inputmode="decimal"></label><p class="hint" id="rc-log-calc"></p>'+shareHTML('-r')+'<div class="acts"><button type="button" class="primary" id="rc-log-add">הוספה לארוחה</button><button type="button" class="iconbtn" id="rc-log-x">ביטול</button></div></div>'+
      '<form class="card" id="rc-form" hidden><label class="f">שם המתכון<input id="rc-name" type="text" maxlength="60" required></label><label class="f">לכמה מנות?<input id="rc-serv" type="number" min="0.5" max="100" step="any" inputmode="decimal" required></label><p class="hint" id="rc-note" hidden></p><p class="hint">לכל מרכיב: כמה גרם נכנסו, וערכים ל־100 גרם. מוצר ששמרתם מתמלא לבד.</p><datalist id="prod-list"></datalist><div id="rc-ings" class="results"></div><button type="button" class="ghost" id="rc-add-ing">עוד מרכיב</button><p class="hint" id="rc-calc"></p><div class="acts"><button class="primary" id="rc-save">שמירת המתכון</button><button type="button" class="iconbtn" id="rc-x">סגירה</button></div><button type="button" class="ghost" id="rc-del" hidden>מחיקת המתכון</button></form></div>'+
@@ -1148,7 +1148,7 @@ function applyPendingRecipe(){const r=S.pendingRecipe;if(!r||!S.me||S.readonly||
   $('rc-ings').innerHTML=(r.ingredients.length?r.ingredients:[{},{}]).map(ingRow).join('');rcCalc();const rn=r.needFill?'מתכון מ־Claude. בחלק מהמרכיבים חסרה כמות בגרם, ולכן הערכים ל־100 גרם ריקים וצריך למלא אותם.':'מתכון מ־Claude. הערכים הם הערכה, כדאי לבדוק אותם לפני השמירה.';scanMsg(rn);$('rc-note').textContent=rn;$('rc-note').hidden=false;syncFood();}
 function applyPendingMeal(){
   const m=S.pendingMeal;if(!m||!S.me||S.readonly||!$('m-name'))return;S.pendingMeal=null;if(S.sel!==today()){S.sel=today();schedule()}openSheet('food');
-  $('m-name').value=m.name||'ארוחה';fillInt('m-kcal',m.kcal);fillInt('m-prot',m.protein);fillInt('m-carb',m.carbs);fillInt('m-fat',m.fat);if(m.carbs!=null||m.fat!=null)$('m-more').open=true;
+  $('m-manual').open=true;$('m-name').value=m.name||'ארוחה';fillInt('m-kcal',m.kcal);fillInt('m-prot',m.protein);fillInt('m-carb',m.carbs);fillInt('m-fat',m.fat);if(m.carbs!=null||m.fat!=null)$('m-more').open=true;
   scanMsg('הערכה מ־Claude. כדאי לבדוק את הערכים ואז ללחוץ ״הוספה״.');$('f-meal').scrollIntoView({block:'center'});
 }
 
@@ -1509,7 +1509,7 @@ function startEdit(kind,id){
   const x=((dayOf(S.me,S.sel)||{})[kind]||[]).find(y=>y.id===id);if(!x)return;S.edit={kind,id,date:S.sel};
   if(kind==='meals'&&x.parts&&x.parts.length){openSheet('food');if(MEALS.includes(x.meal))$('m-type').value=x.meal;openPlate({edit:{id,date:S.sel},name:x.name,parts:x.parts.map(fromStored)});return}
   if(kind==='exercises'){openSheet('ex');renderFavs();setExSel(x.name);const r=rowsOf(x);buildRows(r.length?r:[{}]);$('e-hint').textContent='עריכת התרגיל';$('e-sug').hidden=true;$('e-add').textContent='שמירת השינויים';$('e-add').focus()}
-  if(kind==='meals'){openSheet('food');$('m-type').value=x.meal;$('m-name').value=x.name;$('m-kcal').value=x.kcal!=null?x.kcal:'';$('m-prot').value=x.protein!=null?x.protein:'';$('m-carb').value=x.carbs!=null?x.carbs:'';$('m-fat').value=x.fat!=null?x.fat:'';$('m-more').open=x.carbs!=null||x.fat!=null;$('m-add').textContent='שמירת השינויים';$('m-name').focus()}
+  if(kind==='meals'){openSheet('food');$('m-manual').open=true;$('m-type').value=x.meal;$('m-name').value=x.name;$('m-kcal').value=x.kcal!=null?x.kcal:'';$('m-prot').value=x.protein!=null?x.protein:'';$('m-carb').value=x.carbs!=null?x.carbs:'';$('m-fat').value=x.fat!=null?x.fat:'';$('m-more').open=x.carbs!=null||x.fat!=null;$('m-add').textContent='שמירת השינויים';$('m-name').focus()}
   document.querySelectorAll('[data-cancel]').forEach(b=>b.hidden=false);syncShare();
 }
 /* eating the same dish alone is the whole portion, not the part that was shared last time */
