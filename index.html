@@ -608,7 +608,7 @@ function syncDrawers(){syncShare();
   const d=$('dr-food');if(d){d.classList.toggle('editing',!!S.edit&&S.edit.kind==='meals');const past=S.sel!==today();document.querySelectorAll('.drawer .stitle').forEach(h=>{const t=h.dataset.base+(past?' ל־'+shortDate(S.sel):'');if(h.textContent!==t)h.textContent=t})}
   ['ex','food','weight','note'].forEach(n=>{const s=$('dr-'+n),b=$('open-'+n);if(s){s.hidden=S.open!==n;b.setAttribute('aria-expanded',String(S.open===n))}})}
 const SHEET_Z=30;
-function openSheet(n){if(S.open===n)return;if(S.open)closeSheet();S.show='me';const host=$('panels');if(host)host.dataset.show='me';S.open=n;ovOpen('sheet',closeSheet,SHEET_Z);
+function openSheet(n){if(S.open===n)return;if(S.open)closeSheet();$('toast').hidden=true;S.show='me';const host=$('panels');if(host)host.dataset.show='me';S.open=n;ovOpen('sheet',closeSheet,SHEET_Z);
   if(n==='food'&&!S.edit&&$('m-type'))$('m-type').value=mealSlot();
   syncDrawers();const s=$('dr-'+n);if(s)s.scrollTop=0;if(n==='weight'||n==='note')openField(n);schedule()}
 function closeSheet(){const was=S.open;if(!was)return;if(was==='weight'||was==='note')closeField();S.open=null;if(S.edit)clearEdit(true);
@@ -966,6 +966,7 @@ const liveRows=r=>r.length?r.map(q=>({reps:q.reps,kg:q.kg,done:false,t_reps:q.re
 function lastRows(name){const a=sessions(S.me,name),s=a[a.length-1];return liveRows(s?rowsOf(s.x):[])}
 function peekLive(){if(S.live)return S.live;const raw=recall(liveKey());if(!raw)return null;try{return JSON.parse(raw)}catch(e){return null}}
 function openLive(tplId){
+  $('toast').hidden=true;
   if(!S.live){let raw=recall(liveKey());if(raw){try{S.live=JSON.parse(raw)}catch(e){S.live=null}}}
   if(tplId&&!S.live){const t=((S.people[S.me]||{}).templates||[]).find(x=>x.id===tplId);if(t)S.live={start:Date.now(),cur:0,items:t.exercises.map(x=>{const hist=sessions(S.me,x.name).length;return{name:x.name,rows:hist?lastRows(x.name):liveRows(x.rows)}})};saveLive()}
   else if(tplId&&S.live)toast('יש כבר אימון פתוח. אפשר להתחיל תוכנית אחרת אחרי שהוא מסתיים.');
@@ -1364,7 +1365,7 @@ $('nextW').onclick=()=>{const n=addDays(S.sel,7);S.sel=n>today()?today():n;rende
 $('todayB').onclick=()=>{S.sel=today();render();scrollTo(0,0)};
 $('whobtns').addEventListener('click',e=>{const b=e.target.closest('button');if(b)claim(b.dataset.id)});
 function clearEdit(wipe){const was=S.edit;S.edit=null;document.querySelectorAll('[data-cancel]').forEach(b=>b.hidden=true);
-  const a=$('e-add'),m=$('m-add');if(a)a.textContent='הוספת תרגיל';if(m)m.textContent='הוספה';syncShare();
+  const a=$('e-add'),m=$('m-add');if(a)a.textContent='הוספת תרגיל';if(m)m.textContent='הוספה';syncDrawers();
   /* leaving an edit without saving must not leave its values in the form */
   if(was&&wipe!==false){if(was.kind==='meals')['m-name','m-kcal','m-prot','m-carb','m-fat'].forEach(i=>{if($(i))$(i).value=''});else if($('e-rows')){setExSel('');buildRows([]);$('e-hint').textContent=''}}}
 /* returns how to undo it */
