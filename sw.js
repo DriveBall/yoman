@@ -1,5 +1,5 @@
 /* Bump C whenever a file in CORE or EX changes: vendor/, ex/ and icons are served cache-first. index.html is network-first. */
-const C='yoman-v4',FONTS='yoman-fonts-v1';
+const C='yoman-v5',FONTS='yoman-fonts-v1';
 const CORE=['./','manifest.json','icon-180.png','icon-192.png','icon-512.png','vendor/firebase-app-compat.js','vendor/firebase-firestore-compat.js','vendor/barcode-ponyfill.js','vendor/zxing_reader.wasm'];
 const EX=Array.from({length:78},(_,i)=>'ex/'+String(i).padStart(2,'0')+'.jpg');
 const fresh=u=>new Request(u,{cache:'reload'});

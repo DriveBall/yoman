@@ -109,8 +109,8 @@ body.ready header.top{position:absolute;width:1px;height:1px;overflow:hidden;cli
 .seg button{flex:1;appearance:none;border:0;background:transparent;color:var(--ink);font:700 15px var(--body);min-height:44px;border-radius:var(--radius-pill);cursor:pointer;min-width:0}
 .seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
 .seg3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
-.seg3 button{appearance:none;border:0;background:var(--well);color:var(--ink);font:700 14px/1.2 var(--body);min-height:44px;padding:4px;border-radius:var(--radius-control);cursor:pointer}
-.seg3 button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.seg3 button,.sizes button{appearance:none;border:0;background:var(--well);color:var(--ink);font:700 14px/1.2 var(--body);min-height:44px;padding:4px;border-radius:var(--radius-control);cursor:pointer}
+.seg3 button[aria-pressed="true"],.sizes button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
 @media (max-width:759px){.seg:not([hidden]){display:flex}.panels[data-show="me"] .panel:not(.self){display:none}.panels[data-show="other"] .panel.self{display:none}.panel.self .phead{display:none}}
 /* logbook pages */
 .panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:12px;align-items:start}
@@ -166,7 +166,12 @@ ul.items li{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;border-bo
 .shead{position:sticky;top:0;z-index:2;background:var(--surface);display:flex;align-items:center;gap:8px;padding-block:12px 4px}
 .stitle{flex:1;min-width:0}.shead select{width:auto;flex:none}
 .stick{position:sticky;bottom:calc(-16px - var(--safe-b));z-index:2;background:var(--surface);padding-block:8px calc(16px + var(--safe-b));margin-bottom:calc(-16px - var(--safe-b))}
-#dr-food.confirm #food-main{display:none}#dr-food.editing .noedit{display:none}
+#dr-food.confirm #food-main{display:none}
+.dish{display:grid;gap:4px;background:var(--surface);color:var(--ink);border-radius:12px;padding:8px}.tablecard .dish{background:var(--bg);color:var(--ink)}
+.dish-h{display:flex;align-items:center;gap:8px}.dish-h span{flex:1;min-width:0;overflow-wrap:anywhere}.dish-h small{display:block;color:var(--muted);font-size:14px}
+.sizes{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:4px}
+.pt-total{font-weight:700;margin:0}
+.tablecard h2{font-size:18px;overflow-wrap:anywhere;display:flex;gap:8px;align-items:center}.tablecard h2 span:not(.plate){min-width:0}#dr-food.editing .noedit{display:none}
 .bcman{display:flex;gap:8px}.bcman input{min-width:0;flex:1}
 .results{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}.results:empty{display:none}
 .res{appearance:none;text-align:start;border:0;background:var(--bg);color:var(--ink);border-radius:12px;padding:8px;min-height:44px;font:400 15px var(--body);cursor:pointer;overflow-wrap:anywhere}.res small{display:block;color:var(--muted);font-size:14px}
@@ -284,6 +289,7 @@ body.kb #live-foot{display:none}
       <div class="days" id="days"></div>
     </section>
     <p class="pastline" id="pastline" hidden><span id="pasttext"></span><button class="iconbtn" id="todayB">חזרה להיום</button></p>
+    <div class="view" id="tables" hidden></div>
     <div class="seg" id="seg" role="group" aria-label="של מי היומן" hidden></div>
     <div class="panels" id="panels"></div>
     <section class="block hero" id="hero" hidden></section>
@@ -398,9 +404,8 @@ const EXERCISES={
 };
 const EX_IMG={"סקוואט": "00.jpg", "סקוואט קדמי": "01.jpg", "לחיצת רגליים": "02.jpg", "דדליפט רומני": "03.jpg", "מכרעים (Lunges)": "04.jpg", "בולגרי ספליט סקוואט": "05.jpg", "כפיפת ברכיים במכונה": "06.jpg", "פשיטת ברכיים במכונה": "07.jpg", "היפ ת׳ראסט": "08.jpg", "עליות על קופסה": "09.jpg", "תאומים בעמידה": "10.jpg", "לחיצת חזה במוט": "11.jpg", "לחיצת חזה בשיפוע חיובי": "12.jpg", "לחיצת חזה עם משקולות יד": "13.jpg", "פרפר במכונה": "14.jpg", "קרוס אובר בכבלים": "15.jpg", "שכיבות סמיכה": "16.jpg", "מקבילים": "17.jpg", "דדליפט": "18.jpg", "מתח": "19.jpg", "מתח באחיזה הפוכה": "20.jpg", "פולי עליון": "21.jpg", "חתירה במוט": "22.jpg", "חתירה עם משקולת יד": "23.jpg", "חתירה בכבל בישיבה": "24.jpg", "פייס פול": "25.jpg", "היפר אקסטנשן": "26.jpg", "לחיצת כתפיים במוט": "27.jpg", "לחיצת כתפיים עם משקולות יד": "28.jpg", "הרחקה לצדדים": "29.jpg", "הרחקה קדמית": "30.jpg", "פרפר אחורי": "31.jpg", "שראגס": "32.jpg", "כפיפת מרפקים במוט": "33.jpg", "כפיפת מרפקים עם משקולות יד": "34.jpg", "כפיפת פטיש": "35.jpg", "פשיטת מרפקים בכבל": "36.jpg", "לחיצה צרפתית": "37.jpg", "דיפים על ספסל": "38.jpg", "פלאנק": "39.jpg", "פלאנק צד": "40.jpg", "כפיפות בטן": "41.jpg", "הרמות רגליים בתלייה": "42.jpg", "רוסיאן טוויסט": "43.jpg", "אב רולר": "44.jpg", "קטלבל סווינג": "45.jpg", "קלין אנד פרס": "46.jpg", "טראסטר": "47.jpg", "הליכת חקלאי": "48.jpg", "קפיצה בחבל": "49.jpg", "כפיפת מרפקים בשיפוע": "50.jpg", "כפיפת ריכוז": "51.jpg", "כפיפת סקוט": "52.jpg", "כפיפת מרפקים במוט EZ": "53.jpg", "כפיפת מרפקים בכבל": "54.jpg", "כפיפת פטיש בחבל": "55.jpg", "כפיפה הפוכה במוט": "56.jpg", "פשיטה בכבל עם חבל": "57.jpg", "פשיטה בכבל באחיזה הפוכה": "58.jpg", "פשיטה מעל הראש עם משקולת": "59.jpg", "פשיטה מעל הראש בחבל": "60.jpg", "קיקבק": "61.jpg", "לחיצת חזה צרה": "62.jpg", "מקבילים ליד אחורית": "63.jpg", "האק סקוואט": "64.jpg", "גובלט סקוואט": "65.jpg", "כפיפת ברכיים בישיבה": "66.jpg", "תאומים בישיבה": "67.jpg", "לחיצת שיפוע עם משקולות יד": "68.jpg", "פרפר עם משקולות יד": "69.jpg", "לחיצת חזה בשיפוע שלילי": "70.jpg", "חתירת T": "71.jpg", "פולי ישר ידיים": "72.jpg", "פולי עליון באחיזה צרה": "73.jpg", "לחיצת ארנולד": "74.jpg", "חתירה זקופה": "75.jpg", "כפיפות בטן בכבל": "76.jpg", "מטפסי הרים": "77.jpg"};
 const RX=['💪','🔥','👏','❤️'];
-const RECIPE_URL='https://claude.ai/artifact/NLQ4ctBxTjwHVFV1uQJnZf';
 const PHOTO_URL='https://claude.ai/artifact/SJ29RfbqxbbN9kdiLwrpZN';
-const S={pendingRecipe:null,recipes:{},reward:null,nudges:{},nudgedNow:false,me:null,products:{},reactions:{},open:null,edit:null,show:'me',searchRes:[],live:null,pendingMeal:null,recap:weekStart(today()),cal:today().slice(0,7),people:{},days:{},subs:{},sel:today(),tab:'log',range:30,readonly:false,ready:false,panelsKey:'',daysLoaded:{},failed:[],noticeMsg:'',peopleRaw:{},peopleJson:'',pendingW:{},listenFail:new Set(),importMeal:null,importRecipe:null,codeErr:false,linkBad:false,share:{on:false,pct:0.5},rxOpen:null,feedMore:false,chartWho:null};
+const S={pendingRecipe:null,pendingPlate:null,importPlate:null,tables:{},recipes:{},reward:null,nudges:{},nudgedNow:false,me:null,products:{},reactions:{},open:null,edit:null,show:'me',searchRes:[],live:null,pendingMeal:null,recap:weekStart(today()),cal:today().slice(0,7),people:{},days:{},subs:{},sel:today(),tab:'log',range:30,readonly:false,ready:false,panelsKey:'',daysLoaded:{},failed:[],noticeMsg:'',peopleRaw:{},peopleJson:'',pendingW:{},listenFail:new Set(),importMeal:null,importRecipe:null,codeErr:false,linkBad:false,share:{on:false,pct:0.5},rxOpen:null,feedMore:false,chartWho:null};
 let db=null,loadTimer=null,raf=0;
 
 const color=id=>id==='victor'?'var(--p1)':id==='racheli'?'var(--p2)':'var(--p3)';
@@ -493,7 +498,7 @@ const normRow=r=>{r=r&&typeof r==='object'?r:{};return{reps:toNum(r.reps),kg:toN
 function normItem(kind,raw,i){
   const x=Object.assign({},raw);x.id=raw.id!=null?toStr(raw.id):'_'+kind+i;x.name=toStr(raw.name);if(raw.at!=null)x.at=toStr(raw.at);
   if(kind==='exercises'){x.sets=toNum(raw.sets);if('reps' in raw)x.reps=toNum(raw.reps);if('kg' in raw)x.kg=toNum(raw.kg);x.rows=Array.isArray(raw.rows)?raw.rows.map(normRow):[]}
-  else{x.meal=toStr(raw.meal);['kcal','protein','carbs','fat','grams','qty','share'].forEach(f=>{if(f in raw)x[f]=toNum(raw[f])});if('unit' in raw)x.unit=toStr(raw.unit)}
+  else{x.meal=toStr(raw.meal);['kcal','protein','carbs','fat','grams','qty','share'].forEach(f=>{if(f in raw)x[f]=toNum(raw[f])});if('unit' in raw)x.unit=toStr(raw.unit);if(Array.isArray(raw.parts))x.parts=raw.parts.filter(r=>r&&typeof r==='object').slice(0,60).map(normPart);else delete x.parts;if('table' in raw)x.table=toStr(raw.table)}
   RAW.set(x,raw);return x}
 function normList(kind,a){return (Array.isArray(a)?a:[]).filter(r=>r&&typeof r==='object').map((r,i)=>normItem(kind,r,i)).sort(byAt)}
 function normDay(raw,id){const d=Object.assign({},raw);d.date=id;d.weight=toNum(raw.weight);d.note=toStr(raw.note);d.exercises=normList('exercises',raw.exercises);d.meals=normList('meals',raw.meals);d.workouts=Array.isArray(raw.workouts)?raw.workouts:[];return d}
@@ -546,18 +551,19 @@ function panelSkeleton(id){
      '</div>'+
    '<div class="drawer sheet" id="dr-food" hidden>'+shead('אוכל','<select id="m-type" aria-label="איזו ארוחה">'+MEALS.map(x=>'<option'+(x===defMeal?' selected':'')+'>'+x+'</option>').join('')+'</select>')+
      '<div class="stack" id="food-main"><button type="button" class="primary big noedit" id="scan-live">סריקת ברקוד</button>'+
+     '<div class="two noedit"><button type="button" class="ghost" id="pt-open">צלחת</button><a class="ghost linkbtn" id="claude-link" href="'+PHOTO_URL+'" target="_blank" rel="noopener">לספר ל־Claude</a></div>'+
      '<form class="bcman noedit" id="f-search"><input id="s-q" type="search" enterkeyhint="search" maxlength="80" aria-label="שם או ברקוד" placeholder="שם או ברקוד"><button class="iconbtn" id="s-go">חיפוש</button></form><p class="hint noedit" id="scan-msg" hidden></p><div id="s-res" class="results noedit"></div>'+
      '<div class="chips noedit" id="food-favs"></div>'+
      '<form class="stack" id="f-meal"><label class="f">מה אכלת<input id="m-name" type="text" maxlength="200" required placeholder="חביתה, סלט ופרוסת לחם"></label>'+
      '<div class="two"><label class="f">קלוריות<input id="m-kcal" type="number" min="0" max="10000" inputmode="numeric"></label><label class="f">חלבון (ג׳)<input id="m-prot" type="number" min="0" max="1000" step="any" inputmode="decimal"></label></div>'+
      '<details id="m-more"><summary>עוד ערכים</summary><div class="two"><label class="f">פחמימות (ג׳)<input id="m-carb" type="number" min="0" max="2000" step="any" inputmode="decimal"></label><label class="f">שומן (ג׳)<input id="m-fat" type="number" min="0" max="1000" step="any" inputmode="decimal"></label></div></details>'+shareHTML('')+
      '<div class="acts"><button class="primary" id="m-add">הוספה</button><button type="button" class="ghost" data-cancel hidden>ביטול</button></div></form>'+
-     '<details id="food-more" class="noedit"><summary>עוד אפשרויות</summary><div class="stack"><a class="ghost linkbtn" id="photo-link" href="'+PHOTO_URL+'" target="_blank" rel="noopener">צילום ארוחה</a>'+
+     '<details id="food-more" class="noedit"><summary>עוד אפשרויות</summary><div class="stack">'+
      '<button type="button" class="ghost" id="copy-open">כמו ביום קודם</button><div id="copy-box" class="results" hidden></div>'+
-     '<button type="button" class="ghost" id="rc-open">מתכונים</button><div id="rc-box" class="results" hidden><div id="rc-list" class="results"></div><div class="two"><button type="button" class="ghost" id="rc-new">מתכון חדש</button><a class="ghost linkbtn" href="'+RECIPE_URL+'" target="_blank" rel="noopener">מתכון עם Claude</a></div></div></div></details></div>'+
-     '<div class="card" id="scan-card" hidden></div>'+
+     '<button type="button" class="ghost" id="rc-open">מתכונים</button><div id="rc-box" class="results" hidden><div id="rc-list" class="results"></div><button type="button" class="ghost" id="rc-new">מתכון חדש</button></div></div></details></div>'+
+     '<div class="card" id="scan-card" hidden></div>'+plateHTML()+
      '<div class="card" id="rc-log" hidden><strong id="rc-log-t"></strong><div class="chips" id="rc-por-chips">'+[['0.5','½'],['1','1'],['1.5','1½'],['2','2']].map(a=>'<button type="button" class="chip" data-por="'+a[0]+'" aria-label="'+a[0]+' מנות">'+a[1]+'</button>').join('')+'</div><label class="f">כמות אחרת של מנות<input id="rc-por" type="number" min="0.25" max="50" step="0.25" inputmode="decimal"></label><p class="hint" id="rc-log-calc"></p>'+shareHTML('-r')+'<div class="acts"><button type="button" class="primary" id="rc-log-add">הוספה לארוחה</button><button type="button" class="iconbtn" id="rc-log-x">ביטול</button></div></div>'+
-     '<form class="card" id="rc-form" hidden><label class="f">שם המתכון<input id="rc-name" type="text" maxlength="60" required></label><label class="f">לכמה מנות?<input id="rc-serv" type="number" min="0.5" max="100" step="any" inputmode="decimal" required></label><p class="hint">לכל מרכיב: כמה גרם נכנסו, וערכים ל־100 גרם. מוצר ששמרתם מתמלא לבד.</p><datalist id="prod-list"></datalist><div id="rc-ings" class="results"></div><button type="button" class="ghost" id="rc-add-ing">עוד מרכיב</button><p class="hint" id="rc-calc"></p><div class="acts"><button class="primary" id="rc-save">שמירת המתכון</button><button type="button" class="iconbtn" id="rc-x">סגירה</button></div><button type="button" class="ghost" id="rc-del" hidden>מחיקת המתכון</button></form></div>'+
+     '<form class="card" id="rc-form" hidden><label class="f">שם המתכון<input id="rc-name" type="text" maxlength="60" required></label><label class="f">לכמה מנות?<input id="rc-serv" type="number" min="0.5" max="100" step="any" inputmode="decimal" required></label><p class="hint" id="rc-note" hidden></p><p class="hint">לכל מרכיב: כמה גרם נכנסו, וערכים ל־100 גרם. מוצר ששמרתם מתמלא לבד.</p><datalist id="prod-list"></datalist><div id="rc-ings" class="results"></div><button type="button" class="ghost" id="rc-add-ing">עוד מרכיב</button><p class="hint" id="rc-calc"></p><div class="acts"><button class="primary" id="rc-save">שמירת המתכון</button><button type="button" class="iconbtn" id="rc-x">סגירה</button></div><button type="button" class="ghost" id="rc-del" hidden>מחיקת המתכון</button></form></div>'+
    '<form class="drawer sheet" id="dr-weight" hidden>'+shead('משקל')+'<label class="f">משקל הבוקר (ק״ג)<input id="f-weight" type="number" step="0.1" min="20" max="300" inputmode="decimal" enterkeyhint="done"></label><button class="primary" id="w-done">שמירה</button></form>'+
    '<form class="drawer sheet" id="dr-note" hidden>'+shead('הערה')+'<textarea id="f-note" maxlength="1000" aria-label="הערה ליום" placeholder="איך היה היום?"></textarea><button class="primary" id="n-done">שמירה</button></form>';
   return '<section class="panel'+(id===S.me?' self':'')+(mine?' mine':'')+'" data-id="'+esc(id)+'" style="--c:'+color(id)+'">'+
@@ -584,7 +590,7 @@ function fillPanel(el,id){
   const row=(kind,x,html,label)=>'<li id="row-'+esc(x.id)+'"><div class="it'+(mine?' tap':'')+'"'+(mine?' data-edit="'+kind+'" data-i="'+esc(x.id)+'" role="button" tabindex="0" aria-label="'+esc('עריכה: '+label)+'"':'')+'>'+html+'</div>'+rxHTML(id,x.id,k,label)+(mine?'<button type="button" class="del" data-del="'+kind+'" data-i="'+esc(x.id)+'" aria-label="'+esc('מחיקה: '+label)+'">×</button>':'')+'</li>';
   const ex=(d&&d.exercises)||[],ml=(d&&d.meals)||[],note=(d&&d.note)||'';
   el.querySelector('.ex').innerHTML=ex.map(x=>row('exercises',x,'<div class="exline">'+thumb(x.name)+'<div><strong>'+esc(x.name)+'</strong>'+(isPR(id,k,x)?' <span class="pr">שיא</span>':'')+(perf(x)?'<small>'+esc(perf(x))+'</small>':'')+'</div></div>',x.name)).join('');
-  el.querySelector('.ml').innerHTML=ml.map(x=>{const b=[];if(x.kcal!=null)b.push(fmt(x.kcal)+' קל׳');if(x.protein!=null)b.push(fmt(x.protein,1)+' ג׳ חלבון');if(x.carbs!=null)b.push(fmt(x.carbs,1)+' ג׳ פחמ׳');if(x.fat!=null)b.push(fmt(x.fat,1)+' ג׳ שומן');if(x.sharedBy)b.push('מ'+nameOf(x.sharedBy));if(x.sharedWith)b.push('ביחד עם '+nameOf(x.sharedWith));if(x.qty&&x.unit&&x.unit!=='גרם')b.push(fmt(x.qty,2)+' '+(x.unit==='מנה'&&x.qty!==1?'מנות':x.unit)+' ('+fmt(x.grams)+' ג׳)');else if(x.grams)b.push(fmt(x.grams)+' ג׳');
+  el.querySelector('.ml').innerHTML=ml.map(x=>{const b=[];if(x.kcal!=null)b.push(fmt(x.kcal)+' קל׳');if(x.protein!=null)b.push(fmt(x.protein,1)+' ג׳ חלבון');if(x.carbs!=null)b.push(fmt(x.carbs,1)+' ג׳ פחמ׳');if(x.fat!=null)b.push(fmt(x.fat,1)+' ג׳ שומן');if(x.parts&&x.parts.length)b.unshift(x.parts.length===1?'פריט אחד':x.parts.length+' פריטים');if(x.sharedBy)b.push('מ'+nameOf(x.sharedBy));if(x.sharedWith)b.push('ביחד עם '+nameOf(x.sharedWith));if(x.qty&&x.unit&&x.unit!=='גרם')b.push(fmt(x.qty,2)+' '+(x.unit==='מנה'&&x.qty!==1?'מנות':x.unit)+' ('+fmt(x.grams)+' ג׳)');else if(x.grams)b.push(fmt(x.grams)+' ג׳');
     return row('meals',x,'<strong>'+esc(x.meal)+'</strong>, '+esc(x.name)+(b.length?'<small>'+esc(b.join(', '))+'</small>':''),x.name)}).join('');
   el.querySelector('.sec-ex').hidden=!ex.length;el.querySelector('.sec-ml').hidden=!ml.length;el.querySelector('.sec-nt').hidden=!note;
   el.querySelector('.notetext').textContent=note;
@@ -613,12 +619,12 @@ function openSheet(n){if(S.open===n)return;if(S.open)closeSheet();$('toast').hid
   if(n==='food'&&!S.edit&&$('m-type'))$('m-type').value=mealSlot();
   syncDrawers();const s=$('dr-'+n);if(s)s.scrollTop=0;if(n==='weight'||n==='note')openField(n);schedule()}
 function closeSheet(){const was=S.open;if(!was)return;if(was==='weight'||was==='note')closeField();S.open=null;if(S.edit)clearEdit(true);
-  if(was==='food'&&$('scan-card')){scanCode=null;S.searchRes=[];$('scan-card').hidden=true;$('rc-log').hidden=true;if(!$('rc-form').hidden){$('rc-form').hidden=true;rcEdit=null}dropImport('recipe');
+  if(was==='food'&&$('scan-card')){scanCode=null;S.searchRes=[];$('scan-card').hidden=true;$('rc-log').hidden=true;if(!$('rc-form').hidden){$('rc-form').hidden=true;rcEdit=null}dropImport('recipe');PT=null;$('pt-card').hidden=true;dropImport('plate');
     if(S.importMeal){dropImport('meal');['m-name','m-kcal','m-prot','m-carb','m-fat'].forEach(i=>{$(i).value=''})}
     $('s-res').textContent='';$('s-q').value='';scanMsg('');$('food-more').open=false;$('m-more').open=false;$('copy-box').hidden=true;$('rc-box').hidden=true;resetShare();syncFood()}
   syncDrawers();ovDone('sheet')}
 /* a confirm step takes over the sheet, so its add button is on screen right away */
-function syncFood(){const d=$('dr-food');if(!d)return;const on=!$('scan-card').hidden||!$('rc-log').hidden||!$('rc-form').hidden;d.classList.toggle('confirm',on);if(on)d.scrollTop=0}
+function syncFood(){const d=$('dr-food');if(!d)return;const on=!$('scan-card').hidden||!$('rc-log').hidden||!$('rc-form').hidden||!$('pt-card').hidden;d.classList.toggle('confirm',on);if(on)d.scrollTop=0}
 /* the same toast, closing and row highlight after every add */
 function afterAdd(msg,undo,id){closeSheet();if(!canWrite())return;toast(msg,undo);if(raf){cancelAnimationFrame(raf);raf=0}render();if(id)showRow(id)}
 function showRow(id){const li=document.getElementById('row-'+id);if(!li)return;li.classList.remove('flash');void li.offsetWidth;li.classList.add('flash');try{li.scrollIntoView({block:'nearest',behavior:'smooth'})}catch(e){li.scrollIntoView()}}
@@ -1105,27 +1111,41 @@ const CODE_RE=/^[A-Za-z0-9_-]{6,80}$/;
 const sessGet=k=>{try{return sessionStorage.getItem(k)}catch(e){return null}};
 const sessSet=(k,v)=>{try{if(v==null)sessionStorage.removeItem(k);else sessionStorage.setItem(k,v)}catch(e){}};
 /* an import waits in the session until it is saved or dismissed, so a reload does not lose it */
-function keepImport(){sessSet('fit_import',S.importMeal||S.importRecipe?JSON.stringify({meal:S.importMeal,recipe:S.importRecipe}):null)}
-function dropImport(kind){if(kind==='meal')S.importMeal=null;else S.importRecipe=null;keepImport()}
-function restoreImport(){try{const o=JSON.parse(sessGet('fit_import')||'null');if(o){if(o.meal){S.importMeal=o.meal;S.pendingMeal=o.meal}if(o.recipe){S.importRecipe=o.recipe;S.pendingRecipe=o.recipe}}}catch(e){}}
+function keepImport(){sessSet('fit_import',S.importMeal||S.importRecipe||S.importPlate?JSON.stringify({meal:S.importMeal,recipe:S.importRecipe,plate:S.importPlate}):null)}
+function dropImport(kind){if(kind==='meal')S.importMeal=null;else if(kind==='plate')S.importPlate=null;else S.importRecipe=null;keepImport()}
+function restoreImport(){try{const o=JSON.parse(sessGet('fit_import')||'null');if(o){if(o.meal){S.importMeal=o.meal;S.pendingMeal=o.meal}if(o.recipe){S.importRecipe=o.recipe;S.pendingRecipe=o.recipe}if(o.plate){S.importPlate=o.plate;S.pendingPlate=o.plate}}}catch(e){}}
 /* returns true when the stored code changed */
 function readHash(){
   const h=location.hash.slice(1);if(h==='progress'||h==='log'){if(S.tab!==h&&S.open)closeSheet();S.tab=h;return false}
-  if(!/^(k|meal|recipe)=/.test(h))return false;
+  if(!/^(k|meal|recipe|ai)=/.test(h))return false;
   const q=new URLSearchParams(h);let changed=false,bad=false;
   try{history.replaceState(null,'',location.pathname+location.search)}catch(e){location.hash=''}
   const k=q.get('k'),stored=recall('fit_code');
   if(k&&k!==stored){if(!CODE_RE.test(k)){if(stored)bad=true;else S.codeErr=true}else if(!stored){store('fit_code',k);changed=true}else if(window.confirm('הקישור מחליף את קוד היומן במכשיר הזה. להחליף?')){store('fit_code',k);changed=true}}
   const parse1=(name,fn)=>{const raw=q.get(name);if(!raw)return null;try{const v=fn(JSON.parse(raw));if(!v)bad=true;return v}catch(e){bad=true;return null}};
   const r=parse1('recipe',parseRecipeLink),m=parse1('meal',parseMealLink);
-  if(r){S.pendingRecipe=r;S.importRecipe=r}if(m){S.pendingMeal=m;S.importMeal=m}keepImport();
+  if(r){S.pendingRecipe=r;S.importRecipe=r}if(m){S.pendingMeal=m;S.importMeal=m}
+  const a=parse1('ai',parseAiLink);if(a){if(a.kind==='meal'){S.pendingPlate=a;S.importPlate=a}else{const ar=aiToRecipe(a);S.pendingRecipe=ar;S.importRecipe=ar}}keepImport();
   if(bad)S.linkBad=true;
   return changed;
 }
+/* #ai= from the Claude page: one link for a plate or a recipe */
+function parseAiLink(o){if(!o||typeof o!=='object'||Array.isArray(o)||!Array.isArray(o.items))return null;if(o.v!=null&&impNum(o.v)!==1)return null;
+  const kind=o.kind==='meal'||o.kind==='recipe'?o.kind:null;if(!kind)return null;
+  const items=o.items.slice(0,30).map(i=>i&&typeof i==='object'&&!Array.isArray(i)?{name:impStr(i.name,80).trim(),amount:impStr(i.amount,40).trim(),grams:impNum(i.grams),kcal:impNum(i.kcal),protein:impNum(i.protein),carbs:impNum(i.carbs),fat:impNum(i.fat)}:null).filter(i=>i&&i.name);
+  if(!items.length)return null;const name=impStr(o.name,60).trim();
+  if(kind==='meal')return{kind,name,items,shared:o.shared===true};
+  const sv=impNum(o.servings);return{kind,name,servings:sv>=0.5&&sv<=100?sv:null,items}}
+/* item totals become values per 100 grams. Without grams they stay empty and the form says so. */
+function aiToRecipe(a){let miss=false;const ingredients=a.items.map(i=>{const g=i.grams>0?i.grams:null,o={name:i.name,grams:g};if(!g)miss=true;
+  [['kcal','kcal100'],['protein','protein100'],['carbs','carbs100'],['fat','fat100']].forEach(k=>{o[k[1]]=g&&i[k[0]]!=null?Math.round(i[k[0]]/g*1000)/10:null});return o});
+  return{name:a.name,servings:a.servings,ingredients,needFill:miss}}
+function applyPendingPlate(){const a=S.pendingPlate;if(!a||!S.me||S.readonly||!$('pt-card'))return;S.pendingPlate=null;if(S.sel!==today()){S.sel=today();schedule()}
+  openPlate({name:a.name,shared:a.shared,parts:a.items.map(i=>ptPart('ai',i,1)),note:'הערכה מ־Claude. כדאי לבדוק את הכמויות ואז לשמור.'})}
 function fillInt(id,v){$(id).value=v!=null?v:''}
 function applyPendingRecipe(){const r=S.pendingRecipe;if(!r||!S.me||S.readonly||!$('rc-form'))return;S.pendingRecipe=null;openSheet('food');$('food-more').open=true;$('rc-box').hidden=false;drawRecipes();rcEdit=null;$('rc-form').hidden=false;$('rc-del').hidden=true;$('rc-name').value=r.name;fillInt('rc-serv',r.servings);
   $('prod-list').innerHTML=Object.values(S.products).map(p=>'<option value="'+esc(p.name)+'"></option>').join('');
-  $('rc-ings').innerHTML=(r.ingredients.length?r.ingredients:[{},{}]).map(ingRow).join('');rcCalc();scanMsg('מתכון מ־Claude. הערכים הם הערכה, כדאי לבדוק אותם לפני השמירה.');syncFood();}
+  $('rc-ings').innerHTML=(r.ingredients.length?r.ingredients:[{},{}]).map(ingRow).join('');rcCalc();const rn=r.needFill?'מתכון מ־Claude. בחלק מהמרכיבים חסרה כמות בגרם, ולכן הערכים ל־100 גרם ריקים וצריך למלא אותם.':'מתכון מ־Claude. הערכים הם הערכה, כדאי לבדוק אותם לפני השמירה.';scanMsg(rn);$('rc-note').textContent=rn;$('rc-note').hidden=false;syncFood();}
 function applyPendingMeal(){
   const m=S.pendingMeal;if(!m||!S.me||S.readonly||!$('m-name'))return;S.pendingMeal=null;if(S.sel!==today()){S.sel=today();schedule()}openSheet('food');
   $('m-name').value=m.name||'ארוחה';fillInt('m-kcal',m.kcal);fillInt('m-prot',m.protein);fillInt('m-carb',m.carbs);fillInt('m-fat',m.fat);if(m.carbs!=null||m.fat!=null)$('m-more').open=true;
@@ -1226,10 +1246,110 @@ function drawRecipes(){const l=$('rc-list');if(!l)return;const a=Object.entries(
 function ingRow(i){i=i||{};const v=x=>esc(x!=null?x:''),n=(c,l,val,w)=>'<label class="f '+w+'">'+l+'<input class="'+c+'" type="number" min="0" step="any" inputmode="decimal" value="'+v(val)+'"></label>';return '<div class="ing"><label class="f i-nm">מרכיב<input class="i-name" type="text" list="prod-list" maxlength="80" value="'+v(i.name)+'"></label><button type="button" class="del" data-ing-del aria-label="מחיקת מרכיב">×</button>'+n('i-g','גרם',i.grams,'i-w3')+n('i-k','קל׳ ל־100 ג׳',i.kcal100,'i-w3')+n('i-p','חלבון',i.protein100,'i-w2')+n('i-c','פחמימות',i.carbs100,'i-w2')+n('i-f','שומן',i.fat100,'i-w2')+'</div>'}
 function readIngs(){return [...document.querySelectorAll('#rc-ings .ing')].map(e=>({name:e.querySelector('.i-name').value.trim(),grams:num(e.querySelector('.i-g').value),kcal100:num(e.querySelector('.i-k').value),protein100:num(e.querySelector('.i-p').value),carbs100:num(e.querySelector('.i-c').value),fat100:num(e.querySelector('.i-f').value)})).filter(i=>i.name)}
 function rcCalc(){const n=num($('rc-serv').value)||1,t=ingTotals(readIngs());$('rc-calc').textContent='סך הכול '+fmt(t.kcal)+' קל׳. למנה: '+fmt(t.kcal/n)+' קל׳, '+fmt(t.protein/n)+' ג׳ חלבון.'}
-function openRcForm(id){rcEdit=id||null;const r=id?S.recipes[id]:{};$('rc-form').hidden=false;$('rc-del').hidden=!id;$('rc-name').value=r.name||'';$('rc-serv').value=r.servings||'';
+function openRcForm(id){rcEdit=id||null;$('rc-note').hidden=true;const r=id?S.recipes[id]:{};$('rc-form').hidden=false;$('rc-del').hidden=!id;$('rc-name').value=r.name||'';$('rc-serv').value=r.servings||'';
   $('prod-list').innerHTML=Object.values(S.products).map(p=>'<option value="'+esc(p.name)+'"></option>').join('');$('rc-ings').innerHTML=(r.ingredients&&r.ingredients.length?r.ingredients:[{},{}]).map(ingRow).join('');rcCalc()}
 function logRecipe(id){const r=S.recipes[id];if(!r)return;if(S.edit)clearEdit(true);const c=$('rc-log');c.hidden=false;c.dataset.id=id;$('rc-log-t').textContent=r.name;$('rc-por').value=1;resetShare();rcLogCalc();syncFood()}
 function rcLogCalc(){const r=S.recipes[$('rc-log').dataset.id];if(!r)return;const t=ingTotals(r.ingredients||[]),por=num($('rc-por').value)||0,f=por/(r.servings||1);$('rc-log-calc').textContent=fmt(t.kcal*f)+' קל׳, '+fmt(t.protein*f,1)+' ג׳ חלבון';document.querySelectorAll('#rc-por-chips [data-por]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.por===por)))}
+/* ---------- plates: one meal made of parts. A part keeps its base values and a size, so the size can change later. ---------- */
+const PT_SIZES=[['0.5','½'],['1','1'],['1.5','1½'],['2','2']],PT_ZERO=[['0','0']].concat(PT_SIZES);
+const NUT=['grams','kcal','protein','carbs','fat'],PT_SRC=['ai','product','recipe','usual','manual'];
+const frac=v=>({0:'0',0.5:'½',1:'1',1.5:'1½',2:'2'})[v]||fmt(v,2);
+function normPart(r){const o={name:toStr(r.name).slice(0,80),amount:toStr(r.amount).slice(0,40),src:PT_SRC.includes(r.src)?r.src:'manual'};NUT.forEach(k=>{o[k]=toNum(r[k])});if('size' in r)o.size=toNum(r.size);return o}
+function normTable(r){const t=r.taken&&typeof r.taken==='object'&&!Array.isArray(r.taken)?r.taken:{};return{by:toStr(r.by),date:toStr(r.date),name:toStr(r.name).slice(0,60),meal:toStr(r.meal),at:toStr(r.at),parts:(Array.isArray(r.parts)?r.parts:[]).filter(x=>x&&typeof x==='object').slice(0,30).map(normPart),taken:Object.assign({},t)}}
+const ptName=meal=>meal==='נשנוש'?'נשנוש':'ארוחת '+(meal||mealSlot());
+const rnd=(k,v)=>v==null?null:k==='kcal'?Math.round(v):r1(v);
+function ptPart(src,o,size){const b={};NUT.forEach(k=>{b[k]=o[k]!=null?o[k]:null});return{name:o.name||'',amount:o.amount||'',src,size:size==null?1:size,base:b}}
+function ptScaled(p,f){const o={name:p.name,amount:p.amount,src:p.src};NUT.forEach(k=>{o[k]=p.base[k]==null?null:rnd(k,p.base[k]*f)});return o}
+function ptSum(list){const t={};['kcal','protein','carbs','fat'].forEach(k=>{const a=list.filter(x=>x[k]!=null);t[k]=a.length?rnd(k,a.reduce((s,x)=>s+x[k],0)):null});return t}
+const fromStored=p=>{const s=p.size>0?p.size:1,b={};NUT.forEach(k=>{b[k]=p[k]==null?null:p[k]/s});return{name:p.name,amount:p.amount,src:p.src,size:s,base:b}};
+function partInfo(p,size){const b=[];if(p.amount){b.push(p.amount+(size!=null&&size!==1?' ×'+frac(size):''))}else{if(p.grams!=null)b.push(fmt(p.grams)+' ג׳');if(size!=null&&size!==1)b.push('×'+frac(size))}
+  if(p.kcal!=null)b.push(fmt(p.kcal)+' קל׳');if(p.protein!=null)b.push(fmt(p.protein,1)+' ג׳ חלבון');return b.join(', ')}
+const sumText=(label,t)=>label+': '+(t.kcal!=null?fmt(t.kcal)+' קל׳':'בלי קלוריות')+(t.protein!=null?', '+fmt(t.protein,1)+' ג׳ חלבון':'');
+/* how much of a saved product is usually eaten */
+function prodAmount(p){const u=(p.units||[]).find(x=>x.name===p.lastUnit);
+  if(u&&p.lastQty>0)return{grams:p.lastQty*u.grams,amount:fmt(p.lastQty,2)+' '+u.name};
+  if(p.lastUnit==='גרם'&&p.lastQty>0)return{grams:p.lastQty,amount:fmt(p.lastQty)+' ג׳'};
+  if(p.units&&p.units[0])return{grams:p.units[0].grams,amount:'1 '+p.units[0].name};return{grams:100,amount:'100 ג׳'}}
+function prodValues(p,g){const o={grams:g};[['kcal','kcal100'],['protein','protein100'],['carbs','carbs100'],['fat','fat100']].forEach(a=>{o[a[0]]=p[a[1]]!=null?p[a[1]]*g/100:null});return o}
+function prodPart(p){const a=prodAmount(p);return ptPart('product',Object.assign(prodValues(p,a.grams),{name:p.name,amount:a.amount}),1)}
+/* a saved product with the same name, for parts that came from Claude */
+function ptMatch(name){const k=nameKey(name);if(k.length<2)return null;const all=Object.values(S.products).filter(p=>p.name&&p.kcal100!=null);
+  return all.find(p=>nameKey(p.name)===k)||all.find(p=>{const q=nameKey(p.name);return q.length>=3&&(q.includes(k)||k.includes(q))})||null}
+let PT=null,ptSeq=0;
+function plateHTML(){return '<div class="card" id="pt-card" hidden><strong id="pt-t">צלחת</strong><p class="hint" id="pt-note" hidden></p>'+
+  '<label class="f">שם הצלחת<input id="pt-name" type="text" maxlength="60"></label>'+
+  '<div class="results" id="pt-parts"></div><p class="none" id="pt-empty">עוד אין פריטים בצלחת.</p><p class="pt-total" id="pt-total" aria-live="polite"></p>'+
+  '<details id="pt-addbox"><summary>הוספת פריט</summary><div class="stack">'+
+   '<div class="chips" id="pt-favs"></div>'+
+   '<form class="bcman" id="f-pt-q"><input id="pt-q" type="search" enterkeyhint="search" maxlength="80" aria-label="שם או ברקוד" placeholder="שם או ברקוד"><button class="iconbtn" id="pt-go">חיפוש</button></form><p class="hint" id="pt-msg" hidden></p><div class="results" id="pt-res"></div>'+
+   '<p class="hint" id="pt-rcs-h" hidden>מתכונים מהבית, מנה אחת. את הגודל משנים אחר כך.</p><div class="chips" id="pt-rcs"></div>'+
+   '<form class="stack" id="f-pt-free"><label class="f">משהו אחר<input id="pt-fn" type="text" maxlength="80"></label><div class="two"><label class="f">קלוריות<input id="pt-fk" type="number" min="0" max="10000" inputmode="numeric"></label><label class="f">חלבון (ג׳)<input id="pt-fp" type="number" min="0" max="1000" step="any" inputmode="decimal"></label></div><button class="ghost" id="pt-fadd">הוספה לצלחת</button></form>'+
+  '</div></details>'+
+  '<label class="check" id="pt-sharebox" hidden><input id="pt-share" type="checkbox"><span>אכלנו ביחד</span></label><p class="hint" id="pt-share-h" hidden></p>'+
+  '<div class="acts"><button type="button" class="primary" id="pt-save">שמירת הצלחת</button><button type="button" class="iconbtn" id="pt-x">ביטול</button></div></div>'}
+function ptMsg(t){const m=$('pt-msg');if(!m)return;m.textContent=t||'';m.hidden=!t}
+function openPlate(o){o=o||{};if(S.edit&&!o.edit)clearEdit(true);openSheet('food');if(!$('pt-card'))return;
+  $('scan-card').hidden=true;scanCode=null;$('rc-log').hidden=true;
+  PT={parts:o.parts||[],shared:!!o.shared&&!!other()&&!o.edit,edit:o.edit||null,auto:!o.name,res:[]};
+  $('pt-name').value=o.name||ptName($('m-type').value);$('pt-t').textContent=o.edit?'עריכת צלחת':'צלחת';
+  const n=$('pt-note');n.textContent=o.note||'';n.hidden=!o.note;$('pt-addbox').open=!PT.parts.length;$('pt-q').value='';$('pt-res').textContent='';ptMsg('');
+  $('pt-card').hidden=false;drawPlate();syncFood()}
+function closePlate(){PT=null;ptSeq++;const c=$('pt-card');if(c)c.hidden=true;if(S.edit)clearEdit(true);dropImport('plate');syncFood()}
+function drawPlate(){if(!PT||!$('pt-card'))return;const sz=PT.shared?PT_ZERO:PT_SIZES;
+  $('pt-parts').innerHTML=PT.parts.map((p,i)=>{const v=ptScaled(p,p.size),m=p.src==='ai'?ptMatch(p.name):null;
+    return '<div class="dish"><div class="dish-h"><span><strong>'+esc(p.name)+'</strong><small>'+esc(partInfo(Object.assign(v,{amount:p.amount}),p.size))+'</small></span><button type="button" class="del" data-pt-del="'+i+'" aria-label="'+esc('הסרה: '+p.name)+'">×</button></div>'+
+      '<div class="sizes" role="group" aria-label="'+esc((PT.shared?'החלק שלי מ':'כמות של ')+p.name)+'">'+sz.map(a=>'<button type="button" data-pt-size="'+i+'" data-v="'+a[0]+'" aria-pressed="'+(+a[0]===p.size)+'">'+a[1]+'</button>').join('')+'</div>'+
+      (m?'<button type="button" class="small-link" data-pt-prod="'+i+'">להחליף בערכים מהמוצר: '+esc(m.name)+'</button>':'')+'</div>'}).join('');
+  $('pt-empty').hidden=!!PT.parts.length;
+  const mine=PT.parts.filter(p=>p.size>0).map(p=>ptScaled(p,p.size));$('pt-total').textContent=PT.parts.length?sumText(PT.shared?'בצלחת שלי':'סך הכול בצלחת',ptSum(mine)):'';
+  $('pt-favs').innerHTML=smartFoods(S.me).slice(0,8).map(f=>'<button type="button" class="chip" data-pt-food="'+esc(f.name)+'">'+esc(f.name)+'</button>').join('');
+  const rc=Object.entries(S.recipes).sort((x,y)=>String(x[1].name).localeCompare(y[1].name,'he'));$('pt-rcs-h').hidden=!rc.length;
+  $('pt-rcs').innerHTML=rc.map(([id,r])=>'<button type="button" class="chip" data-pt-rc="'+esc(id)+'">'+esc(r.name)+'</button>').join('');
+  const o=other();$('pt-sharebox').hidden=!o||!!PT.edit;$('pt-share').checked=PT.shared;
+  const h=$('pt-share-h');h.hidden=!PT.shared;if(PT.shared&&o)h.textContent='הכמויות ברשימה הן של כל מה שהיה על השולחן. הכפתורים מתחת לכל פריט הם החלק שלי. ביומן של '+nameOf(o)+' יופיע השולחן לבחירת החלק השני.'}
+function ptAdd(part){if(!PT)return;PT.parts.push(part);if(PT.parts.length>30)PT.parts=PT.parts.slice(-30);drawPlate();toast('נוסף לצלחת: '+part.name)}
+async function ptSearch(raw){raw=raw.trim();const my=++ptSeq;$('pt-res').textContent='';PT&&(PT.res=[]);
+  if(/^[\d\s-]+$/.test(raw)){const code=raw.replace(/\D/g,'');if(code.length<6||code.length>14){ptMsg('מספר ברקוד צריך להכיל בין 6 ל־14 ספרות.');return}
+    if(S.products[code]){ptMsg('');ptAdd(prodPart(S.products[code]));$('pt-q').value='';return}
+    ptMsg('מחפשים את המוצר במאגר…');let f=null;try{f=await lookupOFF(code)}catch(e){if(my===ptSeq)ptMsg('המאגר לא זמין כרגע. אפשר להוסיף את הפריט בשדה ״משהו אחר״.');return}
+    if(my!==ptSeq||!PT)return;if(!f||f.kcal100==null){ptMsg('המוצר לא נמצא במאגר. אפשר להוסיף אותו בשדה ״משהו אחר״.');return}ptMsg('');ptAdd(prodPart(f));$('pt-q').value='';return}
+  if(raw.length<2){ptMsg('צריך לפחות שתי אותיות כדי לחפש.');return}
+  const low=raw.toLowerCase(),local=Object.values(S.products).filter(p=>p.name&&p.kcal100!=null&&p.name.toLowerCase().includes(low)).slice(0,6).map(p=>Object.assign({},p,{local:true}));
+  const draw=()=>{if(!PT)return;$('pt-res').innerHTML=PT.res.map((p,i)=>'<button type="button" class="res" data-pt-res="'+i+'"><strong>'+esc(p.name)+'</strong>'+(p.brand?', '+esc(p.brand):'')+'<small>'+(p.local?'נשמר אצלכם, ':'')+fmt(p.kcal100)+' קל׳ ל־100 ג׳</small></button>').join('')};
+  PT.res=local;draw();ptMsg('מחפשים במאגר…');
+  try{const res=await searchOFF(raw,true);if(my!==ptSeq||!PT)return;const seen=new Set(local.map(p=>p.barcode));PT.res=local.concat(res.filter(p=>!seen.has(p.code))).slice(0,10);draw();ptMsg(PT.res.length?'':'לא נמצאו תוצאות. אפשר להוסיף את הפריט בשדה ״משהו אחר״.')}
+  catch(e){if(my===ptSeq)ptMsg(local.length?'המאגר לא זמין כרגע. אלה המוצרים ששמרתם.':'המאגר לא זמין כרגע. אפשר להוסיף את הפריט בשדה ״משהו אחר״.')}}
+function tableFail(e){if(e&&e.code==='permission-denied')toast('השולחן המשותף לא נשמר. ייתכן שההרשאות במסד הנתונים עוד לא כוללות אותו.');else writeFail(e)}
+function savePlate(){if(!PT)return;const name=$('pt-name').value.trim().slice(0,60)||ptName($('m-type').value),meal=$('m-type').value;
+  const parts=PT.parts.filter(p=>p.size>0).map(p=>Object.assign(ptScaled(p,p.size),{size:p.size}));
+  if(!parts.length){toast('צריך לפחות פריט אחד בצלחת.');return}if(!canWrite())return;
+  if(PT.edit){const ed=PT.edit,find=()=>((dayOf(S.me,ed.date)||{}).meals||[]).find(x=>x.id===ed.id),cur=find();if(!cur){closePlate();return}
+    const prev=RAW.get(cur)||clean(cur);replaceItem(ed.date,'meals',cur,Object.assign({},prev,{name,meal,parts},ptSum(parts)));PT=null;$('pt-card').hidden=true;clearEdit(false);
+    afterAdd('השינויים נשמרו',()=>{const n=find();if(n)replaceItem(ed.date,'meals',n,prev)},null);return}
+  const date=S.sel,now=new Date().toISOString(),item=Object.assign({id:uid(),at:now,meal,name,parts},ptSum(parts)),o=PT.shared&&other();let tid=null;
+  if(o){tid=uid();item.table=tid;item.sharedWith=o;const doc=clean({by:S.me,date,name,meal,at:now,taken:{},parts:PT.parts.map(p=>ptScaled(p,1))});S.tables[tid]=normTable(doc);db.doc('tables/'+tid).set(doc).catch(tableFail)}
+  addItems(date,'meals',[item]);dropImport('plate');PT=null;$('pt-card').hidden=true;
+  afterAdd(mealMsg(item)+(o?'. השולחן נשלח ל'+nameOf(o)+'.':''),()=>{removeIds(S.me,date,'meals',[item.id]);if(tid){delete S.tables[tid];db.doc('tables/'+tid).delete().catch(tableFail)}},item.id)}
+/* ---------- shared tables: the partner takes a portion of each dish into a plate of their own ---------- */
+const TB={};
+function tbPart(p,f){if(!(f>0))return null;const o={name:p.name,amount:p.amount,src:p.src,size:f};NUT.forEach(k=>{o[k]=p[k]==null?null:rnd(k,p[k]*f)});return o}
+function openTables(){const me=S.me;if(!me||S.readonly)return[];return Object.entries(S.tables).filter(([id,t])=>t.by&&t.by!==me&&t.date===S.sel&&typeof t.taken[me]!=='boolean'&&t.parts.length).sort((a,b)=>String(a[1].at).localeCompare(String(b[1].at)))}
+function renderTables(){const box=$('tables');if(!box)return;const list=openTables();box.hidden=!list.length;
+  box.innerHTML=list.map(([id,t])=>{const sz=TB[id]||(TB[id]=t.parts.map(()=>1)),sum=ptSum(t.parts.map((p,i)=>tbPart(p,sz[i])).filter(Boolean));
+    return '<section class="block tablecard" style="--c:'+color(t.by)+'"><h2><span class="plate" aria-hidden="true"></span><span>שולחן משותף מ'+esc(nameOf(t.by))+': '+esc(t.name||'צלחת')+'</span></h2><p class="hint">'+(t.meal?esc(t.meal)+'. ':'')+'הכמויות הן של כל המנה. לבחור כמה לקחת מכל אחת.</p>'+
+      t.parts.map((p,i)=>'<div class="dish"><div class="dish-h"><span><strong>'+esc(p.name)+'</strong><small>'+esc(partInfo(p))+'</small></span></div><div class="sizes" role="group" aria-label="'+esc('כמה לקחת מ'+p.name)+'">'+PT_ZERO.map(a=>'<button type="button" data-tb-size="'+esc(id)+'" data-i="'+i+'" data-v="'+a[0]+'" aria-pressed="'+(+a[0]===sz[i])+'">'+a[1]+'</button>').join('')+'</div></div>').join('')+
+      '<p class="pt-total">'+esc(sumText('בצלחת שלי',sum))+'</p><div class="acts"><button type="button" class="primary" data-tb-save="'+esc(id)+'">הוספה ליומן שלי</button><button type="button" class="ghost" data-tb-skip="'+esc(id)+'">הסתרה</button></div></section>'}).join('')}
+/* taken: true when a portion was added, false when hidden, null when undone and open again */
+function markTable(id,v){const t=S.tables[id];if(t)t.taken[S.me]=v;db.doc('tables/'+id).update({['taken.'+S.me]:v}).catch(tableFail);schedule()}
+function takeTable(id){const t=S.tables[id];if(!t||!canWrite())return;const sz=TB[id]||t.parts.map(()=>1),parts=t.parts.map((p,i)=>tbPart(p,sz[i])).filter(Boolean);
+  if(!parts.length){toast('צריך לבחור לפחות מנה אחת, או ללחוץ ״הסתרה״.');return}
+  const date=t.date,item=Object.assign({id:uid(),at:new Date().toISOString(),meal:t.meal||mealSlot(),name:t.name||'צלחת',parts,table:id,sharedBy:t.by},ptSum(parts));
+  addItems(date,'meals',[item]);markTable(id,true);toast(mealMsg(item),()=>{removeIds(S.me,date,'meals',[item.id]);markTable(id,null)});
+  if(raf){cancelAnimationFrame(raf);raf=0}render();showRow(item.id)}
+$('tables').addEventListener('click',e=>{const t=e.target;
+  const sb=t.closest('[data-tb-size]');if(sb){const id=sb.dataset.tbSize,tb=S.tables[id];if(!tb)return;const a=TB[id]||(TB[id]=tb.parts.map(()=>1));a[+sb.dataset.i]=+sb.dataset.v;renderTables();return}
+  const sv=t.closest('[data-tb-save]');if(sv){takeTable(sv.dataset.tbSave);return}
+  const sk=t.closest('[data-tb-skip]');if(sk){const id=sk.dataset.tbSkip;if(!canWrite())return;markTable(id,false);toast('השולחן הוסתר',()=>markTable(id,null))}});
 /* ---------- couple reward ---------- */
 let rwKey=null;
 function bothMet(ws){const ids=order();return ids.length>0&&ids.every(i=>weekWorkouts(i,ws)>=goalAt(i,ws))}
@@ -1263,7 +1383,7 @@ function render(){
   $('view-log').hidden=S.tab!=='log';$('view-progress').hidden=S.tab!=='progress';
   ['log','progress'].forEach(t=>$('tab-'+t).setAttribute('aria-selected',S.tab===t?'true':'false'));
   if(S.edit&&S.edit.date!==S.sel)clearEdit(true);
-  if(S.tab==='log'){renderHero();renderRail();renderPanels();renderFeed();applyPendingMeal();applyPendingRecipe()}
+  if(S.tab==='log'){renderHero();renderRail();renderPanels();renderFeed();renderTables();applyPendingMeal();applyPendingRecipe();applyPendingPlate()}
   else{renderProgress()}
 }
 function schedule(){if(!raf)raf=requestAnimationFrame(render)}
@@ -1387,13 +1507,14 @@ function addMeals(list,date){
 }
 function startEdit(kind,id){
   const x=((dayOf(S.me,S.sel)||{})[kind]||[]).find(y=>y.id===id);if(!x)return;S.edit={kind,id,date:S.sel};
+  if(kind==='meals'&&x.parts&&x.parts.length){openSheet('food');if(MEALS.includes(x.meal))$('m-type').value=x.meal;openPlate({edit:{id,date:S.sel},name:x.name,parts:x.parts.map(fromStored)});return}
   if(kind==='exercises'){openSheet('ex');renderFavs();setExSel(x.name);const r=rowsOf(x);buildRows(r.length?r:[{}]);$('e-hint').textContent='עריכת התרגיל';$('e-sug').hidden=true;$('e-add').textContent='שמירת השינויים';$('e-add').focus()}
   if(kind==='meals'){openSheet('food');$('m-type').value=x.meal;$('m-name').value=x.name;$('m-kcal').value=x.kcal!=null?x.kcal:'';$('m-prot').value=x.protein!=null?x.protein:'';$('m-carb').value=x.carbs!=null?x.carbs:'';$('m-fat').value=x.fat!=null?x.fat:'';$('m-more').open=x.carbs!=null||x.fat!=null;$('m-add').textContent='שמירת השינויים';$('m-name').focus()}
   document.querySelectorAll('[data-cancel]').forEach(b=>b.hidden=false);syncShare();
 }
 /* eating the same dish alone is the whole portion, not the part that was shared last time */
-function fullPortion(m){const s=m.share>0&&m.share<1?m.share:1,c=s===1?Object.assign({},m):scaleMeal(m,1/s);delete c.sharedBy;delete c.sharedWith;delete c.share;return c}
-function newMeal(l,now){const c=Object.assign({},RAW.get(l)||l,{id:uid(),at:now});delete c.sharedBy;delete c.sharedWith;delete c.share;return c}
+function fullPortion(m){const s=m.share>0&&m.share<1?m.share:1,c=s===1?Object.assign({},m):scaleMeal(m,1/s);delete c.sharedBy;delete c.sharedWith;delete c.share;delete c.table;return c}
+function newMeal(l,now){const c=Object.assign({},RAW.get(l)||l,{id:uid(),at:now});delete c.sharedBy;delete c.sharedWith;delete c.share;delete c.table;return c}
 function prevMealDay(){const ds=S.days[S.me]||{};return Object.keys(ds).filter(k=>k<S.sel&&(ds[k].meals||[]).length).sort().pop()||null}
 function drawCopy(){const k=prevMealDay(),box=$('copy-box');if(!k){box.innerHTML='<p class="none">אין עדיין ארוחות מימים קודמים.</p>';return}
   const ml=S.days[S.me][k].meals;box.innerHTML='<p class="hint">מ־'+shortDate(k)+'</p>'+ml.map((x,i)=>'<button type="button" class="res" data-copy="'+i+'" data-k="'+esc(k)+'"><strong>'+esc(x.meal)+'</strong>, '+esc(x.name)+(x.kcal!=null?'<small>'+fmt(x.kcal)+' קל׳</small>':'')+'</button>').join('')+'<button type="button" class="ghost" data-copy="all" data-k="'+esc(k)+'">הוספת כל הארוחות</button>'}
@@ -1401,6 +1522,8 @@ let lastExAdd={n:'',t:0};
 $('panels').addEventListener('submit',e=>{
   e.preventDefault();const f=e.target,date=S.sel,now=new Date().toISOString();
   if(f.id==='dr-weight'||f.id==='dr-note'){closeSheet();return}
+  if(f.id==='f-pt-q'){ptSearch($('pt-q').value);return}
+  if(f.id==='f-pt-free'){const name=$('pt-fn').value.trim().slice(0,80);if(!name){$('pt-fn').focus();return}ptAdd(ptPart('manual',{name,kcal:num($('pt-fk').value),protein:num($('pt-fp').value)},1));['pt-fn','pt-fk','pt-fp'].forEach(i=>{$(i).value=''});return}
   if(f.id==='f-target'){const kc=num($('t-kcal').value),pr=num($('t-prot').value),was=S.people[S.me].goals||{};if(!(kc>0)||!(pr>0))return;
     saveProfile({'goals.kcal':kc,'goals.protein':pr},{goals:Object.assign({},was,{kcal:kc,protein:pr})});
     toast('היעדים נשמרו',()=>saveProfile({'goals.kcal':was.kcal==null?null:was.kcal,'goals.protein':was.protein==null?null:was.protein},{goals:Object.assign({},(S.people[S.me]||{}).goals,{kcal:was.kcal==null?null:was.kcal,protein:was.protein==null?null:was.protein})}));return}
@@ -1426,6 +1549,8 @@ $('panels').addEventListener('submit',e=>{
 });
 $('panels').addEventListener('input',e=>{const t=e.target;
   if(t.classList&&t.classList.contains('share-on')){S.share.on=t.checked;syncShare()}
+  if(t.id==='pt-name'&&PT)PT.auto=false;
+  if(t.id==='pt-share'&&PT){PT.shared=t.checked;if(!PT.shared)PT.parts.forEach(p=>{if(!(p.size>0))p.size=1});drawPlate()}
   if(t.closest&&t.closest('#rc-form')){if(t.classList.contains('i-name')){const p=Object.values(S.products).find(x=>x.name===t.value),row=t.closest('.ing');if(p){[['.i-k','kcal100'],['.i-p','protein100'],['.i-c','carbs100'],['.i-f','fat100']].forEach(a=>{const i=row.querySelector(a[0]);if(!i.value)i.value=p[a[1]]??''})}}rcCalc()}
   if(t.id==='rc-por')rcLogCalc();
   if(t.id==='p-unit'){const was=scanUnits.find(x=>x.name===t.dataset.prev),now=scanUnits.find(x=>x.name===t.value),q=num($('p-qty').value);if(was&&now&&q)$('p-qty').value=Math.round(q*was.grams/now.grams*100)/100;t.dataset.prev=t.value}
@@ -1445,6 +1570,15 @@ $('panels').addEventListener('click',e=>{const t=e.target;
   if(t.id==='p-edit'){$('p-vals').hidden=false;$('p-sum').hidden=true;return}
   const rxo=t.closest('[data-rx-open]');if(rxo){S.rxOpen=rxo.dataset.rxOpen;schedule();return}
   if(t.id==='scan-live'){startScan();return}
+  if(t.id==='pt-open'){openPlate();return}
+  if(t.id==='pt-x'){closePlate();return}
+  if(t.id==='pt-save'){savePlate();return}
+  if(PT){const z=t.closest('[data-pt-size]');if(z){const p=PT.parts[+z.dataset.ptSize];if(p){p.size=+z.dataset.v;drawPlate()}return}
+    const dl=t.closest('[data-pt-del]');if(dl){PT.parts.splice(+dl.dataset.ptDel,1);drawPlate();return}
+    const pp=t.closest('[data-pt-prod]');if(pp){const i=+pp.dataset.ptProd,p=PT.parts[i],m=p&&ptMatch(p.name);if(m){const g=p.base.grams>0?p.base.grams:prodAmount(m).grams,n=ptPart('product',Object.assign(prodValues(m,g),{name:p.name,amount:p.amount||fmt(g)+' ג׳'}),p.size);PT.parts[i]=n;drawPlate()}return}
+    const pf=t.closest('[data-pt-food]');if(pf){const f=smartFoods(S.me).find(x=>x.name===pf.dataset.ptFood);if(f){const c=fullPortion(f.last);ptAdd(ptPart('usual',Object.assign({},c,{name:f.name,amount:c.qty&&c.unit&&c.unit!=='גרם'?fmt(c.qty,2)+' '+(c.unit==='מנה'&&c.qty!==1?'מנות':c.unit):''}),1))}return}
+    const pr=t.closest('[data-pt-rc]');if(pr){const r=S.recipes[pr.dataset.ptRc];if(r){const a=ingTotals(r.ingredients||[]),sv=r.servings||1;ptAdd(ptPart('recipe',{name:r.name,amount:'מנה',grams:a.grams/sv,kcal:a.kcal/sv,protein:a.protein/sv,carbs:a.carbs/sv,fat:a.fat/sv},1))}return}
+    const ps=t.closest('[data-pt-res]');if(ps){const p=PT.res[+ps.dataset.ptRes];if(p){ptAdd(prodPart(S.products[p.code||p.barcode]||p));$('pt-res').textContent='';$('pt-q').value='';PT.res=[]}return}}
   if(t.id==='p-cancel'){$('scan-card').hidden=true;scanCode=null;scanMsg('');resetShare();syncFood();return}
   if(t.id==='u-add'){const g=num($('u-g').value),n=$('u-name').value;if(!g)return;scanUnits=scanUnits.filter(u=>u.name!==n).concat({name:n,grams:g});fillUnits(n);$('p-qty').value=1;$('u-g').value='';$('u-box').open=false;calcProduct();return}
   if(t.id==='p-unit')return;
@@ -1479,7 +1613,7 @@ $('panels').addEventListener('click',e=>{const t=e.target;
 $('panels').addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('[data-edit]'))startEdit(e.target.dataset.edit,e.target.dataset.i);nextField(e,'r-reps','r-kg')});
 document.addEventListener('click',e=>{if(S.rxOpen&&!(e.target.closest&&e.target.closest('.rx'))){S.rxOpen=null;schedule()}});
 $('panels').addEventListener('focusin',e=>{const t=e.target;if(t.id==='f-weight'||t.id==='f-note')t.dataset.date=S.sel});
-$('panels').addEventListener('change',e=>{const t=e.target;if(t.id==='f-weight'||t.id==='f-note'){queueField(t);flushField(t.id,true)}});
+$('panels').addEventListener('change',e=>{const t=e.target;if(t.id==='m-type'&&PT&&PT.auto)$('pt-name').value=ptName(t.value);if(t.id==='f-weight'||t.id==='f-note'){queueField(t);flushField(t.id,true)}});
 /* weight and note: saved shortly after typing stops, to the day that was on screen when the field got focus */
 const fields={};
 function queueField(el){const f=fields[el.id]||(fields[el.id]={});f.date=el.dataset.date||S.sel;f.who=S.me;f.value=el.value;f.dirty=true;clearTimeout(f.t);f.t=setTimeout(()=>flushField(el.id,false),800)}
@@ -1527,9 +1661,10 @@ async function boot(){
   const lst=(col,lim,fn)=>listen(col,(ok,bad)=>db.collection(col).limit(lim).onSnapshot(ok,bad),fn);
   lst('reactions',1000,sn=>{const m={};sn.docs.forEach(d=>{m[d.id]=d.data()});S.reactions=m;bumpAll();schedule()});
   lst('nudges',10,sn=>{const m={};sn.docs.forEach(d=>{m[d.id]=d.data()});S.nudges=m;schedule()});
-  lst('recipes',500,sn=>{const m={};sn.docs.forEach(d=>{const r=d.data();m[d.id]=Object.assign({},r,{name:toStr(r.name),servings:toNum(r.servings)||1,ingredients:(Array.isArray(r.ingredients)?r.ingredients:[]).filter(i=>i&&typeof i==='object').map(i=>({name:toStr(i.name),grams:toNum(i.grams),kcal100:toNum(i.kcal100),protein100:toNum(i.protein100),carbs100:toNum(i.carbs100),fat100:toNum(i.fat100)}))})});S.recipes=m;if($('rc-box')&&!$('rc-box').hidden)drawRecipes()});
+  lst('recipes',500,sn=>{const m={};sn.docs.forEach(d=>{const r=d.data();m[d.id]=Object.assign({},r,{name:toStr(r.name),servings:toNum(r.servings)||1,ingredients:(Array.isArray(r.ingredients)?r.ingredients:[]).filter(i=>i&&typeof i==='object').map(i=>({name:toStr(i.name),grams:toNum(i.grams),kcal100:toNum(i.kcal100),protein100:toNum(i.protein100),carbs100:toNum(i.carbs100),fat100:toNum(i.fat100)}))})});S.recipes=m;if($('rc-box')&&!$('rc-box').hidden)drawRecipes();if(PT)drawPlate()});
   lst('shared',5,sn=>{const d=sn.docs.find(x=>x.id==='reward');S.reward=d?normReward(d.data()):null;schedule()});
-  lst('products',1000,sn=>{const m={};sn.docs.forEach(d=>{const p=d.data();m[d.id]=Object.assign({},p,{barcode:toStr(p.barcode)||d.id,name:toStr(p.name),kcal100:toNum(p.kcal100),protein100:toNum(p.protein100),carbs100:toNum(p.carbs100),fat100:toNum(p.fat100),lastQty:toNum(p.lastQty),lastUnit:toStr(p.lastUnit),units:(Array.isArray(p.units)?p.units:[]).filter(u=>u&&toNum(u.grams)>0).map(u=>({name:toStr(u.name),grams:toNum(u.grams)}))})});S.products=m});
+  lst('products',1000,sn=>{const m={};sn.docs.forEach(d=>{const p=d.data();m[d.id]=Object.assign({},p,{barcode:toStr(p.barcode)||d.id,name:toStr(p.name),kcal100:toNum(p.kcal100),protein100:toNum(p.protein100),carbs100:toNum(p.carbs100),fat100:toNum(p.fat100),lastQty:toNum(p.lastQty),lastUnit:toStr(p.lastUnit),units:(Array.isArray(p.units)?p.units:[]).filter(u=>u&&toNum(u.grams)>0).map(u=>({name:toStr(u.name),grams:toNum(u.grams)}))})});S.products=m;if(PT)drawPlate()});
+  listen('tables',(ok,bad)=>db.collection('tables').orderBy('date','desc').limit(100).onSnapshot(ok,bad),sn=>{const m={};sn.docs.forEach(d=>{m[d.id]=normTable(d.data())});S.tables=m;schedule()},()=>false);
   listen('people',(ok,bad)=>db.collection('people').onSnapshot({includeMetadataChanges:true},ok,bad),onPeople,e=>{
     if(loadTimer){clearTimeout(loadTimer);loadTimer=null}
     store('fit_code',null);$('start').hidden=true;$('who').hidden=true;$('codebox').hidden=false;const m=$('codemsg');m.textContent='הקוד לא נכון. אפשר לנסות שוב.';m.hidden=false;return false;
