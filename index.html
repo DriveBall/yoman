@@ -36,7 +36,7 @@
 }
 :root[data-theme="concrete"]{color-scheme:light}
 :root[data-theme="concrete"]{--bg:oklch(97% 0.005 250);--surface:oklch(100% 0.002 250);--well:oklch(92% 0.007 250);--ink:oklch(18% 0.08 260);--muted:oklch(42% 0.02 250);--line:oklch(78% 0.008 250);--grid:oklch(88% 0.008 250);--p1:oklch(50% 0.17 255);--p2:oklch(56% 0.20 20);--p3:oklch(50% 0.12 150);--mark:oklch(88% 0.20 120);--mark-ink:oklch(16% 0.08 260);--on-ink:oklch(98% 0.005 250);--accent-2:oklch(80% 0.20 122);--accent-ink:oklch(16% 0.08 260);--accent:oklch(88% 0.20 120);--focus:oklch(50% 0.17 255);}
-:root[data-theme="rose"]{--bg:oklch(22% 0.06 320);--surface:oklch(29% 0.07 320);--well:oklch(16% 0.05 320);--ink:oklch(98% 0.01 320);--muted:oklch(83% 0.03 320);--line:oklch(42% 0.07 320);--grid:oklch(35% 0.06 320);--p1:oklch(85% 0.13 85);--p2:oklch(78% 0.15 350);--p3:oklch(82% 0.1 200);--mark:oklch(80% 0.14 5);--mark-ink:oklch(22% 0.06 320);--on-ink:oklch(22% 0.06 320);--accent-2:oklch(72% 0.16 5);--accent-ink:oklch(22% 0.06 320);--accent:oklch(80% 0.14 5);--focus:oklch(85% 0.12 5);}
+:root[data-theme="rose"]{--bg:oklch(22% 0.06 320);--surface:oklch(29% 0.07 320);--well:oklch(16% 0.05 320);--ink:oklch(98% 0.01 320);--muted:oklch(83% 0.03 320);--line:oklch(42% 0.07 320);--grid:oklch(35% 0.06 320);--p1:oklch(76% 0.13 255);--p2:oklch(78% 0.15 350);--p3:oklch(82% 0.1 200);--mark:oklch(80% 0.14 5);--mark-ink:oklch(22% 0.06 320);--on-ink:oklch(22% 0.06 320);--accent-2:oklch(72% 0.16 5);--accent-ink:oklch(22% 0.06 320);--accent:oklch(80% 0.14 5);--focus:oklch(85% 0.12 5);}
 *{box-sizing:border-box}[hidden]{display:none!important}
 body{background:var(--bg);color:var(--ink);font:400 16px/1.45 var(--body);font-variant-numeric:tabular-nums}
 .wrap{max-width:1080px;margin:0 auto;padding-block:20px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:16px}
@@ -177,7 +177,7 @@ ul.items li{flex-wrap:wrap}
 .sug{background:var(--bg);border-radius:6px;padding:8px 8px;font-size:14px;display:block}.sug .iconbtn{min-height:32px;margin-inline:4px}.stepl{display:inline-flex;gap:4px;align-items:center;color:var(--muted)}.stepl select{width:auto;min-height:30px;padding:4px 4px}
 .pl-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.pl{display:inline-flex;gap:8px;align-items:center;font-weight:600}.pl i{width:16px;height:16px;border-radius:50%;background:var(--pc);border:1px solid var(--line)}
 .seg{display:none;border:1px solid var(--ink);border-radius:6px;overflow:hidden}.seg button{flex:1;appearance:none;border:0;background:transparent;color:var(--ink);font:600 15px var(--body);min-height:40px;cursor:pointer}.seg button[aria-pressed="true"]{background:var(--ink);color:var(--on-ink)}
-@media (max-width:759px){.seg:not([hidden]){display:flex}.panels[data-show="me"] .panel:not(.mine){display:none}.panels[data-show="other"] .panel.mine{display:none}}
+@media (max-width:759px){.seg:not([hidden]){display:flex}.panels[data-show="me"] .panel:not(.self){display:none}.panels[data-show="other"] .panel.self{display:none}}
 .navhead{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.navhead h2{flex:1 1 auto;min-width:0}
 .recap{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px}.rc dl{margin:8px 0 0;display:grid;gap:4px}.rc dl div{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid var(--grid);padding-bottom:4px}.rc dt{color:var(--muted);font-size:14px}.rc dd{margin:0;font-weight:600}
 .cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}.cal .wd{text-align:center;font-size:12px;color:var(--muted);font-weight:600}.calday{appearance:none;background:transparent;border:1px solid var(--grid);border-radius:4px;color:var(--ink);font:600 13px var(--body);min-height:48px;padding:4px 0;cursor:pointer;display:grid;justify-items:center;gap:4px}.calday:disabled{background:transparent;color:var(--line);cursor:not-allowed}.calday.today{border-color:var(--ink)}.calday .dots{margin:0;gap:4px;min-height:10px}.calday .dot{width:10px;height:10px;border-width:2px}.calday .dot.work::after{inset:1px}
@@ -212,7 +212,7 @@ input::placeholder,textarea::placeholder{color:var(--muted);opacity:.8}
 th,td{border-color:var(--line)}.rc dl div{border-color:var(--line)}.calday{border-color:var(--line);border-radius:8px}
 .tick{border-color:var(--ink);color:var(--ink);border-radius:var(--radius-control)}.tick[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 #live{background:var(--bg)}.ltop{background:var(--well);border:0}.sug{background:var(--bg)}#live .sug{background:var(--surface)}
-.thumb{flex:none;width:48px;height:48px;border-radius:12px;background:var(--thumb-bg);object-fit:cover;display:inline-grid;place-items:center;color:var(--on-ink);font:800 20px var(--display)}
+.thumb{flex:none;width:48px;height:48px;border-radius:12px;background:var(--thumb-bg);object-fit:cover;display:inline-grid;place-items:center;color:var(--mark-ink);font:800 20px var(--display)}
 .thumb.s{width:32px;height:32px;border-radius:50%;font-size:14px}.thumb.l{width:96px;height:96px;border-radius:20px;font-size:36px}
 ul.items li.exrow{align-items:center}.exline{display:flex;gap:8px;align-items:center;min-width:0}
 .pickbtn{appearance:none;display:flex;align-items:center;gap:8px;width:100%;min-height:64px;background:var(--bg);border:2px solid var(--line);border-radius:var(--radius-control);color:var(--ink);font:700 16px var(--body);padding:8px 8px;cursor:pointer;text-align:start}
@@ -228,7 +228,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .bar-wrap{display:grid;grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr);align-items:center;height:112px;position:relative}
 .wbar{position:absolute;inset:50% 0 auto;height:8px;transform:translateY(-50%);background:var(--muted);border-radius:4px}
 .wside{position:relative;display:flex;align-items:center;gap:4px;height:100%;z-index:1;grid-row:1}.wside.l{grid-column:1;flex-direction:row-reverse}.wside.r{grid-column:3}
-.wplate{width:16px;height:var(--h);border-radius:6px;border:2px dashed var(--line);background:var(--surface);flex:none}.wplate.on{background:var(--c);border:0}
+.wplate{flex:0 1 16px;min-width:6px;height:var(--h);border-radius:6px;border:2px dashed var(--line);background:var(--surface)}.wplate.on{background:var(--c);border:0}
 @media (prefers-reduced-motion:no-preference){.wplate.on{animation:plate .32s ease-out}}
 @keyframes plate{from{transform:translateY(-16px);opacity:0}to{transform:none;opacity:1}}
 .heroline{margin:0;font-weight:700}
@@ -243,7 +243,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .confetti{position:fixed;inset:0;z-index:60;pointer-events:none}
 .check{display:flex;gap:8px;align-items:center;font-weight:700;min-height:44px;cursor:pointer}.check input{width:24px;height:24px;min-height:0;flex:none;accent-color:var(--accent)}input[type=range]{min-height:32px;padding:0;background:transparent;border:0;accent-color:var(--accent)}
 .rc-row{display:flex;gap:8px;align-items:stretch}.rc-row .res{flex:1;min-width:0}.rc-row .iconbtn{flex:none}
-.ing{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;align-items:center;padding-bottom:8px;border-bottom:1px solid var(--line)}.ing .i-name{grid-column:span 4}.ing .i-g{grid-column:span 2}.ing input{min-height:40px;padding:4px 8px;font-size:15px}.ing .i-k,.ing .i-p,.ing .i-c,.ing .i-f{grid-column:span 1}.ing .i-k{grid-column:span 2}.ing .del{grid-column:6}.ing input.i-f{grid-column:span 1}
+.ing{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;align-items:center;padding-bottom:8px;border-bottom:1px solid var(--line)}.ing .i-name{grid-column:span 4}.ing .i-g{grid-column:span 2}.ing input{min-height:40px;padding:4px 8px;font-size:16px}.ing .i-k,.ing .i-p,.ing .i-c,.ing .i-f{grid-column:span 1}.ing .i-k{grid-column:span 2}.ing .del{grid-column:6}.ing input.i-f{grid-column:span 1}
 .xp.big{height:12px;border-radius:8px}.rw-t{flex:1 1 auto;font:800 18px var(--display)}#reward .count{font:800 18px var(--display)}#reward{gap:8px}
 .egg{position:absolute;inset-inline-start:50%;top:50%;width:20px;height:20px;transform:translate(-50%,-50%);border-radius:50%;border:2px solid var(--ink);background:var(--mark);cursor:pointer;z-index:2;padding:0}.egg::after{content:"";position:absolute;inset:-12px}
 #wrapped{position:fixed;inset:0;z-index:50;background:var(--ink);color:var(--on-ink);display:grid;grid-template-rows:auto 1fr auto auto;justify-items:center;padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-left,0px)) calc(16px + env(safe-area-inset-bottom,0px));gap:12px;text-align:center;cursor:pointer}
@@ -257,7 +257,8 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .whobtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .whobtns button{appearance:none;border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:6px;font:400 20px var(--display);min-height:56px;cursor:pointer}
 .whobtns button:disabled{background:var(--well);color:var(--muted);border-color:var(--line);cursor:not-allowed}
-.toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));inset-inline-start:max(16px,env(safe-area-inset-left,0px));z-index:30;background:var(--ink);color:var(--on-ink);padding:8px 16px;border-radius:6px;display:flex;gap:16px;align-items:center;max-width:calc(100vw - 32px)}
+#notice .iconbtn{margin-inline-start:8px}#reward .xp{background:var(--well)}.fig{overflow-wrap:anywhere}
+.toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));inset-inline-start:max(16px,env(safe-area-inset-left,0px));z-index:70;background:var(--ink);color:var(--on-ink);padding:8px 16px;border-radius:6px;display:flex;gap:16px;align-items:center;max-width:calc(100vw - 32px)}
 .toast button{appearance:none;border:0;background:transparent;color:inherit;font:700 15px var(--body);text-decoration:underline;cursor:pointer}
 @media (max-width:420px){.dots{gap:4px}.dot{width:12px;height:12px}.dot.work::after{inset:2px}.stat b{font-size:18px}}
 @media (prefers-reduced-motion:no-preference){.day{transition:background .12s}}
@@ -276,6 +277,7 @@ body{margin:0}
     </div></div>
   </header>
   <div id="notice" class="banner" hidden></div>
+  <div id="netbar" class="banner" role="status" hidden></div>
 
   <section id="start" class="block">
     <h2>כאן יופיעו האימונים, האוכל והמשקל של שניכם</h2>
@@ -284,13 +286,13 @@ body{margin:0}
 
   <section id="codebox" class="who" hidden>
     <h2>קוד הגישה ליומן</h2>
-    <p class="help">מזינים פעם אחת בכל מכשיר. אם נכנסת מהקישור המלא, זה קורה לבד.</p>
+    <p class="help">מזינים פעם אחת בכל מכשיר.</p>
     <form id="codeform" style="display:grid;gap:10px"><label class="f">קוד<input id="code-in" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" required></label><button class="primary" id="code-go">כניסה</button></form>
     <p class="help" id="codemsg" hidden></p>
   </section>
 
   <section id="who" class="who" hidden>
-    <h2>מי מזין ביומן הזה?</h2>
+    <h2>של מי היומן במכשיר הזה?</h2>
     <p class="help">הבחירה נשמרת במכשיר הזה, ואחרי זה נכנסים ישר ליומן. אפשר להחליף בכל רגע מלמעלה.</p>
     <div class="whobtns" id="whobtns">
       <button type="button" data-id="victor" data-name="ויקטור" id="who-v">ויקטור</button>
@@ -333,19 +335,19 @@ body{margin:0}
     <section class="block"><h2>השוואה בטווח</h2><div class="tablewrap" id="summary"></div></section>
     <section class="block"><h2>הישגים</h2><div class="bcols" id="badges"></div></section>
     <section class="block"><h2>התרגילים המועדפים</h2><div class="tablewrap" id="favTable"></div></section>
-    <section class="block"><h2>התקדמות בתרגיל</h2><div class="inlineform"><label class="f">תרגיל<select id="xc-name"></select></label><label class="f">מדד<select id="xc-metric"><option value="best">משקל גבוה ביותר</option><option value="vol">נפח אימון</option><option value="rm">כוח משוער לחזרה אחת</option></select></label></div><div class="mult" id="xCharts"></div></section>
+    <section class="block"><h2>התקדמות בתרגיל</h2><div class="inlineform"><label class="f">תרגיל<select id="xc-name"></select></label><label class="f">מדד<select id="xc-metric"><option value="best">משקל גבוה ביותר</option><option value="vol">נפח אימון</option><option value="rm">כוח משוער לחזרה אחת</option><option value="reps">הכי הרבה חזרות</option></select></label></div><div class="mult" id="xCharts"></div></section>
     <section class="block"><h2>משקל ומגמה</h2><p class="help">הנקודות הן שקילות, והקו הוא ממוצע של 7 ימים.</p><div class="mult" id="weightCharts"></div></section>
     <section class="block"><h2>סטים בשבוע</h2><div id="workLegend" class="legend"></div><div class="chart" id="workChart"></div></section>
     <section class="block"><h2>קלוריות ביום</h2><div class="mult" id="kcalCharts"></div></section>
     <section class="block"><details id="tableBox"><summary>כל הימים כטבלה</summary><div class="tablewrap" id="dayTable"></div></details></section>
     <section class="block" id="goalsBox">
       <h2>היעדים שלי</h2>
-      <p class="help">לא חובה. מה שתמלא יופיע בסיכום היומי ובגרפים, ושניכם תראו אותו.</p>
+      <p class="help">לא חובה. היעדים מופיעים בסיכום היומי ובגרפים, ושניכם רואים אותם. שינוי ביעד האימונים חל מהשבוע הנוכחי ולא משנה שבועות קודמים.</p>
       <form id="goalsForm" class="goalgrid">
         <label class="f">משקל יעד (ק״ג)<input id="g-weight" type="number" step="0.1" min="20" max="300" inputmode="decimal"></label>
         <label class="f">קלוריות ביום<input id="g-kcal" type="number" step="10" min="0" max="10000" inputmode="numeric"></label>
         <label class="f">חלבון ביום (גרם)<input id="g-protein" type="number" step="1" min="0" max="1000" inputmode="numeric"></label>
-        <label class="f">אימונים בשבוע<input id="g-workouts" type="number" step="1" min="0" max="30" inputmode="numeric"></label>
+        <label class="f">אימונים בשבוע<input id="g-workouts" type="number" step="1" min="1" max="7" placeholder="3" inputmode="numeric"></label>
         <button class="primary" id="g-save">שמירת יעדים</button>
       </form>
     </section>
@@ -376,7 +378,6 @@ const fmt=(n,dec)=>n==null||isNaN(n)?'–':Number(n).toLocaleString('he-IL',{max
 const shortDate=k=>{const d=parse(k);return d.getDate()+'.'+(d.getMonth()+1)};
 const num=v=>{if(v===''||v==null)return null;const n=Number(v);return isFinite(n)?n:null};
 const WD=['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ש׳'];
-const WORK=['כוח','ריצה','הליכה','אופניים','שחייה','יוגה / מתיחות','אחר'];
 const MEALS=['בוקר','צהריים','ערב','נשנוש'];
 
 const EXERCISES={
@@ -392,10 +393,10 @@ const EX_IMG={"סקוואט": "00.jpg", "סקוואט קדמי": "01.jpg", "לח
 const RX=['💪','🔥','👏','❤️'];
 const RECIPE_URL='https://claude.ai/artifact/NLQ4ctBxTjwHVFV1uQJnZf';
 const PHOTO_URL='https://claude.ai/artifact/SJ29RfbqxbbN9kdiLwrpZN';
-const S={pendingRecipe:null,recipes:{},reward:null,nudges:{},nudgedNow:false,me:null,products:{},reactions:{},open:null,edit:null,show:'me',searchRes:[],live:null,pendingMeal:null,recap:weekStart(today()),cal:today().slice(0,7),people:{},days:{},subs:{},sel:today(),tab:'log',range:30,readonly:false,ready:false,panelsKey:'',daysLoaded:{},failed:[],noticeMsg:'',peopleRaw:{},peopleJson:''};
+const S={pendingRecipe:null,recipes:{},reward:null,nudges:{},nudgedNow:false,me:null,products:{},reactions:{},open:null,edit:null,show:'me',searchRes:[],live:null,pendingMeal:null,recap:weekStart(today()),cal:today().slice(0,7),people:{},days:{},subs:{},sel:today(),tab:'log',range:30,readonly:false,ready:false,panelsKey:'',daysLoaded:{},failed:[],noticeMsg:'',peopleRaw:{},peopleJson:'',pendingW:{},listenFail:new Set(),importMeal:null,importRecipe:null,codeErr:false,linkBad:false};
 let db=null,loadTimer=null,raf=0;
 
-const color=id=>{const s=(S.people[id]&&S.people[id].slot)||0;return ['var(--p1)','var(--p2)','var(--p3)'][Math.min(s,2)]};
+const color=id=>id==='victor'?'var(--p1)':id==='racheli'?'var(--p2)':'var(--p3)';
 const nameOf=id=>(S.people[id]&&S.people[id].name)||'מישהו';
 const order=()=>{const ids=Object.keys(S.people);ids.sort((a,b)=>(a===S.me?-1:b===S.me?1:((S.people[a].slot||0)-(S.people[b].slot||0))));return ids};
 const dayOf=(id,k)=>(S.days[id]&&S.days[id][k])||null;
@@ -506,11 +507,11 @@ function renderRail(){
 }
 function panelSkeleton(id){
   const mine=id===S.me&&!S.readonly;
-  const hour=new Date().getHours();const defMeal=hour<11?'בוקר':hour<16?'צהריים':'ערב';
+  const defMeal=mealSlot();
   const forms=!mine?'':'<div class="quick">'+[['ex','תרגיל'],['food','אוכל'],['weight','משקל'],['note','הערה']].map(a=>'<button type="button" data-open="'+a[0]+'" id="open-'+a[0]+'" aria-expanded="false">'+a[1]+'</button>').join('')+'</div>'+
    '<button type="button" class="primary" id="live-open">מצב אימון</button>'+
    '<div class="drawer" id="dr-ex" hidden><div class="chips" id="tpl-chips"></div><div class="chips" id="ex-favs"></div>'+
-     '<form class="add" id="f-ex"><select id="e-name" hidden aria-hidden="true" tabindex="-1"></select><input id="e-custom" type="hidden"><button type="button" class="pickbtn" id="e-pick" style="grid-column:span 6"></button>'+
+     '<form class="add" id="f-ex"><button type="button" class="pickbtn" id="e-pick" style="grid-column:span 6"></button>'+
      '<label class="f w2">כמה סטים<input id="e-sets" type="number" min="1" max="20" inputmode="numeric"></label><div class="setrows" id="e-rows" style="grid-column:span 6" hidden></div>'+
      '<p class="hint" id="e-hint" style="grid-column:span 6"></p><div class="sug" id="e-sug" style="grid-column:span 6" hidden></div>'+
      '<div class="w4"><button class="primary" id="e-add">הוספת תרגיל</button></div><div class="w2"><button type="button" class="ghost" data-cancel hidden>ביטול</button></div></form>'+
@@ -518,19 +519,19 @@ function panelSkeleton(id){
      '<details id="tpl-box"><summary>שמירת התרגילים של היום כתוכנית</summary><form id="f-tpl" class="inlineform"><input id="tpl-name" type="text" maxlength="40" required placeholder="למשל: דחיפה" aria-label="שם התוכנית"><button class="iconbtn" id="tpl-save">שמירה</button></form><div class="chips" id="tpl-manage"></div></details>'+
      '</div>'+
    '<div class="drawer" id="dr-food" hidden><label class="check" id="share-l" hidden><input id="share-on" type="checkbox"><span id="share-txt"></span></label><div id="share-split" hidden><label class="f"><span id="share-pct"></span><input id="share-range" type="range" min="10" max="90" step="10" value="50"></label></div><div class="scanrow"><button type="button" class="scanbtn" id="scan-live">סריקת ברקוד</button><a class="scanbtn" id="photo-link" href="'+PHOTO_URL+'" target="_blank" rel="noopener">צילום ארוחה</a></div>'+
-     '<form class="bcman" id="f-bc"><input id="bc-manual" type="text" inputmode="numeric" maxlength="14" aria-label="מספר ברקוד" placeholder="מספר ברקוד"><button class="iconbtn" id="bc-go">חיפוש</button></form>'+
+     '<form class="bcman" id="f-bc"><input id="bc-manual" type="text" inputmode="numeric" maxlength="40" aria-label="מספר ברקוד" placeholder="מספר ברקוד"><button class="iconbtn" id="bc-go">חיפוש</button></form>'+
      '<form class="bcman" id="f-search"><input id="s-q" type="search" maxlength="80" aria-label="חיפוש מוצר לפי שם" placeholder="חיפוש מוצר לפי שם"><button class="iconbtn" id="s-go">חיפוש</button></form><div id="s-res" class="results"></div>'+
      '<p class="hint" id="scan-msg" hidden></p><div class="card" id="scan-card" hidden></div><div class="chips" id="food-favs"></div>'+
      '<button type="button" class="ghost" id="copy-open">כמו ביום קודם</button><div id="copy-box" class="results" hidden></div>'+
      '<button type="button" class="ghost" id="rc-open">מתכונים של הבית</button><div id="rc-box" class="results" hidden><div id="rc-list" class="results"></div><div class="btnrow"><button type="button" class="ghost" id="rc-new">מתכון חדש</button><a class="ghost linkbtn" href="'+RECIPE_URL+'" target="_blank" rel="noopener">מתכון עם Claude</a></div>'+
      '<div class="card" id="rc-log" hidden><strong id="rc-log-t"></strong><label class="f">כמה מנות אכלת?<input id="rc-por" type="number" min="0.25" max="50" step="0.25" inputmode="decimal"></label><p class="hint" id="rc-log-calc"></p><div class="btnrow"><button type="button" class="primary" id="rc-log-add">הוספה לארוחה</button><button type="button" class="iconbtn" id="rc-log-x">ביטול</button></div></div>'+
-     '<form class="card" id="rc-form" hidden><label class="f">שם המתכון<input id="rc-name" type="text" maxlength="60" required></label><label class="f">לכמה מנות?<input id="rc-serv" type="number" min="1" max="100" step="1" inputmode="numeric" required></label><p class="hint">לכל מרכיב: כמה גרם נכנסו, וערכים ל־100 גרם. מוצר ששמרתם מתמלא לבד.</p><datalist id="prod-list"></datalist><div id="rc-ings" class="results"></div><button type="button" class="ghost" id="rc-add-ing">עוד מרכיב</button><p class="hint" id="rc-calc"></p><div class="btnrow"><button class="primary" id="rc-save">שמירת המתכון</button><button type="button" class="iconbtn" id="rc-x">סגירה</button></div><button type="button" class="ghost" id="rc-del" hidden>מחיקת המתכון</button></form></div>'+
+     '<form class="card" id="rc-form" hidden><label class="f">שם המתכון<input id="rc-name" type="text" maxlength="60" required></label><label class="f">לכמה מנות?<input id="rc-serv" type="number" min="0.5" max="100" step="any" inputmode="decimal" required></label><p class="hint">לכל מרכיב: כמה גרם נכנסו, וערכים ל־100 גרם. מוצר ששמרתם מתמלא לבד.</p><datalist id="prod-list"></datalist><div id="rc-ings" class="results"></div><button type="button" class="ghost" id="rc-add-ing">עוד מרכיב</button><p class="hint" id="rc-calc"></p><div class="btnrow"><button class="primary" id="rc-save">שמירת המתכון</button><button type="button" class="iconbtn" id="rc-x">סגירה</button></div><button type="button" class="ghost" id="rc-del" hidden>מחיקת המתכון</button></form></div>'+
      '<form class="add" id="f-meal"><label class="f w2">ארוחה<select id="m-type">'+MEALS.map(x=>'<option'+(x===defMeal?' selected':'')+'>'+x+'</option>').join('')+'</select></label><label class="f w4">מה אכלת<input id="m-name" type="text" maxlength="200" required placeholder="חביתה, סלט ופרוסת לחם"></label>'+
      '<label class="f w3">קלוריות<input id="m-kcal" type="number" min="0" max="10000" inputmode="numeric"></label><label class="f w3">חלבון (ג׳)<input id="m-prot" type="number" min="0" max="1000" step="any" inputmode="decimal"></label><label class="f w3">פחמימות (ג׳)<input id="m-carb" type="number" min="0" max="2000" step="any" inputmode="decimal"></label><label class="f w3">שומן (ג׳)<input id="m-fat" type="number" min="0" max="1000" step="any" inputmode="decimal"></label>'+
      '<div class="w4"><button class="primary" id="m-add">הוספה</button></div><div class="w2"><button type="button" class="ghost" data-cancel hidden>ביטול</button></div></form></div>'+
    '<div class="drawer" id="dr-weight" hidden><label class="f">משקל הבוקר (ק״ג)<input id="f-weight" type="number" step="0.1" min="20" max="300" inputmode="decimal"></label></div>'+
    '<div class="drawer" id="dr-note" hidden><textarea id="f-note" maxlength="1000" aria-label="הערה ליום" placeholder="איך היה היום?"></textarea></div>';
-  return '<section class="panel'+(mine?' mine':'')+'" data-id="'+esc(id)+'" style="--c:'+color(id)+'">'+
+  return '<section class="panel'+(id===S.me?' self':'')+(mine?' mine':'')+'" data-id="'+esc(id)+'" style="--c:'+color(id)+'">'+
    '<div class="phead"><span class="plate"></span><h2></h2><span class="upd"></span></div><div class="stats"></div><p class="hint macro" hidden></p>'+forms+
    '<div class="sec sec-ex"><h3>תרגילים</h3><ul class="items ex"></ul></div><div class="sec sec-ml"><h3>אוכל</h3><ul class="items ml"></ul></div><div class="sec sec-nt"><h3>הערה ליום</h3><p class="notetext"></p></div></section>';
 }
@@ -558,6 +559,9 @@ function fillPanel(el,id){
   el.querySelector('.sec-ex').hidden=mine&&!ex.length;el.querySelector('.sec-ml').hidden=mine&&!ml.length;el.querySelector('.sec-nt').hidden=mine&&!(d&&d.note);
   el.querySelector('.notetext').textContent=(d&&d.note)||'–';
   if(mine){const w=$('f-weight'),n=$('f-note');
+    /* the day changed while a field was focused: save to the day it was opened on, then show the new day */
+    [w,n].forEach(el=>{if(el&&document.activeElement===el&&el.dataset.date&&el.dataset.date!==k){flushField(el.id,true);el.blur()}});
+    const cb=$('copy-box');if(cb&&!cb.hidden)drawCopy();
     if(w&&document.activeElement!==w)w.value=d&&d.weight!=null?d.weight:'';
     if(n&&document.activeElement!==n)n.value=(d&&d.note)||'';
     renderFavs();renderTemplates();syncDrawers()}
@@ -571,15 +575,11 @@ const perf=x=>{const rs=x.rows||[];if(rs.length&&!rs.every(r=>r.reps===rs[0].rep
 /* limit: ignore days after it, so a past date never gets "previous session" from its future */
 function favExercises(id,limit){return memo(id,'fav'+(limit||''),()=>{const c=Object.create(null),ds=S.days[id]||{};Object.keys(ds).sort().forEach(k=>{if(limit&&k>limit)return;(ds[k].exercises||[]).forEach(x=>{const r=c[x.name]||(c[x.name]={name:x.name,n:0,best:null,bestReps:null});r.n++;r.lastK=k;r.last=x;const b=exBest(x),q=exTopReps(x);if(b!=null&&(r.best==null||b>r.best))r.best=b;if(q!=null&&(r.bestReps==null||q>r.bestReps))r.bestReps=q})});
   return Object.values(c).sort((a,b)=>b.n-a.n||String(b.lastK).localeCompare(a.lastK))})}
-let favKey=null;
+let favKey=null,exName='';
 function renderFavs(){
-  const fx=favExercises(S.me),ff=smartFoods(S.me).slice(0,8),k=fx.map(f=>f.name).join('|'),sel=$('e-name');if(!sel)return;
-  if(k!==favKey||!sel.options.length){favKey=k;const v=sel.value;
-    let h='<option value="">בחירת תרגיל…</option>';
-    if(fx.length)h+='<optgroup label="המועדפים שלי">'+fx.slice(0,8).map(f=>'<option>'+esc(f.name)+'</option>').join('')+'</optgroup>';
-    Object.keys(EXERCISES).forEach(g=>{h+='<optgroup label="'+g+'">'+EXERCISES[g].map(n=>'<option>'+esc(n)+'</option>').join('')+'</optgroup>'});
-    h+='<option value="__other">תרגיל אחר…</option>';sel.innerHTML=h;if(v)setExSel(v);showPick();
-    $('ex-favs').innerHTML=fx.slice(0,8).map(f=>'<button type="button" class="chip" data-ex="'+esc(f.name)+'">'+thumb(f.name,'s')+esc(f.name)+'</button>').join('');
+  const host=$('ex-favs');if(!host)return;const fx=favExercises(S.me),ff=smartFoods(S.me).slice(0,8),k=fx.map(f=>f.name).join('|');
+  if(k!==favKey||!$('e-pick').children.length){favKey=k;showPick();
+    host.innerHTML=fx.slice(0,8).map(f=>'<button type="button" class="chip" data-ex="'+esc(f.name)+'">'+thumb(f.name,'s')+esc(f.name)+'</button>').join('');
   }
   $('food-favs').innerHTML=ff.map(f=>'<button type="button" class="chip" data-food="'+esc(f.name)+'">'+esc(f.name)+'</button>').join('');
 }
@@ -591,31 +591,34 @@ function buildRows(prev,fresh){
   host.hidden=!n;if(!n){host.innerHTML='';return}
   let h='<div class="setrow head"><span>סט</span><span>חזרות</span><span>משקל (ק״ג)</span></div>';
   for(let i=0;i<n;i++){const o=old[i]||{reps:first.reps,kg:first.kg};const differs=i>0&&fresh&&(o.reps!==first.reps||o.kg!==first.kg);
-    h+='<div class="setrow" data-i="'+i+'"><b>'+(i+1)+'</b><input class="r-reps" id="e-r'+i+'" type="number" min="0" max="500" inputmode="numeric" aria-label="חזרות בסט '+(i+1)+'" value="'+(o.reps!=null?o.reps:'')+'"'+((o.t||differs)?' data-touched="1"':'')+'>'+
-       '<input class="r-kg" id="e-k'+i+'" type="number" min="0" max="500" step="0.5" inputmode="decimal" aria-label="משקל בסט '+(i+1)+'" value="'+(o.kg!=null?o.kg:'')+'"'+((o.u||differs)?' data-touched="1"':'')+'></div>'}
+    h+='<div class="setrow" data-i="'+i+'"><b>'+(i+1)+'</b><input class="r-reps" id="e-r'+i+'" type="number" min="0" max="500" inputmode="numeric" aria-label="חזרות בסט '+(i+1)+'" value="'+esc(o.reps!=null?o.reps:'')+'"'+((o.t||differs)?' data-touched="1"':'')+'>'+
+       '<input class="r-kg" id="e-k'+i+'" type="number" min="0" max="500" step="any" inputmode="decimal" aria-label="משקל בסט '+(i+1)+'" value="'+esc(o.kg!=null?o.kg:'')+'"'+((o.u||differs)?' data-touched="1"':'')+'></div>'}
   host.innerHTML=h;
 }
-const thumb=(name,cls)=>EX_IMG[name]?'<img class="thumb '+(cls||'')+'" src="ex/'+EX_IMG[name]+'" alt="" loading="lazy">':'<span class="thumb '+(cls||'')+'" aria-hidden="true">'+esc(String(name||'?').trim().charAt(0))+'</span>';
-function setExSel(name){const sel=$('e-name');sel.value=name;if(sel.value!==name){const o=document.createElement('option');o.textContent=name;sel.append(o);sel.value=name}}
-function showPick(){const b=$('e-pick');if(!b)return;const n=$('e-name').value;b.innerHTML=n?thumb(n)+'<span>'+esc(n)+'</span>':'<span class="thumb" aria-hidden="true">+</span><span>בחירת תרגיל</span>'}
+const imgOf=name=>Object.prototype.hasOwnProperty.call(EX_IMG,name)?EX_IMG[name]:null;
+const thumb=(name,cls)=>imgOf(name)?'<img class="thumb '+(cls||'')+'" src="ex/'+imgOf(name)+'" alt="" loading="lazy" data-letter="'+esc(String(name).charAt(0))+'">':'<span class="thumb '+(cls||'')+'" aria-hidden="true">'+esc(String(name||'?').trim().charAt(0))+'</span>';
+/* a picture that fails to load, offline for example, becomes the first letter */
+document.addEventListener('error',e=>{const t=e.target;if(t&&t.tagName==='IMG'&&t.classList.contains('thumb')){const s=document.createElement('span');s.className=t.className;s.setAttribute('aria-hidden','true');s.textContent=t.dataset.letter||'?';t.replaceWith(s)}},true);
+function setExSel(name){exName=name||'';showPick()}
+function showPick(){const b=$('e-pick');if(!b)return;b.innerHTML=exName?thumb(exName)+'<span>'+esc(exName)+'</span>':'<span class="thumb" aria-hidden="true">+</span><span>בחירת תרגיל</span>'}
 let pkCb=null,pkGroup=null;
 function openPicker(cb,group){pkCb=cb;pkGroup=group||null;$('pk-q').value='';$('picker').hidden=false;drawPicker()}
 function closePicker(){$('picker').hidden=true;pkCb=null}
+const nameKey=s=>String(s).toLowerCase().replace(/[׳'`´״"]/g,'').replace(/\s+/g,' ').trim();
 function drawPicker(){
-  const q=$('pk-q').value.trim(),fx=S.me?favExercises(S.me).slice(0,8).map(f=>f.name):[],tile=n=>'<button type="button" class="pk" data-pk="'+esc(n)+'">'+thumb(n)+'<span>'+esc(n)+'</span></button>';
-  $('pk-groups').innerHTML='<button type="button" data-g="" aria-pressed="'+(!pkGroup)+'">הכול</button>'+Object.keys(EXERCISES).map(g=>'<button type="button" data-g="'+g+'" aria-pressed="'+(pkGroup===g)+'">'+g+'</button>').join('');
+  const q=$('pk-q').value.replace(/\s+/g,' ').trim(),all=S.me?favExercises(S.me).map(f=>f.name):[],fx=all.slice(0,8),tile=n=>'<button type="button" class="pk" data-pk="'+esc(n)+'">'+thumb(n)+'<span>'+esc(n)+'</span></button>';
+  $('pk-groups').innerHTML='<button type="button" data-g="" aria-pressed="'+(!pkGroup&&!q)+'">הכול</button>'+Object.keys(EXERCISES).map(g=>'<button type="button" data-g="'+g+'" aria-pressed="'+(pkGroup===g&&!q)+'">'+g+'</button>').join('');
   let h='';
-  if(q){const all=[...new Set(fx.concat(...Object.values(EXERCISES)))].filter(n=>n.includes(q));h=all.map(tile).join('')+'<button type="button" class="pk" data-pk="'+esc(q)+'">'+thumb(q)+'<span>הוספת ״'+esc(q)+'״ כתרגיל חדש</span></button>'}
+  if(q){const nk=nameKey(q),found=[...new Set(all.concat(...Object.values(EXERCISES)))].filter(n=>nameKey(n).includes(nk));h=found.map(tile).join('');if(!found.some(n=>nameKey(n)===nk))h+='<button type="button" class="pk" data-pk="'+esc(q)+'">'+thumb(q)+'<span>הוספת ״'+esc(q)+'״ כתרגיל חדש</span></button>'}
   else{if(!pkGroup&&fx.length)h+='<h3 class="pk-h">המועדפים שלי</h3>'+fx.map(tile).join('');Object.keys(EXERCISES).forEach(g=>{if(!pkGroup||pkGroup===g)h+='<h3 class="pk-h">'+g+'</h3>'+EXERCISES[g].map(tile).join('')})}
   $('pk-grid').innerHTML=h;
 }
 function pickExercise(name){
-  const sel=$('e-name');if(name)setExSel(name);showPick();
-  const f=favExercises(S.me).find(x=>x.name===sel.value);
-  buildRows(f&&f.last?rowsOf(f.last):[],true);
-  if(f&&f.last){$('e-sets').value=rowsOf(f.last).length||f.last.sets||'';$('e-hint').textContent='פעם קודמת ('+shortDate(f.lastK)+'): '+perf(f.last)+(f.best!=null?'. שיא: '+fmt(f.best,1)+' ק״ג':'')}
-  else $('e-hint').textContent='';
-  renderSug('e-sug',sel.value);
+  if(name!=null)setExSel(name);else showPick();
+  const f=favExercises(S.me,S.sel).find(x=>x.name===exName);
+  if(f&&f.last){const r=rowsOf(f.last);buildRows(r,true);$('e-sets').value=r.length||f.last.sets||'';$('e-hint').textContent='פעם קודמת ('+shortDate(f.lastK)+'): '+perf(f.last)+(f.best!=null?'. שיא: '+fmt(f.best,1)+' ק״ג':f.bestReps!=null?'. שיא: '+fmt(f.bestReps)+' חזרות':'')}
+  else{buildRows([{},{},{}],true);$('e-sets').value=exName?3:'';if(!exName)buildRows([],true);$('e-hint').textContent=''}
+  renderSug('e-sug',exName);
   const pk=$('pl-kg-p1');if(pk){const r=readRows();if(r[0]&&r[0].kg){pk.value=r[0].kg;drawPlates(pk.closest('.platebox'))}}
 }
 /* barcode */
@@ -634,23 +637,30 @@ async function decodeBarcode(file){
   for(const[max,rot]of[[2400,false],[2400,true],[1200,false],[1200,true]]){const r=await det.detect(toCanvas(bmp,max,rot));if(r[0])return r[0].rawValue}
   return null;
 }
-function stopScan(){clearTimeout(scanTimer);scanTimer=0;if(scanStream){scanStream.getTracks().forEach(t=>t.stop());scanStream=null}$('scan-video').srcObject=null;$('scanner').hidden=true}
+let scanStarting=false,scanToken=0,torchOn=false;
+function stopScan(){scanToken++;scanStarting=false;clearTimeout(scanTimer);scanTimer=0;if(scanStream){scanStream.getTracks().forEach(t=>t.stop());scanStream=null}$('scan-video').srcObject=null;$('scanner').hidden=true;torchOn=false;showTorch()}
+function showTorch(){const b=$('scan-torch');b.setAttribute('aria-pressed',String(torchOn));b.textContent=torchOn?'כיבוי פנס':'פנס'}
 async function startScan(){
+  if(scanStarting||scanStream)return;scanStarting=true;const my=++scanToken;
   scanMsg('');
-  const noCam=t=>{$('scanner').hidden=false;$('scan-torch').hidden=true;$('scan-state').textContent=t};
+  const st=$('scan-state'),noCam=t=>{scanStarting=false;$('scanner').hidden=false;$('scan-torch').hidden=true;st.textContent=t};
+  $('scanner').hidden=false;$('scan-torch').hidden=true;st.textContent='פותחים את המצלמה…';
   if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){noCam('הדפדפן לא מאפשר מצלמה כאן. אפשר לבחור תמונה מהגלריה.');return}
-  try{scanStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1080}},audio:false})}
-  catch(e){noCam('אין גישה למצלמה. אשר אותה בהגדרות הדפדפן, או בחר תמונה מהגלריה.');return}
-  const v=$('scan-video'),track=scanStream.getVideoTracks()[0];v.srcObject=scanStream;$('scanner').hidden=false;$('scan-state').textContent='כוון את הברקוד למסגרת, במרחק של כ־15 ס״מ';try{await v.play()}catch(e){}
-  try{const cap=track.getCapabilities?track.getCapabilities():{};if(cap.focusMode&&cap.focusMode.includes('continuous'))await track.applyConstraints({advanced:[{focusMode:'continuous'}]});$('scan-torch').hidden=!cap.torch}catch(e){}
-  let det;try{det=await getDetector()}catch(e){stopScan();scanMsg('קורא הברקודים לא נטען. בדוק את החיבור או הקלד את המספר.');return}
+  let stream;try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1920},height:{ideal:1080}},audio:false})}
+  catch(e){if(my===scanToken)noCam('אין גישה למצלמה. אפשר לאשר אותה בהגדרות הדפדפן, או לבחור תמונה מהגלריה.');return}
+  /* closed while the camera was opening */
+  if(my!==scanToken){stream.getTracks().forEach(t=>t.stop());return}
+  scanStarting=false;scanStream=stream;
+  const v=$('scan-video'),track=scanStream.getVideoTracks()[0];v.srcObject=scanStream;st.textContent='מכוונים את הברקוד למסגרת, במרחק של כ־15 ס״מ';try{await v.play()}catch(e){}
+  try{const cap=track.getCapabilities?track.getCapabilities():{};if(cap.focusMode&&cap.focusMode.includes('continuous'))await track.applyConstraints({advanced:[{focusMode:'continuous'}]});$('scan-torch').hidden=!cap.torch;showTorch()}catch(e){}
+  let det;try{det=await getDetector()}catch(e){stopScan();scanMsg('קורא הברקודים לא נטען. אפשר לבדוק את החיבור או להקליד את המספר.');return}
   const c=document.createElement('canvas'),x=c.getContext('2d',{willReadFrequently:true});let round=0;const started=Date.now();
   const tick=async()=>{if(!scanStream)return;let code=null;
     if(v.videoWidth){const w=v.videoWidth,h=v.videoHeight;round++;
       /* alternate the whole frame with an enlarged middle band, so both far and close barcodes read */
       const band=round%2===0,sh=band?Math.round(h*.4):h,sy=band?Math.round((h-sh)/2):0,sc=band&&w<1400?2:1;c.width=w*sc;c.height=sh*sc;x.imageSmoothingEnabled=true;x.drawImage(v,0,sy,w,sh,0,0,c.width,c.height);
       try{const r=await det.detect(c);if(r[0])code=r[0].rawValue}catch(e){}
-      if(!code&&Date.now()-started>12000)$('scan-state').textContent='עדיין לא נקלט. קרב או הרחק מעט, הוסף אור, או סגור והקלד את המספר.';
+      if(!code&&Date.now()-started>12000)$('scan-state').textContent='עדיין לא נקלט. אפשר לקרב או להרחיק מעט, להוסיף אור, או לסגור ולהקליד את המספר.';
     }
     if(!scanStream)return;
     if(code){try{navigator.vibrate&&navigator.vibrate(80)}catch(e){}stopScan();S.open='food';syncDrawers();openProduct(code);return}
@@ -670,19 +680,21 @@ async function lookupOFF(code){
   const j=await r.json();if(!j||j.status===0||!j.product)return null;
   return offParse(j.product);
 }
-async function searchOFF(q,il){
+async function searchOFF(q,il,ac){
   const u='https://world.openfoodfacts.org/cgi/search.pl?action=process&json=1&search_simple=1&page_size=12&fields=code,'+OFF_FIELDS+'&search_terms='+encodeURIComponent(q)+(il?'&tagtype_0=countries&tag_contains_0=contains&tag_0=israel':'');
-  const r=await fetch(u);if(!r.ok)throw new Error('http');const j=await r.json();
+  const r=await fetch(u,ac?{signal:ac.signal}:undefined);if(!r.ok)throw new Error('http');const j=await r.json();
   return (j.products||[]).filter(p=>p.code&&(p.product_name||p.product_name_he)).map(p=>Object.assign(offParse(p),{code:String(p.code).replace(/\D/g,'')})).filter(p=>p.code.length>=6&&p.code.length<=14&&p.kcal100!=null);
 }
+let searchSeq=0,searchAbort=null;
 async function runSearch(q){
-  const box=$('s-res');box.textContent='';q=q.trim();if(q.length<2)return;
+  const box=$('s-res');box.textContent='';q=q.trim();const my=++searchSeq;if(searchAbort)searchAbort.abort();searchAbort=null;if(q.length<2){scanMsg('צריך לפחות שתי אותיות כדי לחפש.');return}
   const low=q.toLowerCase();const local=Object.values(S.products).filter(p=>p.name&&p.name.toLowerCase().includes(low)).slice(0,6).map(p=>Object.assign({},p,{code:p.barcode,local:true}));
-  S.searchRes=local;drawSearch();scanMsg('מחפש במאגר…');
-  try{let res=await searchOFF(q,true);if(res.length<3)res=res.concat(await searchOFF(q,false));
+  S.searchRes=local;drawSearch();scanMsg('מחפשים במאגר…');
+  const ac=window.AbortController?new AbortController():null;searchAbort=ac;
+  try{let res=await searchOFF(q,true,ac);if(my!==searchSeq)return;if(res.length<3)res=res.concat(await searchOFF(q,false,ac));if(my!==searchSeq)return;
     const seen=new Set(local.map(p=>p.code));S.searchRes=local.concat(res.filter(p=>{if(seen.has(p.code))return false;seen.add(p.code);return true})).slice(0,14);
-    drawSearch();scanMsg(S.searchRes.length?'':'לא נמצאו תוצאות. נסה מילה אחרת, או סרוק את הברקוד.');
-  }catch(e){scanMsg(local.length?'המאגר לא זמין כרגע. אלה המוצרים ששמרתם.':'המאגר לא זמין כרגע. נסה שוב בעוד דקה.')}
+    drawSearch();scanMsg(S.searchRes.length?'':'לא נמצאו תוצאות. אפשר לנסות מילה אחרת, או לסרוק את הברקוד.');
+  }catch(e){if(my!==searchSeq)return;scanMsg(local.length?'המאגר לא זמין כרגע. אלה המוצרים ששמרתם.':'המאגר לא זמין כרגע. אפשר לנסות שוב בעוד דקה.')}
 }
 function drawSearch(){$('s-res').innerHTML=S.searchRes.map((p,i)=>'<button type="button" class="res" data-res="'+i+'"><strong>'+esc(p.name)+'</strong>'+(p.brand?', '+esc(p.brand):'')+'<small>'+(p.local?'נשמר אצלכם, ':'')+fmt(p.kcal100)+' קל׳ ל־100 ג׳</small></button>').join('')}
 function scanMsg(t){const m=$('scan-msg');if(!m)return;m.textContent=t||'';m.hidden=!t}
@@ -690,7 +702,7 @@ async function openProduct(code){
   code=String(code||'').replace(/\D/g,'');if(code.length<6||code.length>14){scanMsg('מספר ברקוד צריך להכיל בין 6 ל־14 ספרות.');return}
   scanCode=code;const known=S.products[code];
   if(known){renderProduct(code,known,'known');return}
-  scanMsg('מחפש את המוצר במאגר…');$('scan-card').hidden=true;
+  scanMsg('מחפשים את המוצר במאגר…');$('scan-card').hidden=true;
   let found=null,failed=false;try{found=await lookupOFF(code)}catch(e){failed=true}
   if(scanCode!==code)return;
   renderProduct(code,found,failed?'error':found?'off':'none');
@@ -698,10 +710,11 @@ async function openProduct(code){
 const UNIT_NAMES=['פרוסה','כף','כפית','כוס','יחידה','מנה'];
 let scanUnits=[];
 function renderProduct(code,p,src){
+  if(S.edit)clearEdit(true);
   scanCode=code;scanMsg('');$('s-res').textContent='';const c=$('scan-card');c.hidden=false;p=p||{};
   scanUnits=[{name:'גרם',grams:1}].concat(p.units||[]);
   const offL='<a href="https://world.openfoodfacts.org/product/'+esc(code)+'" target="_blank" rel="noopener">Open Food Facts</a>';
-  const note={known:'',off:'הערכים מ־'+offL+'. שווה להשוות לאריזה לפני ההוספה.',none:'המוצר לא נמצא במאגר. הקלד את הערכים מהאריזה, והמוצר יישמר לשניכם לפעם הבאה.',error:'לא הצלחנו להגיע למאגר. בדוק את החיבור, או הקלד את הערכים מהאריזה.'}[src];
+  const note={known:'',off:'הערכים מ־'+offL+'. שווה להשוות לאריזה לפני ההוספה.',none:'המוצר לא נמצא במאגר. אפשר להקליד את הערכים מהאריזה, והמוצר יישמר לשניכם לפעם הבאה.',error:'לא הצלחנו להגיע למאגר. אפשר לבדוק את החיבור, או להקליד את הערכים מהאריזה.'}[src];
   const v=x=>esc(x!=null?x:'');
   const lastU=p.lastUnit||(p.units&&p.units[0]&&p.units[0].name)||'גרם';const lastQ=p.lastQty!=null?p.lastQty:(lastU!=='גרם'?1:(p.grams||''));
   c.innerHTML='<strong>'+(src==='known'?'המוצר מוכר':src==='off'?'נמצא במאגר':'מוצר חדש')+' עם ברקוד '+esc(code)+'</strong>'+(note?'<p class="hint">'+note+'</p>':'')+
@@ -712,16 +725,16 @@ function renderProduct(code,p,src){
    '<p class="hint" id="p-calc"></p><div class="btnrow"><button class="primary" id="p-add">הוספה לארוחה</button><button type="button" class="iconbtn" id="p-cancel">ביטול</button></div></form>';
   fillUnits(lastU);calcProduct();
 }
-function fillUnits(sel){const u=$('p-unit');u.innerHTML=scanUnits.map(x=>'<option value="'+esc(x.name)+'">'+esc(x.name)+(x.grams!==1?' ('+fmt(x.grams)+' ג׳)':'')+'</option>').join('');u.value=scanUnits.some(x=>x.name===sel)?sel:'גרם'}
+function fillUnits(sel){const u=$('p-unit');u.innerHTML=scanUnits.map(x=>'<option value="'+esc(x.name)+'">'+esc(x.name)+(x.grams!==1?' ('+fmt(x.grams)+' ג׳)':'')+'</option>').join('');u.value=scanUnits.some(x=>x.name===sel)?sel:'גרם';u.dataset.prev=u.value}
 function scanGrams(){const q=num($('p-qty').value),u=scanUnits.find(x=>x.name===$('p-unit').value);return q&&u?q*u.grams:null}
 function calcProduct(){const g=scanGrams(),at=(id)=>{const v=num($(id).value);return v!=null&&g?v*g/100:null},k=at('p-kcal'),pr=at('p-prot');
   $('p-calc').textContent=k!=null?'סך הכול: '+fmt(k)+' קל׳'+(pr!=null?', '+fmt(pr,1)+' ג׳ חלבון':''):''}
 function renderPanels(){
-  const ids=order(),k=ids.map(i=>i+':'+(S.people[i].slot||0)).join('|')+(S.readonly?'r':'');
+  const ids=order(),k=S.me+'/'+ids.join('|')+(S.readonly?'r':'');
   const host=$('panels');
   if(k!==S.panelsKey){host.innerHTML=ids.map(panelSkeleton).join('');S.panelsKey=k}
   host.dataset.show=S.show;host.querySelectorAll('.panel').forEach(el=>fillPanel(el,el.dataset.id));
-  const others=ids.filter(i=>i!==S.me);$('seg').hidden=!others.length||S.readonly;$('seg').innerHTML='<button type="button" data-show="me" aria-pressed="'+(S.show==='me')+'">שלי</button><button type="button" data-show="other" aria-pressed="'+(S.show==='other')+'">'+esc(others.map(nameOf).join(', ')||'השני')+'</button>';
+  const others=ids.filter(i=>i!==S.me);$('seg').hidden=!others.length;$('seg').innerHTML='<button type="button" data-show="me" aria-pressed="'+(S.show==='me')+'">שלי</button><button type="button" data-show="other" aria-pressed="'+(S.show==='other')+'">'+esc(others.map(nameOf).join(', ')||'השני')+'</button>';
 }
 function renderFeed(){
   const since=addDays(today(),-14),items=[];
@@ -730,9 +743,11 @@ function renderFeed(){
     (d.meals||[]).forEach(x=>items.push({id,at:x.at,k,tx:x.meal+': '+x.name}));
     if(d.weight!=null&&d.weightAt)items.push({id,at:d.weightAt,k,tx:'שקילה: '+fmt(d.weight,1)+' ק״ג'});
   })});
-  Object.values(S.reactions).forEach(r=>items.push({id:r.from,at:r.at,k:r.date,tx:r.emoji+' על '+(r.label||'הזנה')+' של '+nameOf(r.to)}));
+  Object.values(S.reactions).forEach(r=>{if(isDateKey(r.date))items.push({id:r.from,at:r.at,k:r.date,tx:r.emoji+' על '+(r.label||'הזנה')+' של '+nameOf(r.to)})});
   items.sort((a,b)=>String(b.at||'').localeCompare(String(a.at||'')));
-  $('feed').innerHTML=items.slice(0,10).map(i=>{const a=new Date(i.at);const when=isNaN(a)?shortDate(i.k):(key(a)===today()?'היום':shortDate(key(a)))+' '+pad(a.getHours())+':'+pad(a.getMinutes());
+  /* the row shows the day the entry belongs to, and an hour only if it was entered on that day */
+  const dayWord=k=>k===today()?'היום':k===addDays(today(),-1)?'אתמול':shortDate(k);
+  $('feed').innerHTML=items.slice(0,10).map(i=>{const a=new Date(i.at);const when=dayWord(i.k)+(!isNaN(a)&&key(a)===i.k?' '+pad(a.getHours())+':'+pad(a.getMinutes()):'');
     return '<li><span class="plate" style="--c:'+color(i.id)+'"></span><span class="tx"><strong>'+esc(nameOf(i.id))+'</strong>, '+esc(i.tx)+'</span><time>'+when+'</time></li>'}).join('')||'<li class="none">עוד לא הוזן כלום. הוסיפו אימון או ארוחה ביומן, והם יופיעו כאן אצל שניכם.</li>';
 }
 
@@ -749,22 +764,28 @@ function summary(id,from){
 }
 function renderSummary(){
   const ids=order(),from=rangeFrom(),s={};ids.forEach(i=>s[i]=summary(i,from));
-  const sign=v=>v==null?'–':(v>0?'+':'')+fmt(v,1);
+  const sign=v=>signed(v,'');
   const rows=[['משקל אחרון (ק״ג)',i=>fmt(s[i].last,1)],['שינוי במשקל בטווח',i=>sign(s[i].change)],['מגמה שבועית',i=>sign(s[i].trend)],
     ['יעד משקל',i=>fmt((S.people[i].goals||{}).weight,1)],
-    ['אימונים השבוע',i=>{const g=(S.people[i].goals||{}).workouts;return fmt(s[i].week)+(g?' מתוך '+fmt(g):'')}],
+    ['אימונים השבוע',i=>fmt(weekWorkouts(i,weekStart(today())))+' מתוך '+fmt(goalOf(i))],
     ['אימונים בטווח',i=>fmt(s[i].workouts)],['סטים בטווח',i=>fmt(s[i].sets)],
     ['ממוצע קלוריות ליום*',i=>fmt(s[i].kcal)],['ממוצע חלבון ליום*',i=>fmt(s[i].protein)],['ממוצע פחמימות ליום*',i=>fmt(s[i].carbs)],['ממוצע שומן ליום*',i=>fmt(s[i].fat)],['ימים עם הזנה',i=>fmt(s[i].logged)+' מתוך '+S.range]];
   $('summary').innerHTML='<table><thead><tr><th></th>'+ids.map(i=>'<th>'+esc(nameOf(i))+'</th>').join('')+'</tr></thead><tbody>'+
     rows.map(r=>'<tr><th scope="row">'+r[0]+'</th>'+ids.map(i=>'<td>'+r[1](i)+'</td>').join('')+'</tr>').join('')+'</tbody></table>'+
     '<p class="help" style="margin-top:8px">* רק בימים שהוזנו בהם הערכים האלה.</p>';
 }
-function niceScale(lo,hi){
-  if(lo===hi){lo-=1;hi+=1}
+/* a change smaller than the display can show reads as no change */
+function signed(v,unit){if(v==null)return '–';const r=Math.round(v*10)/10;if(!r)return 'ללא שינוי';return (r>0?'+':'')+fmt(r,1)+unit}
+/* dec: decimals on the axis. minSpan keeps a flat line from getting repeated or meaningless ticks. */
+function niceScale(lo,hi,dec,minSpan){
+  if(!isFinite(lo)||!isFinite(hi)){lo=0;hi=1}
+  const prec=dec?Math.pow(10,-dec):1,span=Math.max(minSpan||0,prec*4);
+  if(hi-lo<span){const mid=(lo+hi)/2;lo=Math.max(0,mid-span/2);hi=lo+span}
   const raw=(hi-lo)/4,mag=Math.pow(10,Math.floor(Math.log10(raw)));
-  const step=[1,2,2.5,5,10].map(m=>m*mag).find(s=>s>=raw);
+  const fits=s=>s>=raw&&Math.abs(s/prec-Math.round(s/prec))<1e-6;
+  const step=[1,2,2.5,5,10,20].map(m=>m*mag).find(fits)||Math.ceil(raw/prec)*prec;
   const a=Math.floor(lo/step)*step,b=Math.ceil(hi/step)*step,t=[];
-  for(let v=a;v<=b+step/2;v+=step)t.push(+v.toFixed(4));
+  for(let i=0,v=a;v<=b+step/2&&i<60;v+=step,i++)t.push(+v.toFixed(4));
   return{a,b,t};
 }
 function tip(html,x,y){const t=$('tip');t.innerHTML=html;t.hidden=false;
@@ -774,12 +795,12 @@ function lineChart(el,o){
   const pts=o.pts;
   if(!pts.length){el.innerHTML='<div class="ctitle"><span class="plate" style="--c:'+o.c+'"></span>'+esc(o.title)+'</div><p class="nodata">'+esc(o.empty)+'</p>';return}
   const W=Math.max(el.clientWidth||600,260),H=190,m={t:14,r:52,b:24,l:44};
-  const vals=pts.map(p=>p.v).concat(o.goal!=null?[o.goal]:[]);
-  const sc=niceScale(Math.min.apply(null,vals),Math.max.apply(null,vals));
+  const vals=pts.concat(o.trend||[]).map(p=>p.v).concat(o.goal!=null?[o.goal]:[]);
+  const sc=niceScale(Math.min.apply(null,vals),Math.max.apply(null,vals),o.dec,o.minSpan);
   const d0=dayNum(o.from),d1=dayNum(today()),span=Math.max(d1-d0,1);
   const X=k=>m.l+(dayNum(k)-d0)/span*(W-m.l-m.r),Y=v=>H-m.b-(v-sc.a)/((sc.b-sc.a)||1)*(H-m.t-m.b);
   let s='<svg dir="ltr" viewBox="0 0 '+W+' '+H+'" height="'+H+'" role="img" aria-label="'+esc(o.title)+'">';
-  sc.t.forEach(v=>{s+='<line x1="'+m.l+'" x2="'+(W-m.r)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="var(--grid)"/><text x="'+(m.l-6)+'" y="'+(Y(v)+4)+'" text-anchor="end">'+fmt(v,1)+'</text>'});
+  sc.t.forEach(v=>{s+='<line x1="'+m.l+'" x2="'+(W-m.r)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="var(--grid)"/><text x="'+(m.l-6)+'" y="'+(Y(v)+4)+'" text-anchor="end">'+fmt(v,o.dec)+'</text>'});
   for(let i=0;i<4;i++){const k=addDays(o.from,Math.round(span*i/3));s+='<text x="'+X(k)+'" y="'+(H-6)+'" text-anchor="'+(i===0?'start':i===3?'end':'middle')+'">'+shortDate(k)+'</text>'}
   if(o.goal!=null)s+='<line x1="'+m.l+'" x2="'+(W-m.r)+'" y1="'+Y(o.goal)+'" y2="'+Y(o.goal)+'" stroke="var(--muted)" stroke-dasharray="4 4"/><text x="'+(W-m.r+6)+'" y="'+(Y(o.goal)+4)+'">יעד</text>';
   if(o.trend&&o.trend.length>1){pts.forEach(p=>{s+='<circle cx="'+X(p.k)+'" cy="'+Y(p.v)+'" r="3" fill="'+o.c+'" opacity=".4"/>'});s+='<polyline fill="none" stroke="'+o.c+'" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" points="'+o.trend.map(p=>X(p.k)+','+Y(p.v)).join(' ')+'"/>'}
@@ -800,13 +821,17 @@ function lineChart(el,o){
 }
 function barChart(el){
   const ids=order(),t=today(),last=weekStart(t);
-  const count=Math.min(Math.ceil(S.range/7),26);const weeks=[];for(let i=count-1;i>=0;i--)weeks.push(addDays(last,-7*i));
-  const val=(id,w)=>{let s=0;for(let i=0;i<7;i++)s+=totals(dayOf(id,addDays(w,i))).sets;return s};
+  /* a year is too many weeks for a phone, so it groups by month */
+  const buckets=[];
+  if(S.range>=365){const n=parse(t);for(let i=11;i>=0;i--){const f=new Date(n.getFullYear(),n.getMonth()-i,1),l=new Date(n.getFullYear(),n.getMonth()-i+1,0);buckets.push({from:key(f),n:l.getDate(),label:(f.getMonth()+1)+'.'+String(f.getFullYear()).slice(2),tip:f.toLocaleDateString('he-IL',{month:'long',year:'numeric'})})}}
+  else{const count=Math.ceil(S.range/7);for(let i=count-1;i>=0;i--){const w=addDays(last,-7*i);buckets.push({from:w,n:7,label:shortDate(w),tip:'שבוע '+shortDate(w)})}}
+  const weeks=buckets;
+  const val=(id,b)=>{let s=0;for(let i=0;i<b.n;i++)s+=totals(dayOf(id,addDays(b.from,i))).sets;return s};
   const all=[];weeks.forEach(w=>ids.forEach(id=>all.push(val(id,w))));
   $('workLegend').innerHTML=ids.length>1?ids.map(id=>'<span><i style="--c:'+color(id)+'"></i>'+esc(nameOf(id))+'</span>').join(''):'';
   if(!all.some(v=>v>0)){el.innerHTML='<p class="nodata">עוד אין סטים בטווח הזה. תרגיל שתוסיפו ביומן יופיע כאן.</p>';return}
   const W=Math.max(el.clientWidth||600,260),H=210,m={t:12,r:6,b:24,l:40};
-  const sc=niceScale(0,Math.max.apply(null,all));
+  const sc=niceScale(0,Math.max.apply(null,all),0,4);
   const Y=v=>H-m.b-(v-sc.a)/((sc.b-sc.a)||1)*(H-m.t-m.b),gw=(W-m.l-m.r)/weeks.length;
   const bw=Math.max(2,Math.min(22,(gw-6-(ids.length-1)*2)/ids.length));
   let s='<svg dir="ltr" viewBox="0 0 '+W+' '+H+'" height="'+H+'" role="img" aria-label="סטים בשבוע">';
@@ -815,17 +840,17 @@ function barChart(el){
   weeks.forEach((w,wi)=>{const gx=m.l+wi*gw,tot=ids.length*bw+(ids.length-1)*2,x0=gx+(gw-tot)/2;
     ids.forEach((id,j)=>{const v=val(id,w);if(!v)return;const x=x0+j*(bw+2),y=Y(v),h=Y(0)-y,r=Math.min(4,bw/2,h);
       s+='<path fill="'+color(id)+'" d="M'+x+' '+Y(0)+'V'+(y+r)+'Q'+x+' '+y+' '+(x+r)+' '+y+'H'+(x+bw-r)+'Q'+(x+bw)+' '+y+' '+(x+bw)+' '+(y+r)+'V'+Y(0)+'Z"/>'});
-    if(wi%every===0)s+='<text x="'+(gx+gw/2)+'" y="'+(H-6)+'" text-anchor="middle">'+shortDate(w)+'</text>';
+    if(wi%every===0)s+='<text x="'+(gx+gw/2)+'" y="'+(H-6)+'" text-anchor="middle">'+w.label+'</text>';
   });
   s+='</svg>';el.innerHTML=s;
   const svg=el.querySelector('svg');
   const move=e=>{const r=svg.getBoundingClientRect(),px=(e.clientX-r.left)*(W/r.width),i=Math.floor((px-m.l)/gw);
     if(i<0||i>=weeks.length){untip();return}const w=weeks[i];
-    tip('שבוע '+shortDate(w)+'<br>'+ids.map(id=>esc(nameOf(id))+': <b>'+fmt(val(id,w))+'</b> סטים').join('<br>'),e.clientX,r.top+20)};
+    tip(w.tip+'<br>'+ids.map(id=>esc(nameOf(id))+': <b>'+fmt(val(id,w))+'</b> סטים').join('<br>'),e.clientX,r.top+20)};
   svg.addEventListener('pointermove',move);svg.addEventListener('pointerdown',move);svg.addEventListener('pointerleave',untip);
 }
 function renderTable(){
-  const ids=order(),from=rangeFrom(),keys={};ids.forEach(id=>Object.keys(S.days[id]||{}).forEach(k=>{if(k>=from&&k<=today())keys[k]=1}));
+  const ids=order(),from=rangeFrom(),keys={};ids.forEach(id=>Object.keys(S.days[id]||{}).forEach(k=>{if(k>=from&&k<=today()&&hasData(S.days[id][k]))keys[k]=1}));
   const list=Object.keys(keys).sort().reverse();
   if(!list.length){$('dayTable').innerHTML='<p class="nodata">אין עדיין ימים עם הזנה בטווח הזה.</p>';return}
   $('dayTable').innerHTML='<table><thead><tr><th>תאריך</th>'+ids.map(i=>'<th>'+esc(nameOf(i))+': משקל</th><th>קל׳</th><th>חלבון</th><th>סטים</th>').join('')+'</tr></thead><tbody>'+
@@ -833,15 +858,15 @@ function renderTable(){
 }
 function renderFavTable(){
   const rows=[];order().forEach(id=>favExercises(id).slice(0,5).forEach(f=>rows.push({id,f})));
-  $('favTable').innerHTML=rows.length?'<table><thead><tr><th>מי</th><th>תרגיל</th><th>פעמים</th><th>שיא (ק״ג)</th><th>אחרון</th></tr></thead><tbody>'+rows.map(r=>'<tr><td>'+esc(nameOf(r.id))+'</td><th scope="row"><span class="exline">'+thumb(r.f.name,'s')+esc(r.f.name)+'</span></th><td>'+r.f.n+'</td><td>'+fmt(r.f.best,1)+'</td><td>'+shortDate(r.f.lastK)+'</td></tr>').join('')+'</tbody></table>':'<p class="nodata">תרגילים שתוסיפו ביומן יופיעו כאן לפי כמה פעמים עשיתם אותם.</p>';
+  $('favTable').innerHTML=rows.length?'<table><thead><tr><th>מי</th><th>תרגיל</th><th>פעמים</th><th>שיא (ק״ג)</th><th>אחרון</th></tr></thead><tbody>'+rows.map(r=>'<tr><td>'+esc(nameOf(r.id))+'</td><th scope="row"><span class="exline">'+thumb(r.f.name,'s')+esc(r.f.name)+'</span></th><td>'+r.f.n+'</td><td>'+(r.f.best!=null?fmt(r.f.best,1):r.f.bestReps!=null?fmt(r.f.bestReps)+' חזרות':'–')+'</td><td>'+shortDate(r.f.lastK)+'</td></tr>').join('')+'</tbody></table>':'<p class="nodata">תרגילים שתוסיפו ביומן יופיעו כאן לפי כמה פעמים עשיתם אותם.</p>';
 }
 function renderCharts(){
   const ids=order(),from=rangeFrom();
   const sub=(hostId,prefix)=>{const host=$(hostId);const want=ids.map(i=>prefix+i).join();if(host.dataset.k!==want){host.innerHTML=ids.map(()=>'<div class="chart"></div>').join('');host.dataset.k=want}return host.children};
   const wc=sub('weightCharts','w'),kc=sub('kcalCharts','k');
   ids.forEach((id,i)=>{const g=S.people[id].goals||{};
-    const tc=trendChange(id,today());lineChart(wc[i],{title:nameOf(id)+(tc!=null?', '+(tc>0?'+':'')+fmt(tc,1)+' ק״ג בשבוע':''),trend:trendSeries(id,from),pts:series(id,from,'weight'),from,goal:g.weight!=null?g.weight:null,c:color(id),unit:'ק״ג',dec:1,empty:'עוד אין שקילות בטווח הזה.'});
-    lineChart(kc[i],{title:nameOf(id),pts:series(id,from,'kcal'),from,goal:g.kcal!=null?g.kcal:null,c:color(id),unit:'קל׳',dec:0,empty:'עוד אין ארוחות עם קלוריות בטווח הזה.'});
+    const tc=trendChange(id,today());lineChart(wc[i],{title:nameOf(id)+(tc!=null?', '+signed(tc,' ק״ג בשבוע'):''),trend:trendSeries(id,from),pts:series(id,from,'weight'),from,goal:g.weight!=null?g.weight:null,c:color(id),unit:'ק״ג',dec:1,minSpan:1,empty:'עוד אין שקילות בטווח הזה.'});
+    lineChart(kc[i],{title:nameOf(id),pts:series(id,from,'kcal'),from,goal:g.kcal!=null?g.kcal:null,c:color(id),unit:'קל׳',dec:0,minSpan:50,empty:'עוד אין ארוחות עם קלוריות בטווח הזה.'});
   });
   barChart($('workChart'));
 }
@@ -863,14 +888,15 @@ function prMap(id){return memo(id,'pr',()=>{const ds=S.days[id]||{},m=new Map(),
     if(b!=null&&(s.kg==null||b>s.kg))s.kg=b;if(r!=null&&(s.reps==null||r>s.reps))s.reps=r;if(pr)m.set(x.id,true)}));return m})}
 const isPR=(id,k,x)=>prMap(id).has(x.id);
 function sessions(id,name,limit){const all=memo(id,'sess',()=>{const ds=S.days[id]||{},o=new Map();Object.keys(ds).sort().forEach(k=>(ds[k].exercises||[]).forEach(x=>{if(!o.has(x.name))o.set(x.name,[]);o.get(x.name).push({k,x})}));return o}).get(name)||[];return limit?all.filter(s=>s.k<=limit):all}
-function suggest(id,name){
-  const s=sessions(id,name).slice(-2);if(s.length<2)return null;
-  const sig=x=>{const r=rowsOf(x);if(!r.length)return null;const a=r[0];if(!a.kg||!a.reps||!r.every(q=>q.kg===a.kg&&q.reps===a.reps))return null;return a};
-  const a=sig(s[0].x),b=sig(s[1].x);if(!a||!b||a.kg!==b.kg||a.reps!==b.reps)return null;
+function suggest(id,name,limit){
+  /* same weight and reps on the last two different days, with at least two sets each */
+  const s=sessions(id,name,limit),last=[];for(let i=s.length-1;i>=0&&last.length<2;i--){if(!last.length||last[0].k!==s[i].k)last.unshift(s[i])}if(last.length<2)return null;
+  const sig=x=>{const r=rowsOf(x);if(r.length<2)return null;const a=r[0];if(!a.kg||!a.reps||!r.every(q=>q.kg===a.kg&&q.reps===a.reps))return null;return{kg:a.kg,reps:a.reps,n:r.length}};
+  const a=sig(last[0].x),b=sig(last[1].x);if(!a||!b||a.kg!==b.kg||a.reps!==b.reps||a.n!==b.n)return null;
   const p=S.people[id]||{},step=(p.increments||{})[name]||2.5;return{kg:b.kg+step,step,name};
 }
-function sugHTML(s){return 'השלמת את כל החזרות פעמיים ברצף. לנסות <b>'+fmt(s.kg,2)+' ק״ג</b>? <button type="button" class="iconbtn" data-apply-kg="'+s.kg+'">החלה</button> <label class="stepl">קפיצה <select class="sug-step" data-name="'+esc(s.name)+'" aria-label="גודל הקפיצה">'+[1.25,2.5,5].map(v=>'<option'+(v===s.step?' selected':'')+'>'+v+'</option>').join('')+'</select></label>'}
-function renderSug(boxId,name){const b=$(boxId);if(!b)return;const s=name&&!S.edit?suggest(S.me,name):null;b.hidden=!s;b.innerHTML=s?sugHTML(s):''}
+function sugHTML(s){return 'אותו משקל ואותן חזרות פעמיים ברצף. לנסות <b>'+fmt(s.kg,2)+' ק״ג</b>? <button type="button" class="iconbtn" data-apply-kg="'+esc(s.kg)+'">החלה</button> <label class="stepl">קפיצה <select class="sug-step" data-name="'+esc(s.name)+'" aria-label="גודל הקפיצה">'+[1.25,2.5,5].map(v=>'<option'+(v===s.step?' selected':'')+'>'+v+'</option>').join('')+'</select></label>'}
+function renderSug(boxId,name){const b=$(boxId);if(!b)return;const s=name&&!S.edit?suggest(S.me,name,S.sel):null;b.hidden=!s;b.innerHTML=s?sugHTML(s):''}
 function applyKg(kg){
   if(S.live&&!$('live').hidden){const it=S.live.items[S.live.cur];if(it){it.rows.forEach(r=>{if(!r.done)r.kg=kg});saveLive();drawLive()}return}
   const all=[...document.querySelectorAll('#e-rows .r-kg')];all.forEach(o=>{o.value=kg;delete o.dataset.touched});$('e-sug').hidden=true;
@@ -898,30 +924,34 @@ const liveKey=()=>'fit_live_'+S.me;
 function saveLive(){store(liveKey(),S.live?JSON.stringify(S.live):null)}
 async function holdScreen(){try{if('wakeLock'in navigator&&!$('live').hidden)wake=await navigator.wakeLock.request('screen')}catch(e){}}
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&!$('live').hidden)holdScreen()});
-function lastRows(name){const s=sessions(S.me,name).pop();const r=s?rowsOf(s.x):[];return r.length?r.map(q=>({reps:q.reps,kg:q.kg,done:false})):[{reps:null,kg:null,done:false}]}
+const liveRows=r=>r.length?r.map(q=>({reps:q.reps,kg:q.kg,done:false,t_reps:q.reps!==r[0].reps,t_kg:q.kg!==r[0].kg})):[{reps:null,kg:null,done:false}];
+function lastRows(name){const a=sessions(S.me,name),s=a[a.length-1];return liveRows(s?rowsOf(s.x):[])}
 function openLive(tplId){
   if(!S.live){let raw=recall(liveKey());if(raw){try{S.live=JSON.parse(raw)}catch(e){S.live=null}}}
-  if(tplId&&!S.live){const t=((S.people[S.me]||{}).templates||[]).find(x=>x.id===tplId);if(t)S.live={start:Date.now(),cur:0,items:t.exercises.map(x=>{const hist=sessions(S.me,x.name).length;return{name:x.name,rows:hist?lastRows(x.name):x.rows.map(r=>({reps:r.reps,kg:r.kg,done:false}))}})};saveLive()}
-  else if(tplId&&S.live)toast('יש כבר אימון פתוח. סיים אותו לפני שמתחילים תוכנית אחרת.');
+  if(tplId&&!S.live){const t=((S.people[S.me]||{}).templates||[]).find(x=>x.id===tplId);if(t)S.live={start:Date.now(),cur:0,items:t.exercises.map(x=>{const hist=sessions(S.me,x.name).length;return{name:x.name,rows:hist?lastRows(x.name):liveRows(x.rows)}})};saveLive()}
+  else if(tplId&&S.live)toast('יש כבר אימון פתוח. אפשר להתחיל תוכנית אחרת אחרי שהוא מסתיים.');
   $('live').hidden=false;document.documentElement.style.overflow='hidden';holdScreen();drawLive();
 }
 function closeLive(){$('live').hidden=true;document.documentElement.style.overflow='';if(wake){wake.release().catch(()=>{});wake=null}}
 function drawLive(){
   const box=$('live-body'),L=S.live;
   if(!L){const t=(S.people[S.me]||{}).templates||[];$('live-title').textContent='מצב אימון';
-    box.innerHTML='<button type="button" class="primary big" data-l="empty">התחלת אימון ריק</button>'+(t.length?'<h3>מתוכנית שמורה</h3><div class="stack">'+t.map(x=>'<button type="button" class="ghost big" data-l="tpl" data-id="'+esc(x.id)+'">'+esc(x.name)+'<small>'+x.exercises.length+' תרגילים</small></button>').join('')+'</div>':'<p class="hint">אחרי שתזין תרגילים ביום מסוים, אפשר לשמור אותם כתוכנית ולהתחיל ממנה כאן.</p>');return}
+    box.innerHTML='<button type="button" class="primary big" data-l="empty">התחלת אימון ריק</button>'+(t.length?'<h3>מתוכנית שמורה</h3><div class="stack">'+t.map(x=>'<button type="button" class="ghost big" data-l="tpl" data-id="'+esc(x.id)+'">'+esc(x.name)+'<small>'+x.exercises.length+' תרגילים</small></button>').join('')+'</div>':'<p class="hint">אחרי הזנת תרגילים ביום מסוים, אפשר לשמור אותם כתוכנית ולהתחיל ממנה כאן.</p>');return}
   $('live-title').textContent='מצב אימון';
   const it=L.items[L.cur];
   let h='';
-  if(it){const s=suggest(S.me,it.name),last=sessions(S.me,it.name).pop();
+  if(it){const s=suggest(S.me,it.name,today()),hist=sessions(S.me,it.name),last=hist[hist.length-1];
     h+='<div class="lhead"><button type="button" class="iconbtn" data-l="prev"'+(L.cur?'':' disabled')+' >הקודם</button><div class="lname"><small>'+(L.cur+1)+' מתוך '+L.items.length+'</small>'+thumb(it.name,'l')+'<strong style="display:block">'+esc(it.name)+'</strong></div><button type="button" class="iconbtn" data-l="next"'+(L.cur<L.items.length-1?'':' disabled')+' >הבא</button></div>';
     if(last)h+='<p class="hint">פעם קודמת ('+shortDate(last.k)+'): '+esc(perf(last.x))+'</p>';
     if(s)h+='<div class="sug">'+sugHTML(s)+'</div>';
-    h+='<div class="lrows"><div class="lrow head"><span>סט</span><span>חזרות</span><span>ק״ג</span><span></span></div>'+it.rows.map((r,i)=>'<div class="lrow'+(r.done?' done':'')+'" data-i="'+i+'"><b>'+(i+1)+'</b><input id="l-r'+i+'" class="l-reps" type="number" min="0" max="500" inputmode="numeric" aria-label="חזרות בסט '+(i+1)+'" value="'+(r.reps!=null?r.reps:'')+'"><input id="l-k'+i+'" class="l-kg" type="number" min="0" max="500" step="0.5" inputmode="decimal" aria-label="משקל בסט '+(i+1)+'" value="'+(r.kg!=null?r.kg:'')+'"><button type="button" class="tick" data-l="tick" data-i="'+i+'" aria-pressed="'+!!r.done+'" aria-label="סיום סט '+(i+1)+'">✓</button></div>').join('')+'</div>';
+    h+='<div class="lrows"><div class="lrow head"><span>סט</span><span>חזרות</span><span>ק״ג</span><span></span></div>'+it.rows.map((r,i)=>'<div class="lrow'+(r.done?' done':'')+'" data-i="'+i+'"><b>'+(i+1)+'</b><input id="l-r'+i+'" class="l-reps" type="number" min="0" max="500" inputmode="numeric" aria-label="חזרות בסט '+(i+1)+'" value="'+esc(r.reps!=null?r.reps:'')+'"><input id="l-k'+i+'" class="l-kg" type="number" min="0" max="500" step="any" inputmode="decimal" aria-label="משקל בסט '+(i+1)+'" value="'+esc(r.kg!=null?r.kg:'')+'"><button type="button" class="tick" data-l="tick" data-i="'+i+'" aria-pressed="'+!!r.done+'" aria-label="סיום סט '+(i+1)+'">✓</button></div>').join('')+'</div>';
     h+='<div class="btnrow"><button type="button" class="ghost" data-l="addset">הוספת סט</button><button type="button" class="ghost" data-l="delset"'+(it.rows.length>1?'':' disabled')+'>הסרת סט</button><button type="button" class="ghost" data-l="swap">החלפת תרגיל</button><button type="button" class="ghost" data-l="delex">הסרת תרגיל</button></div>'+plateTool('p2');
-  }else h+='<p class="hint">בחר תרגיל ראשון כדי להתחיל.</p>';
+  }else h+='<p class="hint">מתחילים בבחירת תרגיל ראשון.</p>';
   h+='<button type="button" class="ghost big" data-l="addex">הוספת תרגיל</button><button type="button" class="primary big" data-l="finish">סיום ושמירת האימון</button><button type="button" class="ghost" data-l="discard">ביטול האימון בלי לשמור</button>';
+  /* the plate calculator keeps its value across a redraw */
+  const pb=box.querySelector('.platebox'),pst=pb?{open:pb.open,kg:pb.querySelector('.pl-kg').value,bar:pb.querySelector('.pl-bar').value}:null;
   const y=box.scrollTop;box.innerHTML=h;box.scrollTop=y;
+  const pn=box.querySelector('.platebox');if(pn&&pst){pn.open=pst.open;pn.querySelector('.pl-kg').value=pst.kg;pn.querySelector('.pl-bar').value=pst.bar;drawPlates(pn)}
 }
 function finishLive(){
   if(!canWrite())return;
@@ -932,6 +962,7 @@ function finishLive(){
   addItems(date,'exercises',items);
   S.live=null;saveLive();S.sel=date;render();drawFinish(items,date,before,past);
 }
+let tickAdvanced=0;
 function liveClick(e){const b=e.target.closest('[data-l]');if(!b){const ap=e.target.closest('[data-apply-kg]');if(ap)applyKg(+ap.dataset.applyKg);return}
   const a=b.dataset.l,L=S.live;
   if(a==='addex'){openPicker(n=>{S.live.items.push({name:n,rows:lastRows(n)});S.live.cur=S.live.items.length-1;saveLive();drawLive()});return}
@@ -941,7 +972,7 @@ function liveClick(e){const b=e.target.closest('[data-l]');if(!b){const ap=e.tar
   if(!L)return;const it=L.items[L.cur];
   if(a==='prev'&&L.cur>0)L.cur--;
   if(a==='next'&&L.cur<L.items.length-1)L.cur++;
-  if(a==='tick'){const r=it.rows[+b.dataset.i];r.done=!r.done;if(r.done&&it.rows.every(q=>q.done)&&L.cur<L.items.length-1)L.cur++;}
+  if(a==='tick'){if(Date.now()-tickAdvanced<400)return;const r=it.rows[+b.dataset.i];r.done=!r.done;if(r.done&&it.rows.every(q=>q.done)&&L.cur<L.items.length-1){L.cur++;tickAdvanced=Date.now()}}
   if(a==='swap'){const g=Object.keys(EXERCISES).find(k=>EXERCISES[k].includes(it.name));openPicker(n=>{it.name=n;it.rows=lastRows(n);saveLive();drawLive()},g);return}
   if(a==='addset'){const l=it.rows[it.rows.length-1]||{};it.rows.push({reps:l.reps,kg:l.kg,done:false})}
   if(a==='delset'&&it.rows.length>1)it.rows.pop();
@@ -952,8 +983,9 @@ function liveClick(e){const b=e.target.closest('[data-l]');if(!b){const ap=e.tar
 }
 function liveInput(e){const t=e.target,L=S.live;if(!L)return;
   const row=t.closest('.lrow');if(!row||!row.dataset.i)return;const it=L.items[L.cur],i=+row.dataset.i,f=t.classList.contains('l-reps')?'reps':t.classList.contains('l-kg')?'kg':null;if(!f)return;
-  it.rows[i][f]=num(t.value);it.rows[i]['t_'+f]=i>0;
-  if(i===0)it.rows.forEach((r,j)=>{if(j&&!r.done&&!r['t_'+f]){r[f]=num(t.value);const o=$((f==='reps'?'l-r':'l-k')+j);if(o)o.value=t.value}});
+  let v=num(t.value);if(v!=null){const c=Math.max(0,Math.min(500,f==='reps'?Math.floor(v):v));if(c!==v){v=c;t.value=c}}
+  it.rows[i][f]=v;it.rows[i]['t_'+f]=i>0;
+  if(i===0)it.rows.forEach((r,j)=>{if(j&&!r.done&&!r['t_'+f]){r[f]=v;const o=$((f==='reps'?'l-r':'l-k')+j);if(o)o.value=v==null?'':v}});
   saveLive();
 }
 
@@ -963,7 +995,7 @@ function trendSeries(id,from){return series(id,from,'weight').map(p=>({k:p.k,v:t
 function trendChange(id,k){const a=trendAt(id,k),b=trendAt(id,addDays(k,-7));return a!=null&&b!=null?a-b:null}
 function recapHTML(ws,opts){
   const we=addDays(ws,6),t=today(),end=we>t?t:we,ids=order();
-  const sign=v=>v==null?'–':(v>0?'+':'')+fmt(v,1)+' ק״ג';
+  const sign=v=>signed(v,' ק״ג');
   return '<div class="recap">'+ids.map(id=>{let wk=0,logged=0,prs=0,kc=[];for(let i=0;i<7;i++){const k=addDays(ws,i),d=dayOf(id,k);if(!d||!hasData(d))continue;logged++;const tt=totals(d);wk+=tt.workouts;if(tt.kcal!=null)kc.push(tt.kcal);(d.exercises||[]).forEach(x=>{if(isPR(id,k,x))prs++})}
     const avg=kc.length?kc.reduce((a,b)=>a+b,0)/kc.length:null;
     return '<div class="rc" style="--c:'+color(id)+'"><div class="ctitle"><span class="plate"></span>'+esc(nameOf(id))+'</div><dl><div><dt>אימונים</dt><dd>'+fmt(wk)+'</dd></div><div><dt>ימים עם הזנה</dt><dd>'+logged+' מתוך 7</dd></div><div><dt>שיאים חדשים</dt><dd>'+fmt(prs)+'</dd></div><div><dt>מגמת משקל</dt><dd dir="ltr">'+sign(trendChange(id,end))+'</dd></div><div><dt>ממוצע קלוריות</dt><dd>'+fmt(avg)+'</dd></div></dl></div>'}).join('')+'</div>';
@@ -982,23 +1014,53 @@ function renderCalendar(){
   $('cal').innerHTML=h;
 }
 function renderExChart(){
-  const ids=order(),names={};ids.forEach(id=>favExercises(id).forEach(f=>{names[f.name]=(names[f.name]||0)+(id===S.me?f.n*100:f.n)}));
+  const ids=order(),names=Object.create(null);ids.forEach(id=>favExercises(id).forEach(f=>{names[f.name]=(names[f.name]||0)+(id===S.me?f.n*100:f.n)}));
   const list=Object.keys(names).sort((a,b)=>names[b]-names[a]),sel=$('xc-name'),k=list.join('|');
   if(sel.dataset.k!==k){const v=sel.value;sel.innerHTML=list.map(n=>'<option>'+esc(n)+'</option>').join('');sel.dataset.k=k;if(v&&list.includes(v))sel.value=v}
-  const host=$('xCharts');if(!list.length){host.innerHTML='<p class="nodata">תרגיל שתוסיף ביומן יופיע כאן עם הגרף שלו.</p>';return}
-  const name=sel.value,metric=$('xc-metric').value,from=rangeFrom(),fn={best:exBest,vol:exVol,rm:est1RM}[metric],unit={best:'ק״ג',vol:'ק״ג נפח',rm:'ק״ג משוער'}[metric];
-  const who=ids.filter(id=>sessions(id,name).length);
+  const host=$('xCharts');if(!list.length){host.innerHTML='<p class="nodata">תרגיל שמוזן ביומן יופיע כאן עם הגרף שלו.</p>';return}
+  const name=sel.value,from=rangeFrom(),who=ids.filter(id=>sessions(id,name).length);
+  /* an exercise that never had weight can only be measured in reps */
+  const noKg=who.every(id=>sessions(id,name).every(s=>exBest(s.x)==null));if(noKg&&$('xc-metric').value!=='reps')$('xc-metric').value='reps';
+  const metric=$('xc-metric').value,topReps=x=>rowsOf(x).reduce((m,r)=>Math.max(m,r.reps||0),x.reps||0),fn={best:exBest,vol:exVol,rm:est1RM,reps:topReps}[metric],unit={best:'ק״ג',vol:'ק״ג נפח',rm:'ק״ג משוער',reps:'חזרות'}[metric];
   if(host.children.length!==who.length||host.dataset.k!==who.join()){host.innerHTML=who.map(()=>'<div class="chart"></div>').join('');host.dataset.k=who.join()}
-  who.forEach((id,i)=>{const by={};sessions(id,name).forEach(s=>{if(s.k<from)return;const v=fn(s.x);if(v==null||v===0)return;by[s.k]=Math.max(by[s.k]||0,v)});
-    lineChart(host.children[i],{title:nameOf(id),pts:Object.keys(by).sort().map(q=>({k:q,v:Math.round(by[q]*10)/10})),from,goal:null,c:color(id),unit,dec:1,empty:'אין נתונים לתרגיל הזה בטווח.'})});
+  who.forEach((id,i)=>{const by=Object.create(null);sessions(id,name).forEach(s=>{if(s.k<from)return;const v=fn(s.x);if(v==null||v===0)return;by[s.k]=metric==='vol'?(by[s.k]||0)+v:Math.max(by[s.k]||0,v)});
+    lineChart(host.children[i],{title:nameOf(id),pts:Object.keys(by).sort().map(q=>({k:q,v:Math.round(by[q]*10)/10})),from,goal:null,c:color(id),unit,dec:metric==='reps'?0:1,minSpan:metric==='reps'?4:1,empty:'אין נתונים לתרגיל הזה בטווח.'})});
 }
-function applyPendingRecipe(){const r=S.pendingRecipe;if(!r||!S.me||S.readonly||!$('rc-form'))return;S.pendingRecipe=null;S.open='food';syncDrawers();$('rc-box').hidden=false;drawRecipes();rcEdit=null;$('rc-form').hidden=false;$('rc-del').hidden=true;$('rc-name').value=String(r.name||'').slice(0,60);const sv=Number(r.servings);$('rc-serv').value=sv>=1&&sv<=100?sv:'';
-  const n=v=>{const x=Number(v);return v!=null&&isFinite(x)&&x>=0?x:null};$('prod-list').innerHTML=Object.values(S.products).map(p=>'<option value="'+esc(p.name)+'"></option>').join('');
-  $('rc-ings').innerHTML=r.ingredients.slice(0,40).map(i=>ingRow({name:String(i.name||'').slice(0,80),grams:n(i.grams),kcal100:n(i.kcal100),protein100:n(i.protein100),carbs100:n(i.carbs100),fat100:n(i.fat100)})).join('');rcCalc();scanMsg('מתכון מ־Claude. הערכים הם הערכה, בדוק לפני השמירה.');$('rc-form').scrollIntoView({block:'start'});}
+/* ---------- links from outside: nothing from the hash is trusted ---------- */
+const impNum=v=>{if(typeof v==='number')return isFinite(v)&&v>=0?v:null;if(typeof v==='string'&&v.trim()!==''){const x=Number(v);return isFinite(x)&&x>=0?x:null}return null};
+const impStr=(v,n)=>typeof v==='string'?v.slice(0,n):'';
+function parseMealLink(m){if(!m||typeof m!=='object'||Array.isArray(m))return null;return{name:impStr(m.name,200),kcal:impNum(m.kcal),protein:impNum(m.protein),carbs:impNum(m.carbs),fat:impNum(m.fat)}}
+function parseRecipeLink(r){if(!r||typeof r!=='object'||!Array.isArray(r.ingredients))return null;const sv=impNum(r.servings);
+  return{name:impStr(r.name,60),servings:sv>=0.5&&sv<=100?sv:null,ingredients:r.ingredients.slice(0,40).map(i=>typeof i==='string'?{name:i.slice(0,80)}:i&&typeof i==='object'&&!Array.isArray(i)?{name:impStr(i.name,80),grams:impNum(i.grams),kcal100:impNum(i.kcal100),protein100:impNum(i.protein100),carbs100:impNum(i.carbs100),fat100:impNum(i.fat100)}:null).filter(Boolean)}}
+const CODE_RE=/^[A-Za-z0-9_-]{6,80}$/;
+const sessGet=k=>{try{return sessionStorage.getItem(k)}catch(e){return null}};
+const sessSet=(k,v)=>{try{if(v==null)sessionStorage.removeItem(k);else sessionStorage.setItem(k,v)}catch(e){}};
+/* an import waits in the session until it is saved or dismissed, so a reload does not lose it */
+function keepImport(){sessSet('fit_import',S.importMeal||S.importRecipe?JSON.stringify({meal:S.importMeal,recipe:S.importRecipe}):null)}
+function dropImport(kind){if(kind==='meal')S.importMeal=null;else S.importRecipe=null;keepImport()}
+function restoreImport(){try{const o=JSON.parse(sessGet('fit_import')||'null');if(o){if(o.meal){S.importMeal=o.meal;S.pendingMeal=o.meal}if(o.recipe){S.importRecipe=o.recipe;S.pendingRecipe=o.recipe}}}catch(e){}}
+/* returns true when the stored code changed */
+function readHash(){
+  const h=location.hash.slice(1);if(h==='progress'||h==='log'){S.tab=h;return false}
+  if(!/^(k|meal|recipe)=/.test(h))return false;
+  const q=new URLSearchParams(h);let changed=false,bad=false;
+  try{history.replaceState(null,'',location.pathname+location.search)}catch(e){location.hash=''}
+  const k=q.get('k'),stored=recall('fit_code');
+  if(k&&k!==stored){if(!CODE_RE.test(k)){if(stored)bad=true;else S.codeErr=true}else if(!stored){store('fit_code',k);changed=true}else if(window.confirm('הקישור מחליף את קוד היומן במכשיר הזה. להחליף?')){store('fit_code',k);changed=true}}
+  const parse1=(name,fn)=>{const raw=q.get(name);if(!raw)return null;try{const v=fn(JSON.parse(raw));if(!v)bad=true;return v}catch(e){bad=true;return null}};
+  const r=parse1('recipe',parseRecipeLink),m=parse1('meal',parseMealLink);
+  if(r){S.pendingRecipe=r;S.importRecipe=r}if(m){S.pendingMeal=m;S.importMeal=m}keepImport();
+  if(bad)S.linkBad=true;
+  return changed;
+}
+function fillInt(id,v){$(id).value=v!=null?v:''}
+function applyPendingRecipe(){const r=S.pendingRecipe;if(!r||!S.me||S.readonly||!$('rc-form'))return;S.pendingRecipe=null;S.open='food';syncDrawers();$('rc-box').hidden=false;drawRecipes();rcEdit=null;$('rc-form').hidden=false;$('rc-del').hidden=true;$('rc-name').value=r.name;fillInt('rc-serv',r.servings);
+  $('prod-list').innerHTML=Object.values(S.products).map(p=>'<option value="'+esc(p.name)+'"></option>').join('');
+  $('rc-ings').innerHTML=(r.ingredients.length?r.ingredients:[{},{}]).map(ingRow).join('');rcCalc();scanMsg('מתכון מ־Claude. הערכים הם הערכה, כדאי לבדוק אותם לפני השמירה.');$('rc-form').scrollIntoView({block:'start'});}
 function applyPendingMeal(){
-  const m=S.pendingMeal;if(!m||!S.me||S.readonly||!$('m-name'))return;S.pendingMeal=null;S.sel=today();S.open='food';syncDrawers();
-  $('m-name').value=String(m.name||'ארוחה').slice(0,200);const n=(v,id)=>{const x=Number(v);$(id).value=isFinite(x)&&x>=0?x:''};n(m.kcal,'m-kcal');n(m.protein,'m-prot');n(m.carbs,'m-carb');n(m.fat,'m-fat');
-  scanMsg('הערכה מ־Claude. בדוק את הערכים ולחץ ״הוספה״.');$('f-meal').scrollIntoView({block:'center'});
+  const m=S.pendingMeal;if(!m||!S.me||S.readonly||!$('m-name'))return;S.pendingMeal=null;if(S.sel!==today()){S.sel=today();schedule()}S.open='food';syncDrawers();
+  $('m-name').value=m.name||'ארוחה';fillInt('m-kcal',m.kcal);fillInt('m-prot',m.protein);fillInt('m-carb',m.carbs);fillInt('m-fat',m.fat);
+  scanMsg('הערכה מ־Claude. כדאי לבדוק את הערכים ואז ללחוץ ״הוספה״.');$('f-meal').scrollIntoView({block:'center'});
 }
 
 /* ---------- motivation ---------- */
@@ -1026,26 +1088,33 @@ const BADGES=[
  ['sets','מאה סטים','100 סטים',s=>s.sets>=100],['ton','טון ראשון','1,000 ק״ג בסך הכול',s=>s.kg>=1000],['tons','עשרה טון','10,000 ק״ג בסך הכול',s=>s.kg>=10000],['truck','מאה טון','100,000 ק״ג בסך הכול',s=>s.kg>=100000],
  ['pr','שיא ראשון','שוברים שיא אישי',s=>s.prs>=1],['pr10','עשרה שיאים','10 שיאים אישיים',s=>s.prs>=10],
  ['week4','חודש ברצף','4 שבועות שעומדים ביעד',s=>s.bestStreak>=4],['week12','12 שבועות','12 שבועות שעומדים ביעד',s=>s.bestStreak>=12],
- ['variety','מגוון','10 תרגילים שונים',s=>s.kinds>=10],['food','יומן אוכל','אוכל מוזן ב־14 ימים',s=>s.foodDays>=14],['cheer','מעודד ראשי','10 תגובות לשני',s=>s.given>=10]];
+ ['variety','מגוון','10 תרגילים שונים',s=>s.kinds>=10],['food','יומן אוכל','אוכל מוזן ב־14 ימים',s=>s.foodDays>=14],['cheer','עידוד','10 תגובות',s=>s.given>=10]];
 function renderBadges(){const ids=order();$('badges').innerHTML=ids.map(id=>{const st=playerStats(id),won=BADGES.filter(b=>b[3](st)).length;
   return '<div class="bcol" style="--c:'+color(id)+'"><div class="ctitle"><span class="plate"></span>'+esc(nameOf(id))+', '+won+' מתוך '+BADGES.length+'</div><div class="bgrid">'+BADGES.map(b=>{const on=b[3](st);return '<div class="badge'+(on?' on':'')+'"><i></i><strong>'+b[1]+'</strong><small>'+b[2]+'</small></div>'}).join('')+'</div></div>'}).join('')}
 function renderHero(){
   const ids=order(),t=today(),ws=weekStart(t),host=$('hero');if(!ids.length){host.hidden=true;return}host.hidden=false;
   const side=id=>{const g=goalOf(id),n=weekWorkouts(id,ws),slots=Math.max(g,n);let h='';for(let i=0;i<slots;i++)h+='<i class="wplate'+(i<n?' on':'')+'" style="--c:'+color(id)+';--h:'+Math.max(44,92-i*10)+'%"></i>';return h};
   const a=ids[0],b=ids[1];
-  const total=ids.reduce((s,i)=>s+weekWorkouts(i,ws),0),goal=ids.reduce((s,i)=>s+goalOf(i),0),missing=ids.reduce((s,i)=>s+Math.max(0,goalOf(i)-weekWorkouts(i,ws)),0);
+  const total=ids.reduce((s,i)=>s+Math.min(weekWorkouts(i,ws),goalOf(i)),0),goal=ids.reduce((s,i)=>s+goalOf(i),0),missing=goal-total;
   const me=S.me,other=ids.find(i=>i!==me),meT=totals(dayOf(me,t)).exercises>0,oT=other&&totals(dayOf(other,t)).exercises>0;
   let line=!missing?'המוט מלא. שבוע מעולה לשניכם!':(missing===1?'נשאר אימון אחד':'נשארו '+missing+' אימונים')+' למוט מלא השבוע.';
-  let status='';if(other){status=meT&&oT?'שניכם התאמנתם היום.':oT?esc(nameOf(other))+(other==='victor'?' כבר התאמן':' כבר התאמנה')+' היום. תורך.':meT?'התאמנת היום. עכשיו תור '+esc(nameOf(other))+'.':''}
+  let status='';if(other){status=meT&&oT?'שניכם התאמנתם היום.':oT?esc(nameOf(other))+(other==='victor'?' כבר התאמן':' כבר התאמנה')+' היום. תורך.':meT?'התאמנת היום. עכשיו התור של '+esc(nameOf(other))+'.':''}
   host.innerHTML='<div class="navhead"><h2>המוט של השבוע</h2><strong class="count">'+total+' מתוך '+goal+'</strong></div>'+
     '<div class="bar-wrap" dir="ltr" role="img" aria-label="'+total+' אימונים מתוך '+goal+' השבוע"><div class="wside l">'+(b?side(b):'')+'</div><div class="wbar"></div>'+(wrapYear()!=null&&order().some(i=>hasYear(i,wrapYear()))?'<button type="button" class="egg" id="egg-open" aria-label="הפתעה"></button>':'')+'<div class="wside r">'+side(a)+'</div></div>'+
     '<p class="heroline">'+line+(status?' '+status:'')+'</p>'+
     '<div class="players">'+ids.map(id=>{const st=playerStats(id);return '<div class="player" style="--c:'+color(id)+'"><div class="ctitle"><span class="plate"></span>'+esc(nameOf(id))+'</div><div class="pl-stats"><div><b>'+st.lvl+'</b><small>רמה</small></div><div><b>'+st.streak+'</b><small>שבועות ברצף</small></div><div><b>'+weekWorkouts(id,ws)+'/'+goalOf(id)+'</b><small>השבוע</small></div></div><div class="xp" role="img" aria-label="'+st.into+' מתוך '+st.need+' נקודות לרמה הבאה"><i style="width:'+Math.round(st.into/st.need*100)+'%"></i></div><small class="xpt">עוד '+(st.need-st.into)+' נקודות לרמה '+(st.lvl+1)+'</small></div>'}).join('')+'</div>'+
-    (other&&!S.readonly&&!S.nudgedNow?'<button type="button" class="ghost" id="nudge-send">לדרבן את '+esc(nameOf(other))+'</button>':other&&S.nudgedNow?'<p class="hint">הדרבון יופיע אצל '+esc(nameOf(other))+' בכניסה הבאה.</p>':'');
+    (other&&!S.readonly&&!S.nudgedNow&&nudgeOptions(other).length?'<button type="button" class="ghost" id="nudge-send">לדרבן את '+esc(nameOf(other))+'</button>':'');
   const key='fit_full_'+ws;if(!missing&&ids.length>1&&!recall(key)){store(key,'1');confetti()}
-  const n=S.nudges[me],box=$('nudge');box.hidden=!n;if(n)box.innerHTML='<span>'+esc(nameOf(n.from))+' מדרבנ'+(n.from==='racheli'?'ת':'')+' אותך: '+esc(n.text)+'</span><button type="button" class="iconbtn" id="nudge-ok">קיבלתי</button>';
+  const n=S.nudges[me],box=$('nudge');box.hidden=!n;if(n)box.innerHTML='<span>'+esc(nameOf(n.from))+(n.from==='racheli'?' מדרבנת':' מדרבן')+' אותך: '+esc(n.text)+'</span><button type="button" class="iconbtn" id="nudge-ok">קיבלתי</button>';
 }
-const NUDGES=['קום, יש אימון!','המוט מחכה לך.','אני כבר התאמנתי, מה איתך?','עוד אימון אחד וסגרנו את השבוע.','בוא נראה שיא היום.'];
+/* written for the person who receives it, and only what is true right now */
+function nudgeOptions(to){const fem=to==='racheli',t=today(),ws=weekStart(t),left=goalOf(to)-weekWorkouts(to,ws),o=[];
+  if(left<=0||totals(dayOf(to,t)).exercises)return o;
+  o.push(fem?'קומי, יש אימון!':'קום, יש אימון!','המוט מחכה לך.',fem?'בואי נראה שיא היום.':'בוא נראה שיא היום.');
+  if(totals(dayOf(S.me,t)).exercises)o.push('אני כבר התאמנתי, מה איתך?');
+  const mine=Math.max(0,goalOf(S.me)-weekWorkouts(S.me,ws));
+  if(left===1)o.push(mine===0?'עוד אימון אחד וסגרנו את השבוע.':fem?'עוד אימון אחד ואת סוגרת את היעד שלך.':'עוד אימון אחד ואתה סוגר את היעד שלך.');
+  return o}
 function confetti(){
   if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   const c=document.createElement('canvas');c.className='confetti';c.width=innerWidth;c.height=innerHeight;document.body.append(c);const x=c.getContext('2d'),cs=getComputedStyle(document.documentElement),cols=['--accent','--p1','--p2','--ink'].map(v=>cs.getPropertyValue(v));
@@ -1069,7 +1138,7 @@ function splitMeal(m,pct){const mine=Object.assign({},m,{share:pct}),theirs=Obje
   ['protein','carbs','fat','grams'].forEach(k=>{if(m[k]!=null){mine[k]=r1(m[k]*pct);theirs[k]=r1(m[k]-mine[k])}});
   if(m.qty!=null){mine.qty=Math.round(m.qty*pct*1000)/1000;theirs.qty=Math.round((m.qty-mine.qty)*1000)/1000}
   if(m.kcal!=null){mine.kcal=Math.round(m.kcal*pct);theirs.kcal=m.kcal-mine.kcal}return[mine,theirs]}
-function syncShare(){const o=other(),l=$('share-l');if(!l)return;l.hidden=!o;if(o){$('share-txt').textContent='גם '+nameOf(o)+(o==='victor'?' אכל':' אכלה')+' מזה';const on=$('share-on').checked;$('share-split').hidden=!on;$('share-pct').textContent='החלק שלי '+$('share-range').value+'%'}}
+function syncShare(){const o=other(),l=$('share-l');if(!l)return;l.hidden=!o||!!S.edit;if(S.edit)$('share-on').checked=false;if(o){$('share-txt').textContent='גם '+nameOf(o)+(o==='victor'?' אכל':' אכלה')+' מזה';const on=$('share-on').checked;$('share-split').hidden=!on;$('share-pct').textContent='החלק שלי '+$('share-range').value+'%'}}
 function sendToPartner(item,date){const o=other();if(!o)return;addItems(date,'meals',[Object.assign(item,{id:uid(),sharedBy:S.me})],o)}
 /* ---------- usual foods by time of day ---------- */
 const mealSlot=()=>{const h=new Date().getHours();return h<11?'בוקר':h<16?'צהריים':h<21?'ערב':'נשנוש'};
@@ -1084,15 +1153,16 @@ function readIngs(){return [...document.querySelectorAll('#rc-ings .ing')].map(e
 function rcCalc(){const n=num($('rc-serv').value)||1,t=ingTotals(readIngs());$('rc-calc').textContent='סך הכול '+fmt(t.kcal)+' קל׳. למנה: '+fmt(t.kcal/n)+' קל׳, '+fmt(t.protein/n)+' ג׳ חלבון.'}
 function openRcForm(id){rcEdit=id||null;const r=id?S.recipes[id]:{};$('rc-form').hidden=false;$('rc-del').hidden=!id;delete $('rc-del').dataset.sure;$('rc-del').textContent='מחיקת המתכון';$('rc-name').value=r.name||'';$('rc-serv').value=r.servings||'';
   $('prod-list').innerHTML=Object.values(S.products).map(p=>'<option value="'+esc(p.name)+'"></option>').join('');$('rc-ings').innerHTML=(r.ingredients&&r.ingredients.length?r.ingredients:[{},{}]).map(ingRow).join('');rcCalc()}
-function logRecipe(id){const r=S.recipes[id];if(!r)return;const c=$('rc-log');c.hidden=false;c.dataset.id=id;$('rc-log-t').textContent=r.name;$('rc-por').value=1;rcLogCalc()}
+function logRecipe(id){const r=S.recipes[id];if(!r)return;if(S.edit)clearEdit(true);const c=$('rc-log');c.hidden=false;c.dataset.id=id;$('rc-log-t').textContent=r.name;$('rc-por').value=1;rcLogCalc()}
 function rcLogCalc(){const r=S.recipes[$('rc-log').dataset.id];if(!r)return;const t=ingTotals(r.ingredients||[]),f=(num($('rc-por').value)||0)/(r.servings||1);$('rc-log-calc').textContent=fmt(t.kcal*f)+' קל׳, '+fmt(t.protein*f,1)+' ג׳ חלבון'}
 /* ---------- couple reward ---------- */
 let rwKey=null;
-function bothMet(ws){const ids=order();return ids.length>0&&ids.every(i=>weekWorkouts(i,ws)>=goalOf(i))}
-function rewardProg(r){let n=0,w=r.startWeek;const now=weekStart(today());while(w<=now){if(bothMet(w))n++;w=addDays(w,7)}return n}
+function bothMet(ws){const ids=order();return ids.length>0&&ids.every(i=>weekWorkouts(i,ws)>=goalAt(i,ws))}
+function rewardProg(r){let n=0,w=r.startWeek,i=0;const now=weekStart(today());while(w<=now&&i<520){if(bothMet(w))n++;w=addDays(w,7);i++}return n}
+function normReward(d){const w=toNum(d.weeks),s=toStr(d.startWeek);return Object.assign({},d,{title:toStr(d.title),weeks:w>=1?Math.min(52,Math.floor(w)):4,startWeek:isDateKey(s)?s:weekStart(today())})}
 function renderReward(){const box=$('reward');if(!box||S.readonly&&!S.reward){if(box)box.hidden=true;return}box.hidden=false;const r=S.reward,n=r?rewardProg(r):0,k=r?[r.title,r.weeks,n].join('|'):'none';if(k===rwKey)return;rwKey=k;
   if(!r){box.innerHTML='<details id="rw-box"><summary>לקבוע פרס משותף</summary><form id="f-reward" class="inlineform" style="margin-top:8px"><label class="f">מה הפרס?<input id="rw-title" type="text" maxlength="60" required placeholder="ערב בחוץ"></label><label class="f">כמה שבועות ביעד?<select id="rw-weeks"><option>2</option><option selected>4</option><option>8</option><option>12</option></select></label><button class="iconbtn" id="rw-save">קביעה</button></form></details>';return}
-  const done=n>=r.weeks;box.innerHTML='<div class="navhead"><strong class="rw-t">הפרס שלנו: '+esc(r.title)+'</strong><span class="count">'+Math.min(n,r.weeks)+' מתוך '+r.weeks+'</span></div><div class="xp big" style="--c:var(--accent)" role="img" aria-label="'+n+' מתוך '+r.weeks+' שבועות"><i style="width:'+Math.min(100,n/r.weeks*100)+'%"></i></div>'+(done?'<p class="heroline">הגעתם! תהנו מהפרס.</p><button type="button" class="primary" id="rw-clear">מימשנו, אפשר לקבוע חדש</button>':'<p class="hint">כל שבוע שבו שניכם עומדים ביעד נספר. שבוע שפוספס רק לא נספר.</p><button type="button" class="ghost" id="rw-clear">ביטול הפרס</button>');
+  const done=n>=r.weeks;box.innerHTML='<div class="navhead"><strong class="rw-t">הפרס שלנו: '+esc(r.title)+'</strong><span class="count">'+Math.min(n,r.weeks)+' מתוך '+r.weeks+'</span></div><div class="xp big" style="--c:var(--ink)" role="img" aria-label="'+n+' מתוך '+r.weeks+' שבועות"><i style="width:'+Math.min(100,n/r.weeks*100)+'%"></i></div>'+(done?'<p class="heroline">הגעתם! תהנו מהפרס.</p><button type="button" class="primary" id="rw-clear">מימשנו, אפשר לקבוע חדש</button>':'<p class="hint">כל שבוע שבו שניכם עומדים ביעד נספר. שבוע שפוספס רק לא נספר.</p><button type="button" class="ghost" id="rw-clear">ביטול הפרס</button>');
   if(done){const key='fit_rw_'+r.startWeek+r.title;if(!recall(key)){store(key,'1');confetti()}}}
 /* ---------- year wrapped (hidden until the end of the year) ---------- */
 function wrapYear(){const n=new Date(),m=n.getMonth(),d=n.getDate();if(m===11&&d>=20)return n.getFullYear();if(m===0&&d<=10)return n.getFullYear()-1;return null}
@@ -1105,7 +1175,7 @@ function openWrapped(){const y=wrapYear();if(y==null)return;const ids=order(),D=
   const s=['<small>'+y+'</small><h2 class="wr-big">השנה שלנו</h2><p>'+ids.map(nameOf).map(esc).join(' ו')+', זה מה שעשיתם השנה.</p>',
    '<p>הרמתם ביחד</p><div class="wr-fig">'+fmt(kg)+'</div><p>ק״ג'+(kg>=1500?', בערך '+fmt(kg/1500)+' מכוניות משפחתיות':'')+'</p>',
    '<p>שניכם יחד התאמנתם</p><div class="wr-fig">'+fmt(days)+'</div><p>ימי אימון</p>'];
-  ids.forEach(i=>{const d=D[i];if(!d.fav)return;s.push('<p>התרגיל של '+esc(nameOf(i))+'</p>'+thumb(d.fav,'l')+'<h2 class="wr-mid">'+esc(d.fav)+'</h2><p>'+fmt(d.ex[d.fav])+' פעמים, '+fmt(d.prs)+' שיאים ו־'+fmt(d.sets)+' סטים השנה'+(d.best!=null?'. החודש הכי חזק: '+monName(d.best):'')+'</p>')});
+  ids.forEach(i=>{const d=D[i];if(!d.fav)return;s.push('<p>התרגיל של '+esc(nameOf(i))+'</p>'+thumb(d.fav,'l')+'<h2 class="wr-mid">'+esc(d.fav)+'</h2><p>'+(d.ex[d.fav]===1?'פעם אחת':fmt(d.ex[d.fav])+' פעמים')+', '+(d.prs===1?'שיא אחד':fmt(d.prs)+' שיאים')+' ו־'+(d.sets===1?'סט אחד':fmt(d.sets)+' סטים')+' השנה'+(d.best!=null?'. החודש הכי חזק: '+monName(d.best):'')+'</p>')});
   s.push('<h2 class="wr-big">כל הכבוד לשניכם</h2><p>נתראה על המוט בשנה הבאה.</p>');
   wr={i:0,s};$('wrapped').hidden=false;drawWrapped();confetti()}
 function drawWrapped(){$('wr-slide').innerHTML=wr.s[wr.i];$('wr-dots').innerHTML=wr.s.map((_,i)=>'<i class="'+(i===wr.i?'on':'')+'"></i>').join('');const c=$('wr-slide');c.classList.remove('in');void c.offsetWidth;c.classList.add('in')}
@@ -1116,22 +1186,35 @@ function render(){
   $('tabs').hidden=false;$('start').hidden=true;$('who').hidden=true;
   $('view-log').hidden=S.tab!=='log';$('view-progress').hidden=S.tab!=='progress';
   ['log','progress'].forEach(t=>$('tab-'+t).setAttribute('aria-selected',S.tab===t?'true':'false'));
-  if(S.edit&&S.edit.date!==S.sel)clearEdit();
+  if(S.edit&&S.edit.date!==S.sel)clearEdit(true);
   if(S.tab==='log'){renderHero();renderReward();renderRail();renderRecapLog();renderPanels();renderFeed();applyPendingMeal();applyPendingRecipe()}
   else{renderRecap();renderBadges();renderCalendar();renderSummary();renderFavTable();renderCharts();renderExChart();if($('tableBox').open)renderTable();fillGoals()}
 }
 function schedule(){if(!raf)raf=requestAnimationFrame(render)}
 function setTab(t){S.tab=t;try{history.replaceState(null,'','#'+t)}catch(e){location.hash=t}render()}
 
+/* a listener that fails is started again with growing delays. permission-denied is final. */
+function listen(name,start,next,onDenied){let tries=0;const go=()=>{start(s=>{tries=0;if(S.listenFail.delete(name))updateNet();next(s)},e=>{if(e&&e.code==='permission-denied'&&onDenied&&onDenied(e)===false)return;S.listenFail.add(name);updateNet();tries++;setTimeout(go,Math.min(60000,2000*Math.pow(2,tries)))})};go()}
 function subscribeDays(id){
-  if(S.subs[id])return;
-  S.subs[id]=db.collection('people/'+id+'/days').orderBy('date','desc').limit(1000).onSnapshot({includeMetadataChanges:true},snap=>{
+  if(S.subs[id])return;S.subs[id]=true;
+  listen('days/'+id,(ok,bad)=>db.collection('people/'+id+'/days').orderBy('date','desc').limit(1000).onSnapshot({includeMetadataChanges:true},ok,bad),snap=>{
     const m=S.days[id]||(S.days[id]={}),ch=snap.docChanges();
     ch.forEach(c=>{const k=c.doc.id;if(!isDateKey(k))return;if(c.type==='removed')delete m[k];else m[k]=normDay(c.doc.data(),k)});
     if(ch.length)bump(id);
+    S.pendingW[id]=snap.metadata.hasPendingWrites;updateNet();
     S.daysLoaded[id]=true;tryReady();if(ch.length)schedule();
-  },e=>{toast('חלק מהנתונים לא נטענו. אפשר לטעון את העמוד מחדש.')});
+  });
 }
+/* offline: says so at once. Online with writes still waiting: says so after a few seconds, since a normal save takes less. */
+let netTimer=0,netLate=false;
+function updateNet(){
+  const pending=Object.values(S.pendingW).some(Boolean);
+  if(pending&&!netLate&&!netTimer)netTimer=setTimeout(()=>{netTimer=0;netLate=true;updateNet()},4000);
+  if(!pending){clearTimeout(netTimer);netTimer=0;netLate=false}
+  const b=$('netbar'),t=navigator.onLine===false?'אין חיבור. מה שמוזן נשמר במכשיר ויישלח כשהחיבור יחזור.':pending&&netLate?'יש הזנות שעוד לא נשלחו. הן יישלחו כשהחיבור יתייצב.':S.listenFail.size?'חלק מהנתונים לא נטענו. מנסים שוב.':'';
+  b.textContent=t;b.hidden=!t;
+}
+addEventListener('online',updateNet);addEventListener('offline',updateNet);
 function onPeople(snap){
   const m={},raw={};snap.docs.forEach(d=>{raw[d.id]=d.data();m[d.id]=normPerson(raw[d.id])});
   const js=JSON.stringify(raw);if(js!==S.peopleJson){S.peopleJson=js;bumpAll()}
@@ -1144,7 +1227,7 @@ function onPeople(snap){
 /* the app opens for writing only after the first snapshot of S.me's days */
 function tryReady(){if(S.ready||!S.me||!S.people[S.me]||!S.daysLoaded[S.me])return;S.ready=true;$('switchme').hidden=false;render()}
 function showWho(){S.ready=false;$('start').hidden=true;$('tabs').hidden=true;$('view-log').hidden=true;$('view-progress').hidden=true;$('switchme').hidden=true;$('who').hidden=false}
-const IDS={victor:{name:'ויקטור',slot:0},racheli:{name:'רחלי',slot:1}};
+const IDS={victor:{name:'ויקטור',slot:0},racheli:{name:'רחלי',slot:1}};const isId=v=>v==='victor'||v==='racheli';
 const applySkin=()=>{document.documentElement.dataset.theme=S.me==='racheli'?'rose':'concrete'};
 async function claim(id){
   S.me=id;store('fit_me',id);applySkin();S.panelsKey='';favKey=null;
@@ -1157,21 +1240,22 @@ const store=(k,v)=>{try{if(v==null)localStorage.removeItem(k);else localStorage.
 const recall=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
 
 /* ---------- events ---------- */
-$('switchme').onclick=()=>{S.live=null;S.open=null;S.edit=null;S.show='me';S.me=null;store('fit_me',null);S.panelsKey='';favKey=null;showWho()};
-$('codeform').addEventListener('submit',e=>{e.preventDefault();const c=$('code-in').value.trim();if(c){store('fit_code',c);$('codebox').hidden=true;boot()}});
+$('switchme').onclick=()=>{flushFields();stopScan();S.live=null;S.open=null;S.edit=null;S.show='me';S.me=null;S.ready=false;S.nudgedNow=false;S.searchRes=[];scanCode=null;rcEdit=null;exName='';store('fit_me',null);S.panelsKey='';favKey=null;showWho()};
+$('codeform').addEventListener('submit',e=>{e.preventDefault();const c=$('code-in').value.trim(),m=$('codemsg');if(!c)return;if(!CODE_RE.test(c)){m.textContent='הקוד לא תקין. צריך לבדוק אותו ולנסות שוב.';m.hidden=false;return}m.hidden=true;store('fit_code',c);$('codebox').hidden=true;$('start').hidden=false;boot()});
 $('scan-close').onclick=stopScan;
 $('scan-file').addEventListener('change',async e=>{const file=e.target.files&&e.target.files[0];e.target.value='';if(!file)return;
-  stopScan();S.open='food';syncDrawers();scanMsg('מחפש ברקוד בתמונה…');
-  let code=null;try{code=await decodeBarcode(file)}catch(err){scanMsg('לא הצלחנו לקרוא את התמונה. נסה תמונה אחרת או הקלד את המספר.');return}
-  if(code)openProduct(code);else scanMsg('לא זוהה ברקוד בתמונה. נסה תמונה חדה יותר או הקלד את המספר.');
+  stopScan();S.open='food';syncDrawers();scanMsg('מחפשים ברקוד בתמונה…');
+  let code=null;try{code=await decodeBarcode(file)}catch(err){scanMsg('לא הצלחנו לקרוא את התמונה. אפשר לנסות תמונה אחרת או להקליד את המספר.');return}
+  if(code)openProduct(code);else scanMsg('לא זוהה ברקוד בתמונה. אפשר לנסות תמונה חדה יותר או להקליד את המספר.');
 });
-let torchOn=false;$('scan-torch').onclick=async()=>{if(!scanStream)return;torchOn=!torchOn;try{await scanStream.getVideoTracks()[0].applyConstraints({advanced:[{torch:torchOn}]})}catch(e){}};
+$('scan-torch').onclick=async()=>{if(!scanStream)return;const want=!torchOn;try{await scanStream.getVideoTracks()[0].applyConstraints({advanced:[{torch:want}]});torchOn=want;showTorch()}catch(e){toast('הפנס לא זמין כאן.')}};
 $('pk-close').onclick=closePicker;$('pk-q').addEventListener('input',drawPicker);
 $('pk-groups').addEventListener('click',e=>{const b=e.target.closest('[data-g]');if(b){pkGroup=b.dataset.g||null;drawPicker()}});
 $('pk-grid').addEventListener('click',e=>{const b=e.target.closest('[data-pk]');if(b&&pkCb){const cb=pkCb,n=b.dataset.pk;closePicker();cb(n)}});
-$('hero').addEventListener('click',e=>{if(e.target.id==='egg-open'){openWrapped();return}if(e.target.id!=='nudge-send')return;const o=order().find(i=>i!==S.me);if(!o)return;S.nudgedNow=true;db.doc('nudges/'+o).set({from:S.me,text:NUDGES[Math.floor(Math.random()*NUDGES.length)],at:new Date().toISOString()}).catch(writeFail);renderHero();toast('הדרבון נשלח')});
+$('hero').addEventListener('click',e=>{if(e.target.id==='egg-open'){openWrapped();return}if(e.target.id!=='nudge-send')return;const o=order().find(i=>i!==S.me);if(!o)return;const list=nudgeOptions(o);if(!list.length)return;S.nudgedNow=true;db.doc('nudges/'+o).set({from:S.me,text:list[Math.floor(Math.random()*list.length)],at:new Date().toISOString()}).catch(writeFail);renderHero();toast('הדרבון נשלח')});
 $('nudge').addEventListener('click',e=>{if(e.target.id!=='nudge-ok')return;delete S.nudges[S.me];db.doc('nudges/'+S.me).delete().catch(writeFail);schedule()});
 $('reward').addEventListener('submit',e=>{e.preventDefault();const title=$('rw-title').value.trim();if(!title)return;const doc={title,weeks:+$('rw-weeks').value,startWeek:weekStart(today()),by:S.me,at:new Date().toISOString()};S.reward=doc;db.doc('shared/reward').set(doc).catch(writeFail);renderReward()});
+$('goalsForm').addEventListener('input',e=>{e.target.dataset.dirty='1'});
 $('reward').addEventListener('click',e=>{const t=e.target;if(t.id!=='rw-clear')return;if(t.classList.contains('ghost')&&t.dataset.sure!=='1'){t.dataset.sure='1';t.textContent='ללחוץ שוב כדי לבטל';return}S.reward=null;db.doc('shared/reward').delete().catch(writeFail);renderReward()});
 $('notice').addEventListener('click',e=>{if(e.target.id==='retry-failed')retryFailed()});
 $('wrapped').addEventListener('click',e=>{if(e.target.id==='wr-close'){$('wrapped').hidden=true;return}if(wr.i<wr.s.length-1){wr.i++;drawWrapped()}else $('wrapped').hidden=true});
@@ -1191,7 +1275,9 @@ $('ranges').addEventListener('click',e=>{const b=e.target.closest('button');if(!
   document.querySelectorAll('#ranges button').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));render()});
 $('whobtns').addEventListener('click',e=>{const b=e.target.closest('button');if(b)claim(b.dataset.id)});
 function clearEdit(wipe){const was=S.edit;S.edit=null;document.querySelectorAll('[data-cancel]').forEach(b=>b.hidden=true);
-  const a=$('e-add'),m=$('m-add'),w=$('w-add');if(a)a.textContent='הוספת תרגיל';if(m)m.textContent='הוספה';if(w)w.textContent='הוספה'}
+  const a=$('e-add'),m=$('m-add');if(a)a.textContent='הוספת תרגיל';if(m)m.textContent='הוספה';syncShare();
+  /* leaving an edit without saving must not leave its values in the form */
+  if(was&&wipe!==false){if(was.kind==='meals')['m-name','m-kcal','m-prot','m-carb','m-fat'].forEach(i=>{if($(i))$(i).value=''});else if($('e-rows')){setExSel('');$('e-sets').value='';buildRows([],true);$('e-hint').textContent=''}}}
 function save(kind,item,date,opt){
   const cur=opt&&opt.edit&&S.edit&&S.edit.kind===kind?((dayOf(S.me,date)||{})[kind]||[]).find(x=>x.id===S.edit.id):null;
   if(cur){replaceItem(date,kind,cur,Object.assign({},RAW.get(cur)||cur,item,{id:cur.id,at:cur.at}));clearEdit(false);return}
@@ -1209,85 +1295,100 @@ function addMeals(list,date){
 }
 function startEdit(kind,id){
   const x=((dayOf(S.me,S.sel)||{})[kind]||[]).find(y=>y.id===id);if(!x)return;S.edit={kind,id,date:S.sel};
-  if(kind==='exercises'){S.open='ex';syncDrawers();renderFavs();setExSel(x.name);const r=rowsOf(x);$('e-sets').value=r.length||'';buildRows(r,true);$('e-hint').textContent='עורך את התרגיל';$('e-sug').hidden=true;$('e-add').textContent='שמירת השינויים';$('e-add').focus()}
+  if(kind==='exercises'){S.open='ex';syncDrawers();renderFavs();setExSel(x.name);const r=rowsOf(x);$('e-sets').value=r.length||'';buildRows(r,true);$('e-hint').textContent='עריכת התרגיל';$('e-sug').hidden=true;$('e-add').textContent='שמירת השינויים';$('e-add').focus()}
   if(kind==='meals'){S.open='food';syncDrawers();$('m-type').value=x.meal;$('m-name').value=x.name;$('m-kcal').value=x.kcal!=null?x.kcal:'';$('m-prot').value=x.protein!=null?x.protein:'';$('m-carb').value=x.carbs!=null?x.carbs:'';$('m-fat').value=x.fat!=null?x.fat:'';$('m-add').textContent='שמירת השינויים';$('m-name').focus()}
-  document.querySelectorAll('[data-cancel]').forEach(b=>b.hidden=false);
+  document.querySelectorAll('[data-cancel]').forEach(b=>b.hidden=false);syncShare();
 }
+/* eating the same dish alone is the whole portion, not the part that was shared last time */
+function fullPortion(m){const s=m.share>0&&m.share<1?m.share:1,c=s===1?Object.assign({},m):scaleMeal(m,1/s);delete c.sharedBy;delete c.sharedWith;delete c.share;return c}
 function newMeal(l,now){const c=Object.assign({},RAW.get(l)||l,{id:uid(),at:now});delete c.sharedBy;delete c.sharedWith;delete c.share;return c}
 function prevMealDay(){const ds=S.days[S.me]||{};return Object.keys(ds).filter(k=>k<S.sel&&(ds[k].meals||[]).length).sort().pop()||null}
 function drawCopy(){const k=prevMealDay(),box=$('copy-box');if(!k){box.innerHTML='<p class="none">אין עדיין ארוחות מימים קודמים.</p>';return}
-  const ml=S.days[S.me][k].meals;box.innerHTML='<p class="hint">מ־'+shortDate(k)+'</p>'+ml.map((x,i)=>'<button type="button" class="res" data-copy="'+i+'" data-k="'+k+'"><strong>'+esc(x.meal)+'</strong>, '+esc(x.name)+(x.kcal!=null?'<small>'+fmt(x.kcal)+' קל׳</small>':'')+'</button>').join('')+'<button type="button" class="ghost" data-copy="all" data-k="'+k+'">הוספת כל הארוחות</button>'}
+  const ml=S.days[S.me][k].meals;box.innerHTML='<p class="hint">מ־'+shortDate(k)+'</p>'+ml.map((x,i)=>'<button type="button" class="res" data-copy="'+i+'" data-k="'+esc(k)+'"><strong>'+esc(x.meal)+'</strong>, '+esc(x.name)+(x.kcal!=null?'<small>'+fmt(x.kcal)+' קל׳</small>':'')+'</button>').join('')+'<button type="button" class="ghost" data-copy="all" data-k="'+esc(k)+'">הוספת כל הארוחות</button>'}
+let lastExAdd={n:'',t:0};
 $('panels').addEventListener('submit',e=>{
   e.preventDefault();const f=e.target,date=S.sel,now=new Date().toISOString();
-  if(f.id==='f-bc'){openProduct($('bc-manual').value);$('bc-manual').value='';return}
+  if(f.id==='f-bc'){const c=$('bc-manual').value.replace(/\D/g,'');openProduct(c);if(c.length>=6&&c.length<=14)$('bc-manual').value='';return}
   if(f.id==='f-search'){runSearch($('s-q').value);return}
-  if(f.id==='rc-form'){const name=$('rc-name').value.trim(),servings=num($('rc-serv').value),ingredients=readIngs();if(!name||!servings)return;if(!ingredients.length){toast('הוסף לפחות מרכיב אחד.');return}const id=rcEdit||uid(),doc={name,servings,ingredients,by:S.me,updatedAt:now};S.recipes[id]=doc;db.doc('recipes/'+id).set(doc).catch(writeFail);$('rc-form').hidden=true;rcEdit=null;drawRecipes();toast('המתכון נשמר לשניכם');return}
+  if(f.id==='rc-form'){const name=$('rc-name').value.trim(),servings=num($('rc-serv').value),ingredients=readIngs();if(!name||!servings)return;if(!ingredients.length){toast('צריך לפחות מרכיב אחד.');return}dropImport('recipe');scanMsg('');const id=rcEdit||uid(),doc={name,servings,ingredients,by:S.me,updatedAt:now};S.recipes[id]=doc;db.doc('recipes/'+id).set(doc).catch(writeFail);$('rc-form').hidden=true;rcEdit=null;drawRecipes();toast('המתכון נשמר לשניכם');return}
   if(f.id==='f-tpl'){const name=$('tpl-name').value.trim(),ex=(dayOf(S.me,S.sel)||{}).exercises||[];if(!name)return;if(!ex.length){toast('אין תרגילים ביום הזה לשמור.');return}
-    const tpls=((S.people[S.me]||{}).templates||[]).concat({id:uid(),name,exercises:ex.map(x=>({name:x.name,rows:rowsOf(x)}))});saveProfile({templates:tpls});$('tpl-name').value='';toast('התוכנית נשמרה');return}
-  if(f.id==='f-ex'){const name=$('e-name').value;if(!name){$('e-hint').textContent='בחר תרגיל.';return}
-    const rows=readRows().map(r=>({reps:r.reps,kg:r.kg})),item={id:uid(),at:now,name,sets:rows.length||null,rows},wasEdit=S.edit;save('exercises',item,date,{edit:true});if(!wasEdit&&isPR(S.me,date,item)){confetti();toast('שיא חדש ב'+name+'!')}$('e-hint').textContent='נשמר. הערכים נשארו למקרה שיש עוד סט.';return}
+    const tpl={id:uid(),name,exercises:ex.map(x=>({name:x.name,rows:rowsOf(x).map(normRow)}))},loc=normPerson({templates:[tpl]}).templates[0];
+    saveProfile({templates:FV().arrayUnion(tpl)},{templates:((S.people[S.me]||{}).templates||[]).concat(loc)});$('tpl-name').value='';toast('התוכנית נשמרה');return}
+  if(f.id==='f-ex'){const name=exName;if(!name){$('e-hint').textContent='קודם בוחרים תרגיל.';return}
+    if(!S.edit&&name===lastExAdd.n&&Date.now()-lastExAdd.t<1000)return;lastExAdd={n:name,t:Date.now()};
+    const rows=readRows().map(r=>({reps:r.reps,kg:r.kg})),item={id:uid(),at:now,name,sets:rows.length||null,rows},wasEdit=S.edit;save('exercises',item,date,{edit:true});if(!wasEdit&&isPR(S.me,date,item)){confetti();toast('שיא חדש ב'+name+'!')}if(wasEdit){setExSel('');$('e-sets').value='';buildRows([],true);$('e-hint').textContent='השינויים נשמרו.'}else $('e-hint').textContent='נשמר. הערכים נשארו למקרה שיש עוד סט.';return}
   if(f.id==='f-scan'){const name=$('p-name').value.trim(),k=num($('p-kcal').value),pr=num($('p-prot').value),cb=num($('p-carb').value),ft=num($('p-fat').value),g=scanGrams();if(!name||k==null||!g)return;
     const code=scanCode,unit=$('p-unit').value,qty=num($('p-qty').value),units=scanUnits.filter(u=>u.name!=='גרם');
     const prod={barcode:code,name,kcal100:k,protein100:pr,carbs100:cb,fat100:ft,units,lastUnit:unit,lastQty:qty,updatedAt:now};S.products[code]=prod;db.doc('products/'+code).set(prod).catch(writeFail);
     const r1=v=>v!=null?Math.round(v*g/10)/10:null;
     save('meals',{id:uid(),at:now,meal:$('m-type').value,name,kcal:Math.round(k*g/100),protein:r1(pr),carbs:r1(cb),fat:r1(ft),grams:g,qty,unit,barcode:code},date);$('scan-card').hidden=true;scanCode=null;return}
   if(f.id==='f-meal'){const name=$('m-name').value.trim();if(!name)return;
-    save('meals',{id:uid(),at:now,meal:$('m-type').value,name,kcal:num($('m-kcal').value),protein:num($('m-prot').value),carbs:num($('m-carb').value),fat:num($('m-fat').value)},date,{edit:true});['m-name','m-kcal','m-prot','m-carb','m-fat'].forEach(i=>$(i).value='')}
+    save('meals',{id:uid(),at:now,meal:$('m-type').value,name,kcal:num($('m-kcal').value),protein:num($('m-prot').value),carbs:num($('m-carb').value),fat:num($('m-fat').value)},date,{edit:true});dropImport('meal');scanMsg('');['m-name','m-kcal','m-prot','m-carb','m-fat'].forEach(i=>$(i).value='')}
 });
 $('panels').addEventListener('input',e=>{const t=e.target;
   if(t.id==='share-on'||t.id==='share-range')syncShare();
   if(t.closest&&t.closest('#rc-form')){if(t.classList.contains('i-name')){const p=Object.values(S.products).find(x=>x.name===t.value),row=t.closest('.ing');if(p){row.querySelector('.i-k').value=p.kcal100??'';row.querySelector('.i-p').value=p.protein100??'';row.querySelector('.i-c').value=p.carbs100??'';row.querySelector('.i-f').value=p.fat100??''}}rcCalc()}
   if(t.id==='rc-por')rcLogCalc();
-  if(/^p-(kcal|prot|qty)$/.test(t.id))calcProduct();
+  if(t.id==='p-unit'){const was=scanUnits.find(x=>x.name===t.dataset.prev),now=scanUnits.find(x=>x.name===t.value),q=num($('p-qty').value);if(was&&now&&q)$('p-qty').value=Math.round(q*was.grams/now.grams*100)/100;t.dataset.prev=t.value}
+  if(/^p-(kcal|prot|qty|unit)$/.test(t.id))calcProduct();
+  if(t.id==='f-weight'||t.id==='f-note')queueField(t);
   if(t.id==='e-sets')buildRows();
   if(t.classList.contains('r-reps')||t.classList.contains('r-kg')){const cls=t.classList.contains('r-reps')?'.r-reps':'.r-kg',all=[...document.querySelectorAll('#e-rows '+cls)];
     if(all[0]===t)all.slice(1).forEach(o=>{if(o.dataset.touched!=='1')o.value=t.value});else t.dataset.touched='1'}
 });
 $('panels').addEventListener('click',e=>{const t=e.target;
-  const op=t.closest('[data-open]');if(op){S.open=S.open===op.dataset.open?null:op.dataset.open;syncDrawers();return}
+  const op=t.closest('[data-open]');if(op){if(S.open==='food'&&op.dataset.open==='food')dropImport('meal');S.open=S.open===op.dataset.open?null:op.dataset.open;if(S.open==='food'&&!S.edit&&$('m-type'))$('m-type').value=mealSlot();syncDrawers();return}
   if(t.closest('#e-pick')){openPicker(n=>pickExercise(n));return}
   if(t.id==='live-open'){openLive();return}
   if(t.id==='scan-live'){startScan();return}
   if(t.id==='p-cancel'){$('scan-card').hidden=true;scanCode=null;scanMsg('');return}
   if(t.id==='u-add'){const g=num($('u-g').value),n=$('u-name').value;if(!g)return;scanUnits=scanUnits.filter(u=>u.name!==n).concat({name:n,grams:g});fillUnits(n);$('p-qty').value=1;$('u-g').value='';$('u-box').open=false;calcProduct();return}
   if(t.id==='p-unit')return;
-  if(t.closest('[data-cancel]')){clearEdit();$('e-hint')&&($('e-hint').textContent='');return}
+  if(t.closest('[data-cancel]')){clearEdit(true);$('e-hint')&&($('e-hint').textContent='');return}
   if(t.id==='rc-open'){const b=$('rc-box');b.hidden=!b.hidden;if(!b.hidden)drawRecipes();return}
   if(t.id==='rc-new'){openRcForm();return}
   const re=t.closest('[data-rc-edit]');if(re){openRcForm(re.dataset.rcEdit);return}
   const rl=t.closest('[data-rc]');if(rl){logRecipe(rl.dataset.rc);return}
   if(t.id==='rc-log-x'){$('rc-log').hidden=true;return}
-  if(t.id==='rc-log-add'){const id=$('rc-log').dataset.id,r=S.recipes[id],por=num($('rc-por').value);if(!r||!por)return;const a=ingTotals(r.ingredients||[]),f=por/(r.servings||1);save('meals',{id:uid(),at:new Date().toISOString(),meal:$('m-type').value,name:r.name,kcal:Math.round(a.kcal*f),protein:r1(a.protein*f),carbs:r1(a.carbs*f),fat:r1(a.fat*f),grams:r1(a.grams*f),qty:por,unit:'מנה',recipe:id},S.sel);$('rc-log').hidden=true;return}
+  if(t.id==='rc-log-add'){const id=$('rc-log').dataset.id,r=S.recipes[id],por=num($('rc-por').value);if(!r)return;if(!(por>0&&por<=50)){toast('מספר המנות צריך להיות בין 0.25 ל־50.');return}const a=ingTotals(r.ingredients||[]),f=por/(r.servings||1);save('meals',{id:uid(),at:new Date().toISOString(),meal:$('m-type').value,name:r.name,kcal:Math.round(a.kcal*f),protein:r1(a.protein*f),carbs:r1(a.carbs*f),fat:r1(a.fat*f),grams:r1(a.grams*f),qty:por,unit:'מנה',recipe:id},S.sel);$('rc-log').hidden=true;return}
   if(t.id==='rc-add-ing'){$('rc-ings').insertAdjacentHTML('beforeend',ingRow());return}
   if(t.closest('[data-ing-del]')){t.closest('.ing').remove();rcCalc();return}
-  if(t.id==='rc-x'){$('rc-form').hidden=true;rcEdit=null;return}
+  if(t.id==='rc-x'){$('rc-form').hidden=true;rcEdit=null;dropImport('recipe');return}
   if(t.id==='rc-del'&&rcEdit){if(t.dataset.sure!=='1'){t.dataset.sure='1';t.textContent='ללחוץ שוב כדי למחוק';return}db.doc('recipes/'+rcEdit).delete().catch(writeFail);delete S.recipes[rcEdit];rcEdit=null;$('rc-form').hidden=true;drawRecipes();return}
   if(t.id==='copy-open'){const b=$('copy-box');b.hidden=!b.hidden;if(!b.hidden)drawCopy();return}
   const cp=t.closest('[data-copy]');if(cp){const ml=S.days[S.me][cp.dataset.k].meals,now=new Date().toISOString(),list=cp.dataset.copy==='all'?ml:[ml[+cp.dataset.copy]];addMeals(list.map(l=>newMeal(l,now)),S.sel);toast(list.length>1?'כל הארוחות נוספו':'הארוחה נוספה');return}
   const rs=t.closest('[data-res]');if(rs){const p=S.searchRes[+rs.dataset.res];renderProduct(p.code,S.products[p.code]||p,S.products[p.code]?'known':'off');return}
   const ap=t.closest('[data-apply-kg]');if(ap){applyKg(+ap.dataset.applyKg);return}
   const tp=t.closest('[data-tpl]');if(tp){openLive(tp.dataset.tpl);return}
-  const td=t.closest('[data-tpl-del]');if(td){const list=((S.people[S.me]||{}).templates||[]).filter(x=>x.id!==td.dataset.tplDel);saveProfile({templates:list});return}
+  const td=t.closest('[data-tpl-del]');if(td){const all=(S.people[S.me]||{}).templates||[],gone=all.find(x=>x.id===td.dataset.tplDel);if(gone)saveProfile({templates:FV().arrayRemove(RAW.get(gone)||clean(gone))},{templates:all.filter(x=>x!==gone)});return}
   const ch=t.closest('[data-ex]');if(ch){pickExercise(ch.dataset.ex);return}
-  const fd=t.closest('[data-food]');if(fd){const f=smartFoods(S.me).find(x=>x.name===fd.dataset.food);if(f){const item=Object.assign({},f.last,{id:uid(),at:new Date().toISOString(),meal:mealSlot()});delete item.sharedBy;const date=S.sel;const shared=$('share-on').checked;addMeals([item],date);if(!shared)toast('נוסף: '+f.name,()=>{const it=((dayOf(S.me,date)||{}).meals||[]).find(x=>x.id===item.id);if(it)removeItem(date,'meals',it)})}return}
+  const fd=t.closest('[data-food]');if(fd){const f=smartFoods(S.me).find(x=>x.name===fd.dataset.food);if(f){const date=S.sel,item=Object.assign(fullPortion(f.last),{id:uid(),at:new Date().toISOString(),meal:date===today()?$('m-type').value:f.last.meal}),shared=$('share-on')&&$('share-on').checked;addMeals([item],date);if(!shared)toast('נוסף: '+f.name,()=>{const it=((dayOf(S.me,date)||{}).meals||[]).find(x=>x.id===item.id);if(it)removeItem(date,'meals',it)})}return}
   const rb=t.closest('[data-rx]');if(rb){toggleRx(rb.dataset);return}
   const b=t.closest('[data-del]');if(b){
     const kind=b.dataset.del,id=b.dataset.i,date=S.sel,cur=dayOf(S.me,date);if(!cur)return;
     const idx=(cur[kind]||[]).findIndex(x=>x.id===id);if(idx<0)return;const item=cur[kind][idx];
-    if(S.edit&&S.edit.id===id)clearEdit();
+    if(S.edit&&S.edit.id===id)clearEdit(true);
     removeItem(date,kind,item);
     toast('נמחק',()=>addItems(date,kind,[RAW.get(item)||item]));return}
   const ed=t.closest('[data-edit]');if(ed)startEdit(ed.dataset.edit,ed.dataset.i);
 });
 $('panels').addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('[data-edit]'))startEdit(e.target.dataset.edit,e.target.dataset.i)});
-$('panels').addEventListener('change',async e=>{
-  const date=S.sel;
-  if(e.target.id==='e-name'){pickExercise();return}
-  if(e.target.id==='f-weight'){const v=num(e.target.value);
-    if(v!=null&&(v<20||v>300)){toast('משקל צריך להיות בין 20 ל־300 ק״ג.');return}
-    setDayFields(date,{weight:v,weightAt:v==null?null:new Date().toISOString()})}
-  if(e.target.id==='f-note'){setDayFields(date,{note:e.target.value.trim()})}
-});
+$('panels').addEventListener('focusin',e=>{const t=e.target;if(t.id==='f-weight'||t.id==='f-note')t.dataset.date=S.sel});
+$('panels').addEventListener('change',e=>{const t=e.target;if(t.id==='f-weight'||t.id==='f-note'){queueField(t);flushField(t.id,true)}});
+/* weight and note: saved shortly after typing stops, to the day that was on screen when the field got focus */
+const fields={};
+function queueField(el){const f=fields[el.id]||(fields[el.id]={});f.date=el.dataset.date||S.sel;f.who=S.me;f.value=el.value;f.dirty=true;clearTimeout(f.t);f.t=setTimeout(()=>flushField(el.id,false),800)}
+function flushField(id,final){const f=fields[id];if(!f||!f.dirty)return;clearTimeout(f.t);if(f.who!==S.me){f.dirty=false;return}const d=dayOf(S.me,f.date)||{};
+  if(id==='f-weight'){const v=num(f.value);if(v!=null&&(v<20||v>300)){if(final){f.dirty=false;toast('משקל צריך להיות בין 20 ל־300 ק״ג.')}return}
+    if(v==null&&!final)return;f.dirty=false;if(v!==(d.weight==null?null:d.weight))setDayFields(f.date,{weight:v,weightAt:v==null?null:new Date().toISOString()});return}
+  f.dirty=false;const v=f.value.trim();if(v!==(d.note||''))setDayFields(f.date,{note:v})}
+function flushFields(){['f-weight','f-note'].forEach(id=>flushField(id,true))}
+/* ---------- coming back to the app ---------- */
+let lastToday=today();
+function checkDay(){const t=today();if(t===lastToday)return;const old=lastToday;lastToday=t;if(S.sel===old)S.sel=t;if(S.recap===weekStart(old))S.recap=weekStart(t);if(S.cal===old.slice(0,7))S.cal=t.slice(0,7);bumpAll();schedule()}
+setInterval(checkDay,60000);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){flushFields();if(scanStream||scanStarting)stopScan()}else{checkDay();updateNet()}});
+addEventListener('pagehide',flushFields);
 $('goalsForm').addEventListener('submit',async e=>{e.preventDefault();
   const goals={weight:num($('g-weight').value),kcal:num($('g-kcal').value),protein:num($('g-protein').value),workouts:num($('g-workouts').value)};
   const me=S.people[S.me]||{},ws=weekStart(today()),eff=goals.workouts==null?3:clampGoal(goals.workouts),hist=Object.assign(Object.create(null),me.goalHistory),wire={};
@@ -1309,27 +1410,31 @@ function connect(code){
   try{const f=JSON.parse(recall('fit_failed')||'[]');if(Array.isArray(f))S.failed=f;renderNotice()}catch(e){}
 }
 async function boot(){
-  const msg=$('startmsg'),h=location.hash.slice(1);
-  if(/^(k|meal|recipe)=/.test(h)){const q=new URLSearchParams(h);if(q.get('k'))store('fit_code',q.get('k'));if(q.get('recipe')){try{const m=JSON.parse(q.get('recipe'));if(m&&typeof m==='object'&&Array.isArray(m.ingredients))S.pendingRecipe=m}catch(e){}}if(q.get('meal')){try{const m=JSON.parse(q.get('meal'));if(m&&typeof m==='object')S.pendingMeal=m}catch(e){}}try{history.replaceState(null,'',location.pathname)}catch(e){location.hash=''}}
-  else if(h==='progress')S.tab='progress';
+  const msg=$('startmsg');restoreImport();readHash();
+  if(S.linkBad){S.linkBad=false;toast('הקישור לא תקין. אפשר לבקש קישור חדש.')}
   if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{})}
   if(!window.firebase||!FIREBASE_CONFIG.projectId){msg.textContent='החיבור לנתונים לא נטען. אפשר לבדוק את האינטרנט ולטעון מחדש.';return}
   const code=recall('fit_code');
-  if(!code||!/^[A-Za-z0-9_-]{6,80}$/.test(code)){store('fit_code',null);$('start').hidden=true;$('codebox').hidden=false;return}
-  connect(code);S.me=recall('fit_me');if(S.me&&!IDS[S.me])S.me=null;
+  if(!code||!CODE_RE.test(code)){const wrong=(code&&!CODE_RE.test(code))||S.codeErr;S.codeErr=false;store('fit_code',null);$('start').hidden=true;$('codebox').hidden=false;if(wrong){const m=$('codemsg');m.textContent='הקוד לא תקין. צריך לבדוק אותו ולנסות שוב.';m.hidden=false}return}
+  connect(code);S.me=recall('fit_me');if(!isId(S.me))S.me=null;
   $('start').hidden=false;
-  loadTimer=setTimeout(()=>{msg.textContent='הנתונים עוד לא נטענו. בדוק את החיבור לאינטרנט.'},10000);
-  db.collection('reactions').limit(1000).onSnapshot(sn=>{const m={};sn.docs.forEach(d=>{m[d.id]=d.data()});S.reactions=m;bumpAll();schedule()},()=>{});
-  db.collection('nudges').limit(10).onSnapshot(sn=>{const m={};sn.docs.forEach(d=>{m[d.id]=d.data()});S.nudges=m;schedule()},()=>{});
-  db.collection('recipes').limit(500).onSnapshot(sn=>{const m={};sn.docs.forEach(d=>{m[d.id]=d.data()});S.recipes=m;if($('rc-box')&&!$('rc-box').hidden)drawRecipes()},()=>{});
-  db.collection('shared').limit(5).onSnapshot(sn=>{const d=sn.docs.find(x=>x.id==='reward');S.reward=d?d.data():null;schedule()},()=>{});
-  db.collection('products').limit(1000).onSnapshot(sn=>{const m={};sn.docs.forEach(d=>{m[d.id]=d.data()});S.products=m},()=>{});
-  db.collection('people').onSnapshot({includeMetadataChanges:true},onPeople,e=>{
+  loadTimer=setTimeout(()=>{msg.textContent='הנתונים עוד לא נטענו. כדאי לבדוק את החיבור לאינטרנט.'},10000);
+  const lst=(col,lim,fn)=>listen(col,(ok,bad)=>db.collection(col).limit(lim).onSnapshot(ok,bad),fn);
+  lst('reactions',1000,sn=>{const m={};sn.docs.forEach(d=>{m[d.id]=d.data()});S.reactions=m;bumpAll();schedule()});
+  lst('nudges',10,sn=>{const m={};sn.docs.forEach(d=>{m[d.id]=d.data()});S.nudges=m;schedule()});
+  lst('recipes',500,sn=>{const m={};sn.docs.forEach(d=>{const r=d.data();m[d.id]=Object.assign({},r,{name:toStr(r.name),servings:toNum(r.servings)||1,ingredients:(Array.isArray(r.ingredients)?r.ingredients:[]).filter(i=>i&&typeof i==='object').map(i=>({name:toStr(i.name),grams:toNum(i.grams),kcal100:toNum(i.kcal100),protein100:toNum(i.protein100),carbs100:toNum(i.carbs100),fat100:toNum(i.fat100)}))})});S.recipes=m;if($('rc-box')&&!$('rc-box').hidden)drawRecipes()});
+  lst('shared',5,sn=>{const d=sn.docs.find(x=>x.id==='reward');S.reward=d?normReward(d.data()):null;schedule()});
+  lst('products',1000,sn=>{const m={};sn.docs.forEach(d=>{const p=d.data();m[d.id]=Object.assign({},p,{barcode:toStr(p.barcode)||d.id,name:toStr(p.name),kcal100:toNum(p.kcal100),protein100:toNum(p.protein100),carbs100:toNum(p.carbs100),fat100:toNum(p.fat100),lastQty:toNum(p.lastQty),lastUnit:toStr(p.lastUnit),units:(Array.isArray(p.units)?p.units:[]).filter(u=>u&&toNum(u.grams)>0).map(u=>({name:toStr(u.name),grams:toNum(u.grams)}))})});S.products=m});
+  listen('people',(ok,bad)=>db.collection('people').onSnapshot({includeMetadataChanges:true},ok,bad),onPeople,e=>{
     if(loadTimer){clearTimeout(loadTimer);loadTimer=null}
-    if(e&&e.code==='permission-denied'){store('fit_code',null);$('start').hidden=true;$('who').hidden=true;$('codebox').hidden=false;const m=$('codemsg');m.textContent='הקוד לא נכון. נסה שוב.';m.hidden=false;return}
-    msg.textContent='לא הצלחנו לטעון את היומן. טען את העמוד מחדש.';
+    store('fit_code',null);$('start').hidden=true;$('who').hidden=true;$('codebox').hidden=false;const m=$('codemsg');m.textContent='הקוד לא נכון. אפשר לנסות שוב.';m.hidden=false;return false;
   });
+  updateNet();
 }
+addEventListener('hashchange',()=>{const had=!!db,changed=readHash();if(S.linkBad){S.linkBad=false;toast('הקישור לא תקין. אפשר לבקש קישור חדש.')}
+  if(changed){if(had)location.reload();else{$('codebox').hidden=true;boot()}return}
+  if(S.codeErr&&!had){S.codeErr=false;const m=$('codemsg');m.textContent='הקוד לא תקין. צריך לבדוק אותו ולנסות שוב.';m.hidden=false}
+  schedule()});
 boot();
 })();
 </script>
