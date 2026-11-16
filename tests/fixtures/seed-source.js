@@ -1,0 +1,46 @@
+// Source of the in-page mock only: harness.js extracts the `mock` template string. Not run directly.
+const {chromium}=require('playwright'),fs=require('fs'),path=require('path');const dir=process.argv[2],site='/home/claude/yoman';
+const html=fs.readFileSync(site+'/index.html','utf8');
+const mock=`(()=>{const store=new Map();const subs=new Set();
+const D=p=>({id:p.split('/').pop(),exists:store.has(p),data:()=>store.get(p),metadata:{fromCache:false}});
+const col=c=>[...store.keys()].filter(k=>k.startsWith(c+'/')&&k.split('/').length===c.split('/').length+1).map(D);
+const C=c=>{const q={orderBy(){return q},limit(){return q},onSnapshot(a,b){const n=typeof a==='function'?a:b;const f=()=>{const docs=col(c);n({docs,metadata:{fromCache:false}})};subs.add(f);setTimeout(f,0);return()=>subs.delete(f)}};return q};
+window.__store=store;const root='spaces/testcode123/';const pad=n=>String(n).padStart(2,'0');const K=n=>{const d=new Date();d.setDate(d.getDate()-n);return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
+store.set(root+'people/victor',{name:'ויקטור',slot:0,goals:{weight:80,kcal:2200}});store.set(root+'people/racheli',{name:'רחלי',slot:1,goals:{}});
+for(let i=40;i>=1;i-=2){const at=new Date(Date.now()-i*864e5).toISOString();store.set(root+'people/victor/days/'+K(i),{date:K(i),weight:86-(40-i)*.08,weightAt:at,exercises:[{id:'s'+i,at,name:'סקוואט',sets:3,rows:[{reps:8,kg:i<=4?70:60-Math.floor(i/10)},{reps:8,kg:i<=4?70:60-Math.floor(i/10)},{reps:8,kg:i<=4?70:60-Math.floor(i/10)}]}],meals:[{id:'m'+i,at,meal:'ערב',name:'עוף ואורז',kcal:2000+i*5,protein:120,carbs:200,fat:60}]});
+store.set(root+'people/racheli/days/'+K(i),{date:K(i),weight:62-(40-i)*.03,weightAt:at,exercises:[{id:'r'+i,at,name:'לחיצת חזה במוט',sets:3,rows:[{reps:10,kg:30},{reps:10,kg:30},{reps:10,kg:30}]}],meals:[{id:'n'+i,at,meal:'בוקר',name:'יוגורט ופירות',kcal:300,protein:20}]});}
+store.set(root+'people/racheli/days/'+K(0),{date:K(0),weight:61,weightAt:new Date().toISOString(),exercises:[{id:'today1',at:new Date().toISOString(),name:'מתח',sets:3,rows:[{reps:6,kg:null},{reps:6,kg:null},{reps:6,kg:null}]}],meals:[]});
+const fs={collection:C,doc:p=>({set:async d=>{store.set(p,JSON.parse(JSON.stringify(d)));subs.forEach(f=>f())},delete:async()=>{store.delete(p);subs.forEach(f=>f())}})};
+window.firebase={apps:[],initializeApp(){this.apps.push(1)},firestore:Object.assign(()=>Object.assign({enablePersistence:async()=>{}},fs))};})();`;
+const off=u=>u.includes('search.pl')?{products:[{code:'7290000011111',product_name:'קוטג׳ תנובה',brands:'תנובה',nutriments:{'energy-kcal_100g':90,proteins_100g:11,carbohydrates_100g:3,fat_100g:5},serving_quantity:250}]}:u.includes('/7290000066318')?{status:1,product:{product_name:'שוקו',nutriments:{'energy-kcal_100g':80,proteins_100g:3,carbohydrates_100g:12,fat_100g:2},serving_quantity:200}}:{status:0};
+(async()=>{const b=await chromium.launch();const c=await b.newContext({viewport:{width:400,height:860},isMobile:true,hasTouch:true,deviceScaleFactor:1});const p=await c.newPage();const errs=[];p.on('pageerror',e=>errs.push(e.message));p.on('console',m=>{if(m.type()==='error'&&!/Failed to load|ERR_/.test(m.text()))errs.push(m.text())});
+await p.addInitScript(mock);
+await p.route('**/*',r=>{const u=r.request().url();
+ if(u.includes('openfoodfacts'))return r.fulfill({contentType:'application/json',headers:{'access-control-allow-origin':'*'},body:JSON.stringify(off(u))});
+ if(u.startsWith('https://site.test/')){const f=new URL(u).pathname.slice(1);if(f&&fs.existsSync(site+'/'+f))return r.fulfill({path:site+'/'+f});return r.fulfill({contentType:'text/html',body:html})}
+ if(u.includes('fonts.g'))return r.continue().catch(()=>r.abort());return r.abort()});
+await p.goto('https://site.test/#k=testcode123');await p.waitForTimeout(400);
+await p.click('#who-v');await p.waitForTimeout(400);
+const shot=n=>p.screenshot({path:dir+'/n-'+n+'.png'});
+await shot('home');
+await p.click('#open-ex');await p.click('#e-pick');await p.waitForTimeout(300);await shot('picker');
+await p.fill('#pk-q','סקוו');await p.click('[data-pk="סקוואט"]');await p.waitForTimeout(100);
+console.log('prefill',await p.inputValue('#e-sets'),await p.inputValue('#e-k0'),'|',await p.textContent('#e-hint'),'| sug',await p.locator('#e-sug').isVisible());
+await p.click('#e-add');await p.waitForTimeout(150);console.log('ex',await p.locator('.panel.mine .ex li').allTextContents());
+await p.evaluate(()=>document.querySelector('.panel.mine .ex .it').click());await p.waitForTimeout(100);console.log('editing',await p.textContent('#e-add'));await p.fill('#e-k0','75');await p.click('#e-add');await p.waitForTimeout(150);console.log('after edit',await p.locator('.panel.mine .ex li').allTextContents(),'PR',await p.locator('.panel.mine .pr').count());
+await p.fill('#tpl-name','רגליים').catch(async()=>{await p.click('#tpl-box summary');await p.fill('#tpl-name','רגליים')});await p.click('#tpl-save');await p.waitForTimeout(100);console.log('tpl',await p.locator('#tpl-chips .chip').allTextContents());
+await p.click('#open-ex');await shot('after-ex');
+await p.click('#open-food');await p.fill('#s-q','קוטג');await p.click('#s-go');await p.waitForTimeout(200);console.log('search',await p.locator('#s-res .res').allTextContents());await p.click('#s-res .res');await p.waitForTimeout(100);
+console.log('unit',await p.inputValue('#p-unit'),await p.inputValue('#p-qty'),await p.textContent('#p-calc'));await p.locator('#scan-card').scrollIntoViewIfNeeded();await shot('card');await p.fill('#p-qty','2');await p.click('#p-add');await p.waitForTimeout(150);console.log('meal',await p.locator('.panel.mine .ml li').allTextContents());
+await p.click('#copy-open');await p.waitForTimeout(50);await p.click('[data-copy="all"]');await p.waitForTimeout(120);console.log('copied meals',await p.locator('.panel.mine .ml li').count(),'macro',await p.textContent('.panel.mine .macro'));
+await p.click('[data-show=other]');await p.waitForTimeout(100);await p.click('.panel:not(.mine) [data-rx]');await p.waitForTimeout(200);console.log('rx',await p.evaluate(()=>[...__store.keys()].filter(k=>k.includes('reactions'))));await shot('other');
+await p.click('[data-show=me]');await p.waitForTimeout(100);
+await p.click('#live-open');await p.waitForTimeout(100);await shot('live-start');await p.click('[data-l=tpl]');await p.waitForTimeout(100);await shot('live');
+await p.fill('#l-k0','72');console.log('copy first',await p.inputValue('#l-k2'));await p.click('[data-l=tick][data-i="0"]');
+await p.click('#live .platebox summary');await p.fill('#pl-kg-p2','72');console.log('plates',await p.textContent('#live .pl-out'));
+await p.click('[data-l=finish]');await p.waitForTimeout(300);await shot('finish');console.log('fin',await p.textContent('.finish .fig'));await p.click('[data-l=close]');await p.waitForTimeout(150);console.log('finished',await p.isVisible('#live'),await p.locator('.panel.mine .ex li').count(),await p.locator('.panel.mine .stats').textContent());
+await p.click('#nudge-send');await p.waitForTimeout(150);console.log('nudge',await p.evaluate(()=>[...__store.keys()].filter(k=>k.includes('nudges'))));await p.evaluate(()=>scrollTo(0,0));await shot('hero');await p.click('#tab-progress');await p.waitForTimeout(400);await p.screenshot({path:dir+'/n-prog.png',fullPage:true});
+console.log('overflow',await p.evaluate(()=>document.documentElement.scrollWidth-innerWidth));
+await p.goto('https://site.test/#meal='+encodeURIComponent(JSON.stringify({name:'סלט',kcal:300,protein:20,carbs:10,fat:15})));await p.reload();await p.waitForTimeout(300);
+const p2=await c.newPage();await p2.addInitScript(mock);await p2.route('**/*',r=>r.request().url().startsWith('https://site.test/')?r.fulfill({contentType:'text/html',body:html}):r.abort());await p2.goto('https://site.test/#meal='+encodeURIComponent(JSON.stringify({name:'סלט',kcal:300,protein:20})));await p2.waitForTimeout(500);console.log('import',await p2.inputValue('#m-name'),await p2.inputValue('#m-kcal'),p2.url());
+console.log('errors',errs);await b.close()})();
