@@ -384,7 +384,9 @@ const key=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
 const parse=k=>{const[y,m,d]=k.split('-').map(Number);return new Date(y,m-1,d)};
 const dayNum=k=>{const[y,m,d]=k.split('-').map(Number);return Math.round(Date.UTC(y,m-1,d)/864e5)};
 const addDays=(k,n)=>{const d=parse(k);d.setDate(d.getDate()+n);return key(d)};
-const today=()=>key(new Date());
+/* the day ends at 06:00: late-night eating belongs to the evening before */
+const DAY_START_HOUR=6;
+const today=()=>{const d=new Date();if(d.getHours()<DAY_START_HOUR)d.setDate(d.getDate()-1);return key(d)};
 const weekStart=k=>addDays(k,-parse(k).getDay());
 const fmt=(n,dec)=>n==null||isNaN(n)?'–':Number(n).toLocaleString('he-IL',{maximumFractionDigits:dec||0});
 const shortDate=k=>{const d=parse(k);return d.getDate()+'.'+(d.getMonth()+1)};

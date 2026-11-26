@@ -71,6 +71,8 @@ A Hebrew, right-to-left, phone-first web app that Victor and his partner Racheli
 - `reactions/{from}_{itemId}`, `nudges/{to}`, `shared/reward`.
 - `tables/{id}`: shared table. The owner's plate is saved for the owner; the partner gets a card on that date to choose a portion of each dish.
 
+The app's day runs from 06:00 to 06:00 (`DAY_START_HOUR` in `index.html`): anything logged before 06:00 goes to the previous date, and the day rail, week counts and "today" follow the same rule.
+
 Numbers from Firestore are coerced on read (`normDay`, `normItem` and the related helpers), and user text is always escaped with `esc()` before HTML.
 
 ## Pages inside Claude (`claude-pages/`)
@@ -94,6 +96,7 @@ node logic-t.js
 node model-t.js
 node smoke-t.js
 node plate-t.js
+node night-t.js
 cd real && node real-t.js
 ```
 
